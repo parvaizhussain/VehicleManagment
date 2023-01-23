@@ -1,0 +1,13 @@
+﻿@model List<Domain.ViewModels.NavigationMenuViewModel>
+
+<div class="row col-md-8">
+    @foreach (var item in Model)
+    {
+        <div class="pr-2">
+            <button type="submit" class="@item.ButtonClass form-control text-white" name="statusCode" value="@item.StatusCode">@item.Name</button>
+        </div>
+    }
+</div>
+
+
+    

@@ -1,0 +1,51 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+    <PackageReference Include="FluentValidation" Version="11.2.2" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.2.2" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.2" />
+    <PackageReference Include="System.Text.Json" Version="6.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\Airport\Command\CreateAirport\" />
+    <Folder Include="Features\Airport\Command\DeleteAirport\" />
+    <Folder Include="Features\Airport\Command\UpdateAirport\" />
+    <Folder Include="Features\Airport\Querys\GetByID\" />
+    <Folder Include="Features\Airport\Querys\GetByList\" />
+    <Folder Include="Features\Driver\Command\CreateDriver\" />
+    <Folder Include="Features\Driver\Command\DeleteDriver\" />
+    <Folder Include="Features\Driver\Command\UpdateDriver\" />
+    <Folder Include="Features\Driver\Querys\GetByID\" />
+    <Folder Include="Features\Driver\Querys\GetByList\" />
+    <Folder Include="Features\FuelCard\Command\CreateFuelCard\" />
+    <Folder Include="Features\FuelCard\Command\DeleteFuelCard\" />
+    <Folder Include="Features\FuelCard\Command\UpdateFuelCard\" />
+    <Folder Include="Features\FuelCard\Querys\GetByID\" />
+    <Folder Include="Features\FuelCard\Querys\GetByList\" />
+    <Folder Include="Features\VehicleBrands\Command\CreateDriver\" />
+    <Folder Include="Features\VehicleBrands\Command\DeleteDriver\" />
+    <Folder Include="Features\VehicleBrands\Command\UpdateDriver\" />
+    <Folder Include="Features\VehicleBrands\Querys\GetByID\" />
+    <Folder Include="Features\VehicleBrands\Querys\GetByList\" />
+    <Folder Include="Features\User\Commands\" />
+    <Folder Include="Features\Vehicle\Querys\GetByID\" />
+    <Folder Include="Features\Vehicle\Querys\GetByList\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+  </ItemGroup>
+
+</Project>

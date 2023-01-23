@@ -1,0 +1,118 @@
+﻿
+
+@model List<Domain.ViewModels.NavigationMenuViewModel>
+@{
+    ViewData["Title"] = "NavigationMenu";
+}
+
+@*<link rel="stylesheet" href="~/assets/vendor/css/rtl/theme-default.css" class="template-customizer-theme-css" />
+*@
+@*Menu Items from the database*@
+
+@foreach (var item in Model)
+{
+    if (item.ParentMenuId == null && string.IsNullOrWhiteSpace(item.ControllerName)) //Level one items will have null parent id
+    {
+        var children = Model.Where(x => x.ParentMenuId == item.Id && x.Visible).OrderBy(x => x.DisplayOrder).ToList();
+                <li id="@(item.ParentMenuName == null ? item.Name.Trim().Replace(" ",""):0)" class="menu-item">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons @item.CssClass" asp-area="@item.Area" asp-controller="@item.ControllerName" asp-action="@item.ActionName"></i>
+                        <div data-i18n="@item.Name">@item.Name</div>
+                @* <div class="badge bg-label-primary rounded-pill ms-auto">3</div>*@
+                    </a>
+
+            @* <a href="#uiElements" class="has-arrow"><i class="fa fa-square" asp-area="@item.Area" asp-controller="@item.ControllerName" asp-action="@item.ActionName"></i> <span>@item.Name</span></a>*@
+            @if (children != null)
+            {
+                            <ul class="menu-sub">
+                    @foreach (var itm in children)
+                    {
+                        if (ViewContext.RouteData.Values["Controller"].ToString() == itm.ControllerName)
+                        {
+                                         <script>
+                                                    $('#@itm.ParentMenuName.Trim().Replace(" ","")').attr('class','menu-item active open');
+                                                    </script>
+                        }
+                                    <li class="menu-item @(ViewContext.RouteData.Values["Controller"].ToString() == itm.ControllerName ? "active":"")">
+                                            <a class="menu-link @itm.ControllerName" asp-area="@itm.Area" asp-controller="@itm.ControllerName" asp-action="@itm.ActionName">
+                                                <div data-i18n="@itm.Name">@itm.Name</div>
+                                            </a>
+                                        </li>
+
+                        @*<li><a class="@itm.ControllerName" asp-area="@itm.Area" asp-controller="@itm.ControllerName" asp-action="@itm.ActionName">@itm.Name</a></li>*@
+                    }
+                            </ul>
+            }
+                </li>
+    }
+    else if (item.ParentMenuId == null && !string.IsNullOrWhiteSpace(item.ControllerName))
+    {
+        @*<li><a class="@item.ControllerName" asp-area="@item.Area" asp-controller="@item.ControllerName" asp-action="@item.ActionName"><i class="fa fa-cube"></i><span>@item.Name</span></a></li>*@
+                 <li class="menu-item active open">
+                    <a href="#uiElements;" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons @item.CssClass"
+                asp-area="@item.Area" asp-controller="@item.ControllerName" asp-action="@item.ActionName"></i>
+                        <div data-i18n="@item.Name">@item.Name</div>
+                @* <div class="badge bg-label-primary rounded-pill ms-auto">3</div>*@
+                    </a>
+                    </li>
+    }
+}
+
+
+
+
+@*
+<!-- Dashboards -->
+<li class="menu-item active open">
+    <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <i class="menu-icon tf-icons ti ti-smart-home"></i>
+        <div data-i18n="Dashboards">Dashboards</div>
+        <div class="badge bg-label-primary rounded-pill ms-auto">3</div>
+    </a>
+    <ul class="menu-sub">
+        <li class="menu-item active">
+            <a href="index.html" class="menu-link">
+                <div data-i18n="Analytics">Analytics</div>
+            </a>
+        </li>
+       
+    </ul>
+</li>
+*@
+
+
+
+@*
+@model List<Domain.ViewModels.NavigationMenuViewModel>
+@{
+    ViewData["Title"] = "NavigationMenu";
+}
+*@
+
+@*@foreach (var item in Model)
+{
+    if (item.ParentMenuId == null && string.IsNullOrWhiteSpace(item.ControllerName)) //Level one items will have null parent id
+    {
+        var children = Model.Where(x => x.ParentMenuId == item.Id && x.Visible).OrderBy(x => x.DisplayOrder).ToList();
+        <li>
+
+            <a href="#uiElements" class="has-arrow"><i class="fa fa-square" asp-area="@item.Area" asp-controller="@item.ControllerName" asp-action="@item.ActionName"></i> <span>@item.Name</span></a>
+            @if (children != null)
+            {
+                <ul>
+                    @foreach (var itm in children)
+                    {
+
+                        <li><a class="@itm.ControllerName" asp-area="@itm.Area" asp-controller="@itm.ControllerName" asp-action="@itm.ActionName">@itm.Name</a></li>
+                    }
+                </ul>
+            }
+        </li>
+    }
+    else if (item.ParentMenuId == null && !string.IsNullOrWhiteSpace(item.ControllerName))
+    {
+        <li><a class="@item.ControllerName" asp-area="@item.Area" asp-controller="@item.ControllerName" asp-action="@item.ActionName"><i class="fa fa-cube"></i><span>@item.Name</span></a></li>
+
+    }
+}*@
