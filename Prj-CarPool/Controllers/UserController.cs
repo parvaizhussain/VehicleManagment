@@ -15,6 +15,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Prj_CarPool.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {
         private readonly ApplicationIdentityDbContext _dbi;

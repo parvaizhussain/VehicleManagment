@@ -7,6 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Features\VehicleBrands\Command\CreateDriver\**" />
+    <Compile Remove="Features\VehicleBrands\Command\DeleteDriver\**" />
+    <Compile Remove="Features\VehicleBrands\Command\UpdateDriver\**" />
+    <Compile Remove="Features\Vehicle\**" />
+    <EmbeddedResource Remove="Features\VehicleBrands\Command\CreateDriver\**" />
+    <EmbeddedResource Remove="Features\VehicleBrands\Command\DeleteDriver\**" />
+    <EmbeddedResource Remove="Features\VehicleBrands\Command\UpdateDriver\**" />
+    <EmbeddedResource Remove="Features\Vehicle\**" />
+    <None Remove="Features\VehicleBrands\Command\CreateDriver\**" />
+    <None Remove="Features\VehicleBrands\Command\DeleteDriver\**" />
+    <None Remove="Features\VehicleBrands\Command\UpdateDriver\**" />
+    <None Remove="Features\Vehicle\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     <PackageReference Include="FluentValidation" Version="11.2.2" />
@@ -34,14 +49,7 @@
     <Folder Include="Features\FuelCard\Command\UpdateFuelCard\" />
     <Folder Include="Features\FuelCard\Querys\GetByID\" />
     <Folder Include="Features\FuelCard\Querys\GetByList\" />
-    <Folder Include="Features\VehicleBrands\Command\CreateDriver\" />
-    <Folder Include="Features\VehicleBrands\Command\DeleteDriver\" />
-    <Folder Include="Features\VehicleBrands\Command\UpdateDriver\" />
-    <Folder Include="Features\VehicleBrands\Querys\GetByID\" />
-    <Folder Include="Features\VehicleBrands\Querys\GetByList\" />
     <Folder Include="Features\User\Commands\" />
-    <Folder Include="Features\Vehicle\Querys\GetByID\" />
-    <Folder Include="Features\Vehicle\Querys\GetByList\" />
   </ItemGroup>
 
   <ItemGroup>

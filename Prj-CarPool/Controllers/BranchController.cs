@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Prj_CarPool.Extensions;
 using Persistence;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Prj_CarPool.Controllers
 {
+    [Authorize]
     public class BranchController : Controller
     {
         private readonly IBranchRepository _BranchRepository;

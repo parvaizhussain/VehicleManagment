@@ -28,13 +28,21 @@ using Application.Features.Session.Commands.UpdateSession;
 using Application.Features.Session.Queries.GetSessionByID;
 using Application.Features.Session.Queries.GetSessionByName;
 using Application.Features.Session.Queries.GetSessionList;
-using Application.Features.Vehicle.Command.CreateCommand;
-using Application.Features.Vehicle.Command.CreateVehicle;
-using Application.Features.Vehicle.Command.UpdateVehicle;
+//using Application.Features.Vehicle.Command.CreateCommand;
+//using Application.Features.Vehicle.Command.CreateVehicle;
+//using Application.Features.Vehicle.Command.UpdateVehicle;
+using Application.Features.VehicleBrands.Command.Create;
+using Application.Features.VehicleBrands.Command.Update;
+using Application.Features.VehicleBrands.Querys.GetByID;
+using Application.Features.VehicleBrands.Querys.GetByList;
 using Application.Features.VehicleCompany.Command.Create;
 using Application.Features.VehicleCompany.Command.Update;
 using Application.Features.VehicleCompany.Querys.GetByID;
 using Application.Features.VehicleCompany.Querys.GetByList;
+using Application.Features.VehicleDetails.Command.Create;
+using Application.Features.VehicleDetails.Command.Update;
+using Application.Features.VehicleDetails.Querys.GetByID;
+using Application.Features.VehicleDetails.Querys.GetByList;
 using AutoMapper;
 using Domain.Entities;
 using Domain.ViewModels;
@@ -91,15 +99,27 @@ namespace Application.Profiles
             CreateMap<Session, UpdateSessionCommand>().ReverseMap();
             CreateMap<Session, GetSessionListVM>().ReverseMap();
 
-            CreateMap<VehicleSpecification, CreateVehicleCommand>().ReverseMap();
-            CreateMap<VehicleSpecification, CreateVehicleDto>().ReverseMap();
+            //CreateMap<VehicleSpecification, CreateVehicleCommand>().ReverseMap();
+            //CreateMap<VehicleSpecification, CreateVehicleDto>().ReverseMap();
 
             CreateMap<VehicleCompany, Create_VehicleCompany_Commands>().ReverseMap();
             CreateMap<VehicleCompany, Create_VehicleCompany_Dto>().ReverseMap();
             CreateMap<VehicleCompany, Get_VehicleCompany_VM>().ReverseMap();
             CreateMap<VehicleCompany, Get_VehicleCompany_ListVM>().ReverseMap();
             CreateMap<VehicleCompany, Update_VehicleCompany_Commads>().ReverseMap();
-           
+
+            CreateMap<VehicleBrands, Create_VehicleBrands_Commands>().ReverseMap();
+            CreateMap<VehicleBrands, Create_VehicleBrands_Dto>().ReverseMap();
+            CreateMap<VehicleBrands, Get_VehicleBrands_VM>().ReverseMap();
+            CreateMap<VehicleBrands, Get_VehicleBrands_ListVM>().ReverseMap();
+            CreateMap<VehicleBrands, Update_VehicleBrands_Commads>().ReverseMap();
+
+            CreateMap<Set_VehicleDetails, Create_VehicleDetails_Commands>().ReverseMap();
+            CreateMap<Set_VehicleDetails, Create_VehicleDetails_Dto>().ReverseMap();
+            CreateMap<Set_VehicleDetails, Get_VehicleDetails_VM>().ReverseMap();
+            CreateMap<Set_VehicleDetails, Get_VehicleDetails_ListVM>().ReverseMap();
+            CreateMap<Set_VehicleDetails, Update_VehicleDetails_Commads>().ReverseMap();
+
 
         }
 

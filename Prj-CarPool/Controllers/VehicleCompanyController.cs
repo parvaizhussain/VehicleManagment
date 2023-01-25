@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Persistence;
 using Prj_CarPool.Extensions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Prj_CarPool.Controllers
 {
+    [Authorize]
     public class VehicleCompanyController : Controller
     {
         private readonly IVehicleCompanyRepository _vehicleCompanyRepository;

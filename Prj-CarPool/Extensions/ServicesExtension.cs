@@ -21,6 +21,8 @@ namespace Prj_CarPool.Extensions
             services.AddSingleton<IAuthorizationPolicyProvider, AuthorizationPolicyProvider>();
             services.AddSingleton<IBranchRepository,  BranchRepository>();
             services.AddSingleton<IVehicleCompanyRepository, VehicleCompanyRepository>();
+            services.AddSingleton<IVehicleBrandRepository,VehicleBrandRepository>();
+            services.AddSingleton<IVehicleDetailsRepository,VehicleDetailsRepository>();
 
             return services;
         }

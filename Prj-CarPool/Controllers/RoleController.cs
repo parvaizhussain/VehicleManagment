@@ -16,6 +16,7 @@ using Prj_CarPool.IServices;
 
 namespace Prj_CarPool.Controllers
 {
+    [Authorize]
     public class RoleController : Controller
     {
         private readonly ApplicationIdentityDbContext _dbi;

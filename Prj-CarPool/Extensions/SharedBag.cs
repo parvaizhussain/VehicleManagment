@@ -24,5 +24,13 @@ namespace Prj_CarPool.Extensions
         public const string VehicleCompanyUpsert = APIBaseUrl + "api/VehicleCompany/";
         public const string VehicleCompanyDelete = APIBaseUrl + "api/VehicleCompany/DeleteVC";
         public const string VehicleCompanylist = APIBaseUrl + "api/VehicleCompany/all";
+       
+        public const string VehicleBrandsUpsert = APIBaseUrl + "api/VehicleBrands/";
+        public const string VehicleBrandsDelete = APIBaseUrl + "api/VehicleBrands/DeleteVB";
+        public const string VehicleBrandslist = APIBaseUrl + "api/VehicleBrands/all";
+
+        public const string VehicleDetailsUpsert = APIBaseUrl + "api/VehicleDetails/";
+        public const string VehicleDetailsDelete = APIBaseUrl + "api/VehicleDetails/DeleteVD";
+        public const string VehicleDetailslist = APIBaseUrl + "api/VehicleDetails/all";
     }
 }

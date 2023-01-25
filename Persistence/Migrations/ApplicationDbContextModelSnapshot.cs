@@ -514,6 +514,85 @@ namespace Persistence.Migrations
                     b.ToTable("Sessions");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Set_VehicleDetails", b =>
+                {
+                    b.Property<int>("VehicleID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VehicleID"), 1L, 1);
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FuelType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("PurchaseDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("RegionID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VehicleBrandID")
+                        .HasColumnType("int");
+
+                    //b.Property<int>("VehicleBrandsVehicleBrandId")
+                    //    .HasColumnType("int");
+
+                    b.Property<string>("VehicleColor")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("VehicleERP")
+                        .HasColumnType("int");
+
+                    b.Property<string>("VehicleMilage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VehicleModel")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VehicleName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VehicleNum")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VehicleType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("VehicleID");
+
+                    b.HasIndex("RegionID");
+
+                    b.HasIndex("VehicleBrandID");
+
+                    b.ToTable("Set_VehicleDetails");
+                });
+
             modelBuilder.Entity("Domain.Entities.SetIcon", b =>
                 {
                     b.Property<int>("ID")
@@ -612,90 +691,6 @@ namespace Persistence.Migrations
                     b.ToTable("VehicleCompanies");
                 });
 
-            modelBuilder.Entity("Domain.Entities.VehicleSpecification", b =>
-                {
-                    b.Property<int>("VehicleID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VehicleID"), 1L, 1);
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FuelType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("LastModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("PurchaseDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("RegionID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("VehicleBrandID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("VehicleBrandsVehicleBrandId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("VehicleColor")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("VehicleCompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("VehicleERP")
-                        .HasColumnType("int");
-
-                    b.Property<string>("VehicleMilage")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VehicleModel")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VehicleName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VehicleNum")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VehicleType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("VehicleID");
-
-                    b.HasIndex("RegionID");
-
-                    b.HasIndex("VehicleBrandsVehicleBrandId");
-
-                    b.HasIndex("VehicleCompanyId");
-
-                    b.ToTable("VehicleSpecifications");
-                });
-
             modelBuilder.Entity("Domain.Entities.Airport", b =>
                 {
                     b.HasOne("Domain.Entities.City", "City")
@@ -779,18 +774,7 @@ namespace Persistence.Migrations
                     b.Navigation("Region");
                 });
 
-            modelBuilder.Entity("Domain.Entities.VehicleBrands", b =>
-                {
-                    b.HasOne("Domain.Entities.VehicleCompany", "VehicleCompany")
-                        .WithMany()
-                        .HasForeignKey("VehicleCompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("VehicleCompany");
-                });
-
-            modelBuilder.Entity("Domain.Entities.VehicleSpecification", b =>
+            modelBuilder.Entity("Domain.Entities.Set_VehicleDetails", b =>
                 {
                     b.HasOne("Domain.Entities.Region", "Region")
                         .WithMany()
@@ -800,19 +784,22 @@ namespace Persistence.Migrations
 
                     b.HasOne("Domain.Entities.VehicleBrands", "VehicleBrands")
                         .WithMany()
-                        .HasForeignKey("VehicleBrandsVehicleBrandId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.VehicleCompany", "VehicleCompany")
-                        .WithMany()
-                        .HasForeignKey("VehicleCompanyId")
+                        .HasForeignKey("VehicleBrandID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Region");
 
                     b.Navigation("VehicleBrands");
+                });
+
+            modelBuilder.Entity("Domain.Entities.VehicleBrands", b =>
+                {
+                    b.HasOne("Domain.Entities.VehicleCompany", "VehicleCompany")
+                        .WithMany()
+                        .HasForeignKey("VehicleCompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("VehicleCompany");
                 });

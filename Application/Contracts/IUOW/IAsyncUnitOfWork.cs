@@ -19,11 +19,11 @@ namespace Application.Contracts.IUOW
         public INetworkRepository Network { get;}
         public ISessionRepository Session { get; }
         public IFuelCardRepository FuelCard { get; }
-        public IVehicleRepository   Vehicle { get; }
         public IAirportRepository Airport  { get; }
         public IDriverRepository Driver { get; }
         public IVehicleBrandsRepository VehicleBrands { get; }
         public IVehicleCompanyRepository VehicleCompany { get; }
+        public IVehicleDetailsRepository VehicleDetails { get; }
 
 
         Task<object> Commit(object obj);

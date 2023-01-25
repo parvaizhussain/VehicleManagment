@@ -27,12 +27,13 @@ namespace Persistence.UOW
             Group = new GroupRepository(_dbContext);
             Network = new NetworkRepository(_dbContext);
             Session = new SessionRepository(_dbContext);
-            Vehicle= new VehicleRepository(_dbContext); 
+           
             Driver= new DriverRepository(_dbContext);
             FuelCard= new FuelCardRepository(_dbContext);
             Airport= new AirportRepository(_dbContext);
             VehicleBrands = new VehicleBrandsRepository(_dbContext);
-            VehicleCompany= new VehicleCompanyRepository(_dbContext);  
+            VehicleCompany= new VehicleCompanyRepository(_dbContext);
+            VehicleDetails = new VehicleDetailsRepository(_dbContext);  
 
         }
         public IUserRepository User { get; set; }
@@ -43,12 +44,12 @@ namespace Persistence.UOW
         public IGroupRepository Group { get; set; }
         public INetworkRepository Network { get; set; }
         public ISessionRepository Session { get; set; }
-        public IVehicleRepository Vehicle { get; set; }
         public IDriverRepository Driver { get; set; }
         public IFuelCardRepository FuelCard { get; set; }
         public IAirportRepository Airport { get; set; }
         public IVehicleBrandsRepository VehicleBrands { get; set; }
         public IVehicleCompanyRepository VehicleCompany { get; set; }
+        public IVehicleDetailsRepository VehicleDetails{ get; set; }
 
 
 
@@ -96,7 +97,6 @@ namespace Persistence.UOW
                 using (var transaction = _dbContext.Database.BeginTransaction())
                 {
                     await _dbContext.SaveChangesAsync();
-
                     transaction.Commit();
                 }
                 return obj;

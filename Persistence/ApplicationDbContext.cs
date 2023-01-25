@@ -35,13 +35,15 @@ namespace Persistence
         public DbSet<Department> Department { get; set; }
         public DbSet<Session> Sessions { get; set; }
         public DbSet<SetIcon> SetIcons { get; set; }
-        public DbSet<VehicleSpecification> VehicleSpecifications { get; set; }
+        //public DbSet<VehicleSpecification> VehicleSpecifications { get; set; }
+       // public DbSet<VehicleDetail> VehicleDetails { get; set; }
         public DbSet<FuelCard> FuelCards { get; set; }
         public DbSet<Airport> Airports { get; set; }
         public DbSet<Driver> Drivers { get; set; }
         public DbSet<VehicleCompany> VehicleCompanies { get; set; }
         public DbSet<VehicleBrands> VehicleBrands { get; set; }
-
+        public DbSet<Set_VehicleDetails> Set_VehicleDetails { get; set; }
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
