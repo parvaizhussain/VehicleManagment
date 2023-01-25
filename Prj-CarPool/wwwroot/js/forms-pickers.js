@@ -9,7 +9,7 @@
   // --------------------------------------------------------------------
   const flatpickrDate = document.querySelector('#flatpickr-date'),
     flatpickrTime = document.querySelector('#flatpickr-time'),
-    flatpickrDateTime = document.querySelector('#flatpickr-datetime'),
+    flatpickrDateTime = document.querySelector('.flatpickr-datetime'),
     flatpickrMulti = document.querySelector('#flatpickr-multi'),
     flatpickrRange = document.querySelector('#flatpickr-range'),
     flatpickrInline = document.querySelector('#flatpickr-inline'),
@@ -49,7 +49,7 @@
     });
   }
 
-  // Range
+   //Range
   if (typeof flatpickrRange != undefined) {
     flatpickrRange.flatpickr({
       mode: 'range'
