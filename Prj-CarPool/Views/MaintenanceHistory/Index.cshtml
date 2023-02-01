@@ -1,0 +1,288 @@
+﻿@model IEnumerable<Utility.Models.MaintainaceHistory>
+@using System.Text.Json;
+@{
+    ViewData["Title"] = "Maintain History";
+    var UserData = JsonSerializer.Deserialize<Domain.ViewModels.UserViewModel>(@ViewBag.JsonUserData);
+}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@tabler/icons@latest/iconfont/tabler-icons.min.css">
+<link rel="stylesheet" href="~/assets/vendor/libs/spinkit/spinkit.css" />
+
+<link href="~/vendor/libs/toastr/toastr.css" rel="stylesheet" />
+@* ************** Content ************** *@
+<input type="hidden" id="UserData" value="@ViewBag.JsonUserData">
+<input type="hidden" id="UserDataJson" value="@ViewBag.JsonData">
+
+<input type="hidden" id="SelectedRegion" value="">
+
+
+@*Menu Items from the database*@
+
+<!-- Toast with Placements -->
+<div class="bs-toast toast toast-placement-ex m-2"
+     role="alert"
+     aria-live="assertive"
+     aria-atomic="true"
+     data-bs-delay="2000">
+    <div class="toast-header">
+        <i class="ti ti-bell ti-xs me-2"></i>
+        <div class="me-auto fw-semibold">Bootstrap</div>
+        <small class="text-muted">11 mins ago</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">Hello, world! This is a toast message.</div>
+</div>
+<!-- Toast with Placements -->
+
+<input type="text" class="form-control navigationId" hidden="hidden" />
+
+<div class="card">
+    <div class="card-header border-bottom">
+        <h5 class="card-title mb-3">Maintainace History</h5>
+
+    </div>
+
+
+    <div class="card-datatable table-responsive mytable">
+        <table class="datatables-users-mytable table border-top">
+            <thead>
+                <tr>
+                    <th hidden></th>
+                    <th>Id</th>
+                    <th>Car Number</th>
+                    <th>Invoice No</th>
+                    <th>Maintainace Location</th>
+                    <th>Amount</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+
+    <!-- Offcanvas to add new user -->
+    <div class="modal fade" tabindex="-1" id="modalAddMaintain" aria-labelledby="offcanvasAddUserLabel">
+        <!--offcanvasAddUser-->
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+        <div class="modal-header">
+            <h5 id="offcanvasAddUserLabel" class="modal-title">Add Maintainance History</h5>
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+                <div class="modal-body">
+            <form class="add-new-user pt-0" id="addNewUserForm2" onsubmit="return false">
+
+               
+                <div class="mb-3">
+
+             
+                    <span class="stred">*</span><label class="form-label">Maintenance Location</label>
+                            <input type="text" class="form-control AddMaintenanceLocation" />
+                  @*  <select id="mainlocationList" class="select2 form-select" data-allow-clear="true">
+                    </select>*@
+                    <p class="error-message">* Maintenance Location Required</p>
+                
+                </div>
+
+                <div class="mb-3 row">
+                    <div class="col">
+                        <span class="stred">*</span><label class="form-label">Maintenance Date From</label>
+                        @*<input type="text" class="form-control Addmaindatefrom flatpickr-datetime1" placeholder="YYYY-MM-DD HH:MM"  />*@
+                              <div class="input-group input-group-merge">
+                                <input type="text" class="form-control Addmaindatefrom flatpickr-datetime1" 
+                                placeholder="DD-MMM-YYYY"
+                                  aria-describedby="multicol-password2" />
+                                    <span class="input-group-text cursor-pointer" data-toggle id="multicol-password2">
+                                        <i class="ti ti-calendar"></i>
+                                    </span>
+                                </div>
+                                <p class="error-message">* Maintenance Date From Required</p>
+                              
+                                    
+                             
+                    
+                    
+                    </div>
+                 <div class="col">
+                        <span class="stred">*</span><label class="form-label">Maintenance Date to</label>
+                        <div class="input-group input-group-merge">
+                                <input type="text" class="form-control Addmaindateto flatpickr-datetime2" placeholder="DD-MMM-YYYY" aria-describedby="multicol-password1" />
+                                <span class="input-group-text cursor-pointer" data-toggle id="multicol-password1">
+                                    <i class="ti ti-calendar"></i>
+                                </span>
+                                </div>
+                        <p class="error-message">* Maintenance Date To Required</p>
+
+                     
+                       
+                    </div>
+               
+                </div>
+
+
+                <div class="mb-3">
+
+                    <span class="stred">*</span><label class="form-label">Car Number</label>
+                    <input type="text" class="form-control Addmaincarno" />
+                    <p class="error-message">* Car Number Required</p>
+                </div>
+                <div class="mb-3">
+
+                    <span class="stred">*</span><label class="form-label">Issue</label>
+                 
+                    <textarea class="form-control Addmainissue" rows="3">
+
+                    </textarea>
+                    <p class="error-message">* Issue Required</p>
+                </div>
+
+
+                <div class="mb-3">
+
+                    <span class="stred">*</span><label class="form-label">Invoice Number</label>
+                    <input type="text" class="form-control Addmaininvoiceno" />
+                    <p class="error-message">* Invoice Number Required</p>
+                </div>
+
+                <div class="mb-3">
+
+                    <span class="stred">*</span><label class="form-label">Amount</label>
+                    <input type="text" class="form-control Addmainamount" />
+                    <p class="error-message">* Amount Required</p>
+                </div>
+
+
+
+                <button type="button" class="btn btn-primary me-sm-3 me-1" onclick="SaveVC()">Submit</button>
+                <button type="reset" class="btn btn-label-secondary" id="btnCancelSave" data-bs-dismiss="modal">Cancel</button>
+            </form>
+        </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Offcanvas to Edit new Navigation -->
+    <div class="modal fade" tabindex="-1" id="modalEditMaintain" aria-labelledby="offcanvasEditNavLabel">
+        <!--offcanvasAddUser-->
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+        <div class="modal-header">
+           <h5 id="offcanvasAddUserLabel" class="modal-title">Edit Maintainace History</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form class="add-new-user pt-0" id="EditNewUserForm" onsubmit="return false">
+
+                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-6">
+                    <div class="form-group">
+
+                        <label>ID</label>
+                        <input type="text" disabled="disabled" class="form-control EditMaintainHisId" value="0" />
+                    </div>
+                </div>
+                        <div class="mb-3">
+
+
+                            <span class="stred">*</span><label class="form-label">Maintenance Location</label>
+                            <input type="text" class="form-control EditMaintenanceLocation" />
+                            @*  <select id="mainlocationList" class="select2 form-select" data-allow-clear="true">
+                            </select>*@
+                            <p class="error-message">* Maintenance Location Required</p>
+
+                        </div>
+
+                        <div class="mb-3 row">
+                            <div class="col">
+                                <span class="stred">*</span><label class="form-label">Maintenance Date From</label>
+                                <input type="text" class="form-control Editmaindatefrom flatpickr-datetime1" placeholder="YYYY-MM-DD HH:MM" />
+                                <p class="error-message">* Maintenance Date From Required</p>
+                            </div>
+                            <div class="col">
+                                <span class="stred">*</span><label class="form-label">Maintenance Date to</label>
+
+                                <input type="text" class="form-control Editmaindateto flatpickr-datetime2" placeholder="YYYY-MM-DD HH:MM" />
+                                <p class="error-message">* Maintenance Date To Required</p>
+
+
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <span class="stred">*</span><label class="form-label">Car Number</label>
+                            <input type="text" class="form-control Editmaincarno" />
+                            <p class="error-message">* Car Number Required</p>
+                        </div>
+                        <div class="mb-3">
+
+                            <span class="stred">*</span><label class="form-label">Issue</label>
+
+                            <textarea class="form-control Editmainissue" rows="3">
+
+                    </textarea>
+                            <p class="error-message">* Issue Required</p>
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <span class="stred">*</span><label class="form-label">Invoice Number</label>
+                            <input type="text" class="form-control Editmaininvoiceno" />
+                            <p class="error-message">* Invoice Number Required</p>
+                        </div>
+
+                        <div class="mb-3">
+
+                            <span class="stred">*</span><label class="form-label">Amount</label>
+                            <input type="text" class="form-control Editmainamount" />
+                            <p class="error-message">* Amount Required</p>
+                        </div>
+
+                        <button type="button" class="btn btn-primary me-sm-3 me-1" onclick="EditMH()">Edit</button>
+                <button type="reset" class="btn btn-label-secondary" id="btnCancelEdit" data-bs-dismiss="modal">Cancel</button>
+            </form>
+        </div>
+        </div>
+        </div>
+
+    </div>
+</div>
+@*<button type="button" class="btn btn-primary me-sm-3 me-1" onclick="btnShow()">Show</button>*@
+@*<div class="block-ui-btn demo-inline-spacing">
+<button type="button" class="btn btn-primary btn-page-block-custom me-sm-3 me-1">Icon</button>
+</div>*@
+
+<div class="content-backdrop fade"></div>
+
+
+<style>
+    .error-message {
+        display: none !important;
+    }
+</style>
+
+
+
+<script src="~/assets/vendor/libs/block-ui/block-ui.js"></script>
+<script src="~/js/ui-toasts.js"></script>
+<script src="~/assets/js/extended-ui-blockui.js"></script>
+<script src="~/js/projectjs/maintenancehistory.js"></script>
+@*  <script src="~/assets/js/app-user-list.js" defer></script>*@
+<script defer>
+    $(".flatpickr-datetime1").flatpickr({
+        monthSelectorType: 'static',
+        allowInput: true,
+        dateFormat: 'd-M-Y',
+          theme: "dark"
+    });
+    $(".flatpickr-datetime2").flatpickr({
+        monthSelectorType: 'static',
+        allowInput: true,
+        dateFormat: 'd-M-Y',
+        theme: "dark"
+    });
+</script>
+

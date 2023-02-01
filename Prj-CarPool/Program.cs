@@ -10,6 +10,9 @@ using Identity;
 using Identity.Models;
 using Prj_CarPool.IServices.Services;
 using Identity.Seed;
+using Domain.Entities;
+using Application.Contracts;
+using System.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -112,6 +115,27 @@ app.UseEndpoints(endpoints =>
         pattern: "{controller=Home}/{action=Index}/{id?}");
     endpoints.MapRazorPages();
 });
+
+app.MapGet("/vehicleMy", async (ApplicationDbContext appdb) => {
+
+    var starttime = DateTime.Now;
+    for (int i = 0; i < 1000000; i++)
+    {
+
+    }
+    //await appdb.SetIcons.ToListAsync();
+    var Endtime = DateTime.Now;
+    return Results.Json("startTime " + starttime.Millisecond + " || Endtime " + Endtime.Millisecond);
+});
+
+//app.MapPost("/vehicleInsert", async (VehicleBrands Obj, ApplicationDbContext appdb) => {
+//    //Obj.CreatedBy = "admin";
+//    appdb.VehicleBrands.Add(Obj);
+//    await appdb.SaveChangesAsync();
+
+//    return Results.Created($"/save/{Obj.VehicleBrandId}", Obj);
+
+//});
 
 
 app.Run();

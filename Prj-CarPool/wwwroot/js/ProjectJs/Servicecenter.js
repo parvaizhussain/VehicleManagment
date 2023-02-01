@@ -10,37 +10,26 @@
 
     for (var st = 0; st < newdatas.data.length; st++) {
 
-        var $name = newdatas.data[st].VehicleCompanyName;
-        var $output = '<i class="ti ti-car" data-icon="ti ti-car"></i>';
+        var $name = newdatas.data[st].ServiceCenterName;
+       
 
         stutbl += '<tr>';
 
-        stutbl += '<td class="visiblityhidden"></td>';
-        stutbl += '<td id="editVCID">' + newdatas.data[st].VehicleCompanyID + '</td>';
-        stutbl += '<td>';
-        stutbl += '<div id="editVCName" class="d-flex justify-content-start align-items-center user-name">';
-        stutbl += '<div class="avatar-wrapper">';
-        stutbl += '<div class="avatar avatar-sm me-3">';
+        stutbl += '<td class="visiblityhidden" hidden></td>';
+        stutbl += '<td id="editSCID">' + newdatas.data[st].ServiceCenterId + '</td>';
+        stutbl += '<td id="editSCName">' + newdatas.data[st].ServiceCenterName + '</td>';
+        stutbl += '<td id="editSCDealer">' + newdatas.data[st].VehicleCompany.VehicleCompanyName + '</td>';
+      
 
-        stutbl += $output;
-        stutbl += '</div>';
-        stutbl += '</div>';
-        stutbl += '<div class="d-flex flex-column">';
-        stutbl += '<a href="#" class="text-body text-truncate"><span class="fw-semibold">';
-        stutbl += $name;
-        stutbl += '</span></a>';
-        stutbl += '</div>';
-        stutbl += '</div>';
-        stutbl += '</td>';
-        if (newdatas.data[st].IsActive === true) {
-            stutbl += '<td id="editVCActive"><span class="badge bg-label-danger" text-capitalized>InActive</span></td>';
+        if (newdatas.data[st].DealerType === true) {
+            stutbl += '<td id="editVCActive"><span class="badge bg-label-warning" text-capitalized>Authorized Dealer</span></td>';
         }
         else {
-            stutbl += '<td id="editVCActive"><span class="badge bg-label-success" text-capitalized>Active</span></td>';
+            stutbl += '<td id="editVCActive"><span class="badge bg-label-secondary" text-capitalized>UnAuthorized Dealer</span></td>';
 
         }
         stutbl += '<td><div class="d-flex align-items-center">';
-        stutbl += '<a  onclick ="ShowEditBranch(this)" class="text-body" data-bs-toggle="offcanvas" data-bs-target="#offcanvasEditNav" ><i class="ti ti-edit ti-sm me-2"></i></a>';
+        stutbl += '<a  onclick ="ShowEditBranch(this)" class="text-body" data-bs-toggle="modal" data-bs-target="#offcanvasEditCenter" ><i class="ti ti-edit ti-sm me-2"></i></a>';
         stutbl += '<a href="/" class="text-body delete-record"><i class="ti ti-trash ti-sm mx-2"></i></a>';
         stutbl += '<a href="/" class="text-body dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm mx-1"></i></a>';
         stutbl += '<div class="dropdown-menu dropdown-menu-end m-0">';
@@ -217,121 +206,15 @@
                 ]
             },
             {
-                text: '<i class="ti ti-plus me-0 me-sm-1 ti-xs"></i><span class="d-none d-sm-inline-block">Add New Company</span>',
+                text: '<i class="ti ti-plus me-0 me-sm-1 ti-xs"></i><span class="d-none d-sm-inline-block">Add New Service Center</span>',
                 className: 'add-new btn btn-primary',
                 attr: {
-                    'data-bs-toggle': 'offcanvas',
-                    'data-bs-target': '#offcanvasAddUser'
+                    'data-bs-toggle': 'modal',
+                    'data-bs-target': '#offcanvasCenter'
                 }
             }
         ]
-        // For responsive popup
-        //responsive: {
-        //    details: {
-        //        display: $.fn.dataTable.Responsive.display.modal({
-        //            header: function (row) {
-        //                var data = row.data();
-        //                return 'Details of ' + data['full_name'];
-        //            }
-        //        }),
-        //        type: 'column',
-        //        renderer: function (api, rowIdx, columns) {
-        //            var data = $.map(columns, function (col, i) {
-        //                return col.title !== '' // ? Do not show row in modal popup if title is blank (for check box)
-        //                    ? '<tr data-dt-row="' +
-        //                    col.rowIndex +
-        //                    '" data-dt-column="' +
-        //                    col.columnIndex +
-        //                    '">' +
-        //                    '<td>' +
-        //                    col.title +
-        //                    ':' +
-        //                    '</td> ' +
-        //                    '<td>' +
-        //                    col.data +
-        //                    '</td>' +
-        //                    '</tr>'
-        //                    : '';
-        //            }).join('');
-
-        //            return data ? $('<table class="table"/><tbody />').append(data) : false;
-        //        }
-        //    }
-        //},
-        //initComplete: function () {
-        //    // Adding role filter once table initialized
-        //    this.api()
-        //        .columns(2)
-        //        .every(function () {
-        //            var column = this;
-        //            var select = $(
-        //                '<select id="UserRole" class="form-select text-capitalize"><option value=""> Select Role </option></select>'
-        //            )
-        //                .appendTo('.user_role')
-        //                .on('change', function () {
-        //                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
-        //                    column.search(val ? '^' + val + '$' : '', true, false).draw();
-        //                });
-
-        //            column
-        //                .data()
-        //                .unique()
-        //                .sort()
-        //                .each(function (d, j) {
-        //                    select.append('<option value="' + d + '">' + d + '</option>');
-        //                });
-        //        });
-        //    // Adding plan filter once table initialized
-        //    this.api()
-        //        .columns(3)
-        //        .every(function () {
-        //            var column = this;
-        //            var select = $(
-        //                '<select id="UserPlan" class="form-select text-capitalize"><option value=""> Select Plan </option></select>'
-        //            )
-        //                .appendTo('.user_plan')
-        //                .on('change', function () {
-        //                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
-        //                    column.search(val ? '^' + val + '$' : '', true, false).draw();
-        //                });
-
-        //            column
-        //                .data()
-        //                .unique()
-        //                .sort()
-        //                .each(function (d, j) {
-        //                    select.append('<option value="' + d + '">' + d + '</option>');
-        //                });
-        //        });
-        //    // Adding status filter once table initialized
-        //    //this.api()
-        //    //    .columns(5)
-        //    //    .every(function () {
-        //    //        var column = this;
-        //    //        var select = $(
-        //    //            '<select id="FilterTransaction" class="form-select text-capitalize"><option value=""> Select Status </option></select>'
-        //    //        )
-        //    //            .appendTo('.user_status')
-        //    //            .on('change', function () {
-        //    //                var val = $.fn.dataTable.util.escapeRegex($(this).val());
-        //    //                column.search(val ? '^' + val + '$' : '', true, false).draw();
-        //    //            });
-
-        //    //        column
-        //    //            .data()
-        //    //            .unique()
-        //    //            .sort()
-        //    //            .each(function (d, j) {
-        //    //                select.append(
-        //    //                    '<option value="' +
-        //    //                    statusObj[d].title +
-        //    //                    '" class="text-capitalize">' +
-        //    //                    statusObj[d].title +
-        //    //                    '</option>'
-        //    //                );
-        //    //            });
-        //    //    });
-        //},
+        
 
 
     });
@@ -354,6 +237,26 @@ $(document).ready(function () {
     });
 });
 
+var DealerLists = "";
+$.ajax({
+    type: 'GET',
+    async: false,
+    url: 'https://localhost:7112/api/VehicleCompany/all',
+    success: function (result) {
+        DealerLists += '<option value="0" style="font-weight: bold;background: #d9d5d5;">No Select</option>';
+        for (var i = 0; i < result.length; i++) {
+            DealerLists += '<option value="' + result[i].vehicleCompanyId + '">' + result[i].vehicleCompanyName + '</option>';
+        }
+        $("#DealerList").html(DealerLists);
+        $("#EditDealerList").html(DealerLists);
+
+    },
+    complete: function (result) {
+
+    },
+    error: function (err) { console.log(JSON.stringify(err)); }
+
+});
 
 
 function SaveVC() {
@@ -362,7 +265,7 @@ function SaveVC() {
     var servicename_validation = $(".Addservicenameadd").val();
     var servicecontact_validation = $(".Addservicecontactadd").val();
     var servicecontact_validation = $(".Addservicepersonadd").val();
-    var Dealerlist_validation = $(".DealerList").val();
+    var Dealerlist_validation = $("#DealerList").val();
     /**Validation**/
     $('.Addservicenameadd').on("input", function () {
         $('.Addservicenameadd').next(".error-message").hide();
@@ -407,21 +310,26 @@ function SaveVC() {
 
     /**Validation**/
 
+   
 
-    var VCObj = {
-        VehicleCompanyID: 0,
-        VehicleCompanyName: $('.VCnameadd').val(),
 
-    }
+    var SCObj = {
+        ServiceCenterId: 0,
+        ServiceCenterName: $('.Addservicenameadd').val(),
+        ContactNo: $('.Addservicecontactadd').val(),
+        ContactPersonName: $('.Addservicepersonadd').val(),
+        DealerType: true,//$('.VCnameadd').val(),
+        DealerID: $('#DealerList option:selected').val()
+       }
     $.ajax({
 
         type: 'POST',
         async: false,
-        data: { Obj: VCObj },
-        url: '/VehicleCompany/Upsert',
+        data: { Obj: SCObj },
+        url: '/ServiceCenter/Upsert',
         success: function (result) {
             if (result.datasuccess == true) {
-                Command: toastr["success"]("This Vehicle Company Succefully Saved.");
+                Command: toastr["success"]("This Service Center Succefully Saved.");
                 var mydata = result.json;// $('#UserDataJson').val();
                 var newdata = JSON.parse(mydata);
 
@@ -443,21 +351,41 @@ function SaveVC() {
 
 function ShowEditBranch(item) {
 
-    var VCId = $(item).closest("tr").find('#editVCID').text();
-    var VCName = $(item).closest("tr").find('#editVCName').text();
+    var SCId = $(item).closest("tr").find('#editSCID').text();
+    $.ajax({
+        type: 'GET',
+        async: false,
+        url: 'https://localhost:7112/api/ServiceCenter/' + SCId,
+        success: function (result) {
 
+            $('.EditserviceId').val(SCId);
+            $('.Editservicenameadd').val(result.serviceCenterName);
+            $('.Editservicecontactadd').val(result.contactNo);
+            $('.Editservicepersonadd').val(result.contactPersonName);
+            //$('#editvehicleColor').val(result.dealerType);
+            $('#EditDealerList').val(result.dealerID).trigger('change');
+          //  Editserviceaddressadd
 
-    $('.EditVCId').val(VCId.trim());
-    $('.EditVCnameadd').val(VCName.trim());
+        },
+        complete: function (result) {
+
+        },
+        error: function (err) { console.log(JSON.stringify(err)); }
+
+    });
 
 
 }
 
-function EditVC() {
+function Editservice() {
 
-    var VCEditObj = {
-        VehicleCompanyID: parseInt($('.EditVCId').val()),
-        VehicleCompanyName: $(".EditVCnameadd").val(),
+    var SCEditObj = {
+        ServiceCenterId: $('.EditserviceId').val(),
+        ServiceCenterName: $('.Editservicenameadd').val(),
+        ContactNo: $('.Editservicecontactadd').val(),
+        ContactPersonName: $('.Editservicepersonadd').val(),
+        DealerType: true,//$('.VCnameadd').val(),
+        DealerID: $('#EditDealerList option:selected').val()
 
 
     }
@@ -465,13 +393,13 @@ function EditVC() {
 
         type: 'POST',
         async: false,
-        data: { Obj: VCEditObj },
-        url: '/VehicleCompany/Upsert',
+        data: { Obj: SCEditObj },
+        url: '/ServiceCenter/Upsert',
         success: function (result) {
 
             if (result.datasuccess == true) {
 
-                Command: toastr["success"]("Vehicle Company SuccessFully Edited !");
+                Command: toastr["success"]("Service Center SuccessFully Edited !");
                 var mydata = result.json;// $('#UserDataJson').val();
                 var newdata = JSON.parse(mydata);
 
@@ -480,7 +408,7 @@ function EditVC() {
             }
             else {
 
-                Command: toastr["error"]("This Vehicle Company not Succefully Edit. \n Somthing Went Wrongs.");
+                Command: toastr["error"]("This Service Center not Succefully Edit. \n Somthing Went Wrongs.");
                 var mydata = result.json;// $('#UserDataJson').val();
                 var newdata = JSON.parse(mydata);
 

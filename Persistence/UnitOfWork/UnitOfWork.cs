@@ -34,6 +34,9 @@ namespace Persistence.UOW
             VehicleBrands = new VehicleBrandsRepository(_dbContext);
             VehicleCompany= new VehicleCompanyRepository(_dbContext);
             VehicleDetails = new VehicleDetailsRepository(_dbContext);  
+            ServiceCenter=new ServiceCenterRepository(_dbContext);  
+            MaintainaceHistory =  new MaintainaceHistoryRepository(_dbContext);
+            AccessRights = new AccessRightsRepository(_dbContext);
 
         }
         public IUserRepository User { get; set; }
@@ -50,6 +53,9 @@ namespace Persistence.UOW
         public IVehicleBrandsRepository VehicleBrands { get; set; }
         public IVehicleCompanyRepository VehicleCompany { get; set; }
         public IVehicleDetailsRepository VehicleDetails{ get; set; }
+        public IServiceCenterRepository ServiceCenter{ get; set; }
+        public IMaintainaceHistoryRepository MaintainaceHistory{ get; set; }
+        public IAccessRightsRepository AccessRights{ get; set; }
 
 
 
@@ -91,22 +97,24 @@ namespace Persistence.UOW
         }
         public async Task<object> Commit(object obj, string action, string controller)
         {
-
-            try
+            using (var transaction = _dbContext.Database.BeginTransaction())
             {
-                using (var transaction = _dbContext.Database.BeginTransaction())
+                try
                 {
+
                     await _dbContext.SaveChangesAsync();
                     transaction.Commit();
+
+
                 }
-                return obj;
-            }
-            catch (Exception ex)
-            {
+                catch (Exception ex)
+                {
 
-
-                return obj;
+                    transaction.Rollback();
+                    throw;
+                }
             }
+            return obj;
         }
         public async Task Commit()
         {

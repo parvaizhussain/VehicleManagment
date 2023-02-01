@@ -24,6 +24,9 @@ namespace Application.Contracts.IUOW
         public IVehicleBrandsRepository VehicleBrands { get; }
         public IVehicleCompanyRepository VehicleCompany { get; }
         public IVehicleDetailsRepository VehicleDetails { get; }
+        public IServiceCenterRepository ServiceCenter { get; }
+        public IMaintainaceHistoryRepository MaintainaceHistory { get; }
+        public IAccessRightsRepository AccessRights { get; }
 
 
         Task<object> Commit(object obj);

@@ -1,6 +1,5 @@
 ﻿using Application.Contracts.IUOW;
 using Application.Exceptions;
-using Application.Features.VehicleDetails.Command.Update;
 using AutoMapper;
 using MediatR;
 using System;

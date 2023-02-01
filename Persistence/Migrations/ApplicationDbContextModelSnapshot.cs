@@ -362,6 +362,59 @@ namespace Persistence.Migrations
                     b.ToTable("Group");
                 });
 
+            modelBuilder.Entity("Domain.Entities.MaintainaceHistory", b =>
+                {
+                    b.Property<int>("MaintainaceHistoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MaintainaceHistoryId"), 1L, 1);
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("CarNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("InvoiceNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Issue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("MaintainaceDateForm")
+                        .HasColumnType("date");
+
+                    b.Property<DateTime>("MaintainaceDateTo")
+                        .HasColumnType("date");
+
+                    b.Property<string>("MaintainaceLocation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("MaintainaceHistoryId");
+
+                    b.ToTable("MaintainaceHistories");
+                });
+
             modelBuilder.Entity("Domain.Entities.Network", b =>
                 {
                     b.Property<int>("NetworkId")
@@ -453,6 +506,58 @@ namespace Persistence.Migrations
                     b.HasKey("RegionId");
 
                     b.ToTable("Region");
+                });
+
+            modelBuilder.Entity("Domain.Entities.ServiceCenter", b =>
+                {
+                    b.Property<int>("ServiceCenterId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ServiceCenterId"), 1L, 1);
+
+                    b.Property<string>("ContactNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContactPersonName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DealerID")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("DealerType")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ServiceCenterName")
+                        .HasColumnType("nvarchar(max)");
+
+                    //b.Property<int?>("VehicleCompanyID")
+                    //    .HasColumnType("int");
+
+                    b.HasKey("ServiceCenterId");
+
+                    b.HasIndex("DealerID");
+
+                    b.ToTable("ServiceCenters");
                 });
 
             modelBuilder.Entity("Domain.Entities.Session", b =>
@@ -554,8 +659,8 @@ namespace Persistence.Migrations
                     b.Property<int>("VehicleBrandID")
                         .HasColumnType("int");
 
-                    //b.Property<int>("VehicleBrandsVehicleBrandId")
-                    //    .HasColumnType("int");
+                    b.Property<int>("VehicleBrandsVehicleBrandId")
+                        .HasColumnType("int");
 
                     b.Property<string>("VehicleColor")
                         .IsRequired()
@@ -588,7 +693,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("RegionID");
 
-                    b.HasIndex("VehicleBrandID");
+                    b.HasIndex("VehicleBrandsVehicleBrandId");
 
                     b.ToTable("Set_VehicleDetails");
                 });
@@ -765,6 +870,15 @@ namespace Persistence.Migrations
                     b.Navigation("City");
                 });
 
+            modelBuilder.Entity("Domain.Entities.ServiceCenter", b =>
+                {
+                    b.HasOne("Domain.Entities.VehicleCompany", "VehicleCompany")
+                        .WithMany()
+                        .HasForeignKey("DealerID");
+
+                    b.Navigation("VehicleCompany");
+                });
+
             modelBuilder.Entity("Domain.Entities.Session", b =>
                 {
                     b.HasOne("Domain.Entities.Region", "Region")
@@ -784,7 +898,7 @@ namespace Persistence.Migrations
 
                     b.HasOne("Domain.Entities.VehicleBrands", "VehicleBrands")
                         .WithMany()
-                        .HasForeignKey("VehicleBrandID")
+                        .HasForeignKey("VehicleBrandsVehicleBrandId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

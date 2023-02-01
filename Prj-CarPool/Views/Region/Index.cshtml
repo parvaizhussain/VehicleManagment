@@ -1,0 +1,186 @@
+﻿@model IEnumerable<Utility.Models.Region>
+@using System.Text.Json;
+@{
+    ViewData["Title"] = "Branch";
+    var UserData = JsonSerializer.Deserialize<Domain.ViewModels.UserViewModel>(@ViewBag.JsonUserData);
+}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@tabler/icons@latest/iconfont/tabler-icons.min.css">
+<link rel="stylesheet" href="~/assets/vendor/libs/spinkit/spinkit.css" />
+
+<link href="~/vendor/libs/toastr/toastr.css" rel="stylesheet" />
+@* ************** Content ************** *@
+<input type="hidden" id="UserData" value="@ViewBag.JsonUserData">
+<input type="hidden" id="UserDataJson" value="@ViewBag.JsonData">
+
+<input type="hidden" id="SelectedRegion" value="">
+
+
+@*Menu Items from the database*@
+
+<!-- Toast with Placements -->
+<div class="bs-toast toast toast-placement-ex m-2"
+     role="alert"
+     aria-live="assertive"
+     aria-atomic="true"
+     data-bs-delay="2000">
+    <div class="toast-header">
+        <i class="ti ti-bell ti-xs me-2"></i>
+        <div class="me-auto fw-semibold">Bootstrap</div>
+        <small class="text-muted">11 mins ago</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">Hello, world! This is a toast message.</div>
+</div>
+<!-- Toast with Placements -->
+
+<input type="text" class="form-control navigationId" hidden="hidden" />
+
+<div class="card">
+    <div class="card-header border-bottom">
+        <h5 class="card-title mb-3">Regions</h5>
+
+    </div>
+
+
+    <div class="card-datatable table-responsive mytable">
+        <table class="datatables-users-mytable table border-top">
+            <thead>
+                <tr>
+                    <th hidden="hidden"></th>
+                    <th>Id</th>
+                    <th>Region Name</th>
+                    <th>Region Code</th>
+                    <th>Normalization</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+
+    <!-- Offcanvas to add new user -->
+    <div class="modal fade" tabindex="-1" id="offcanvasAddUser" aria-labelledby="offcanvasAddUserLabel">
+        <!--offcanvasAddUser-->
+        <div class="modal-dialog modal-lg modal-simple modal-edit-user">
+            <div class="modal-content p-3 p-md-5">
+             
+                <div class="modal-body">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="text-center mb-4">
+                        <h3 class="mb-2">Add New Region</h3>
+                        @*<p class="text-muted">Updating user details will receive a privacy audit.</p>*@
+                    </div>
+                    <form class="add-new-user pt-0" id="addNewUserForm">
+
+                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-6 visiblityhidden">
+                            <div class="form-group">
+                                <label class="visiblityhidden">ID</label>
+                                <input type="text" class="form-control regionId visiblityhidden" value="0" />
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <span class="stred">*</span><label class="form-label"> Name</label>
+                            <input type="text" class="form-control regionnameadd onlyalphabetallowwithspace" />
+                            <p class="error-message">* Name Required</p>
+
+                        </div>
+
+                        <div class="mb-3">
+                            <span class="stred">*</span><label class="form-label"> Short Name</label>
+                            <input type="text" class="form-control regionshortnameadd" />
+                            <p class="error-message">* Short Name Required</p>
+                        </div>
+
+                        <div class="mb-3">
+                            <span class="stred">*</span><label class="form-label"> Region Code</label>
+                            <input type="text" class="form-control regioncodeadd" />
+                            <p class="error-message">* Region Code Required</p>
+                        </div>
+
+
+                        <button type="button" class="btn btn-primary me-sm-3 me-1" onclick="SaveRegion()">Submit</button>
+                        <button type="reset" class="btn btn-label-secondary" id="btnCancelSave" data-bs-dismiss="modal">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Offcanvas to Edit new Navigation -->
+    <div class="modal fade" tabindex="-1" id="offcanvasEditNav" aria-labelledby="offcanvasEditNavLabel">
+        <!--offcanvasAddUser-->
+        <div class="modal-dialog modal-lg modal-simple modal-edit-user">
+            <div class="modal-content p-3 p-md-5">
+                <div class="modal-body">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="text-center mb-4">
+                        <h3 class="mb-2">Edit Branch</h3>
+                        @*<p class="text-muted">Updating user details will receive a privacy audit.</p>*@
+                    </div>
+                    <form class="add-new-user pt-0" id="EditNewUserForm" onsubmit="return false">
+
+
+                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-6 visiblityhidden">
+                            <div class="form-group">
+                                <label class="visiblityhidden">ID</label>
+                                <input type="text" class="form-control EditregionId visiblityhidden" value="0" />
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <span class="stred">*</span><label class="form-label"> Name</label>
+                            <input type="text" class="form-control Editregionnameadd onlyalphabetallowwithspace" />
+                            <p class="error-message">* Name Required</p>
+
+                        </div>
+
+                        <div class="mb-3">
+                            <span class="stred">*</span><label class="form-label"> Short Name</label>
+                            <input type="text" class="form-control Editregionshortnameadd" />
+                            <p class="error-message">* Short Name Required</p>
+                        </div>
+
+                        <div class="mb-3">
+                            <span class="stred">*</span><label class="form-label"> Region Code</label>
+                            <input type="text" class="form-control Editregioncodeadd" />
+                            <p class="error-message">* Region Code Required</p>
+                        </div>
+
+
+
+                        <div class="text-center">
+                            <button type="button" class="btn btn-primary me-sm-3 me-1" onclick="EditBranch()">Edit</button>
+                            <button type="reset" class="btn btn-label-secondary" id="btnCancelEdit" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+@*<button type="button" class="btn btn-primary me-sm-3 me-1" onclick="btnShow()">Show</button>*@
+@*<div class="block-ui-btn demo-inline-spacing">
+<button type="button" class="btn btn-primary btn-page-block-custom me-sm-3 me-1">Icon</button>
+</div>*@
+
+
+<style>
+    .error-message {
+        display: none !important;
+    }
+</style>
+
+<script src="~/assets/vendor/libs/block-ui/block-ui.js"></script>
+<script src="~/js/ui-toasts.js"></script>
+<script src="~/assets/js/extended-ui-blockui.js"></script>
+<script src="~/js/projectjs/Region.js"></script>
+@*  <script src="~/assets/js/app-user-list.js" defer></script>*@
+<script defer>
+
+</script>
+

@@ -68,7 +68,7 @@ function LoadTable(newdatas) {
       
 
         stutbl += '<td><div class="d-flex align-items-center">';
-        stutbl += '<a  onclick ="ShowEditBranch(this)" class="text-body" data-bs-toggle="offcanvas" data-bs-target="#offcanvasEditNav" ><i class="ti ti-edit ti-sm me-2"></i></a>';
+        stutbl += '<a  onclick ="ShowEditBranch(this)" class="text-body" data-bs-toggle="modal" data-bs-target="#offcanvasEditNav" ><i class="ti ti-edit ti-sm me-2"></i></a>';
         stutbl += '<a href="/" class="text-body delete-record"><i class="ti ti-trash ti-sm mx-2"></i></a>';
         stutbl += '<a href="/" class="text-body dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm mx-1"></i></a>';
         stutbl += '<div class="dropdown-menu dropdown-menu-end m-0">';
@@ -251,7 +251,7 @@ function LoadTable(newdatas) {
                 text: '<i class="ti ti-plus me-0 me-sm-1 ti-xs"></i><span class="d-none d-sm-inline-block">Add New Branch</span>',
                 className: 'add-new btn btn-primary',
                 attr: {
-                    'data-bs-toggle': 'offcanvas',
+                    'data-bs-toggle': 'modal',
                     'data-bs-target': '#offcanvasAddUser'
                 }
             }
@@ -424,35 +424,26 @@ function ShowEditBranch(item) {
     // $('.editmenuName').val(navigationvisibleedit);
 
 }
-function EditNav() {
+function EditBranch() {
 
-    var navid = $('.editmenuID').val();
-    navid = parseInt(navid);
-    var val = $('.editmyselectpickerIcons option:selected').data('icon');
-    var navigationparentmenuvalidation = $(".editSnavigationparentmenu option:Selected").val();
-
-
-    var navigationObj = {
-        Id: parseInt(navid),
-        Name: $(".editmenuName").val(),
-        ControllerName: $(".editmenuController").val(),
-        ParentMenuId: navigationparentmenuvalidation,
-        DisplayOrder: parseInt($(".editmenuDisplayorder").val()),
-        Visible: true,//$('#visiblecheckbox').is(':checked'),
-        CssClass: val
-
+    var EditbranchObj = {
+        branchId: $('.EditbranchId').val(), 
+        branchName: $('.Editbranchnameadd').val(),
+        NormalizedName: $('.Editbranchshortnameadd').val().toUpperCase(),
+        branchCode: $('.Editbranchcodeadd').val(),
+        networkId: $('.Editnetworklist option:selected').val()
     }
     $.ajax({
 
         type: 'POST',
         async: false,
-        data: { viewModel: navigationObj },
-        url: '/navigation/EditNavigation',
+        data: { Obj: EditbranchObj },
+        url: '/Branch/Upsert',
         success: function (result) {
 
             if (result.datasuccess == true) {
 
-                Command: toastr["success"]("Navigation SuccessFully Edited !");
+                Command: toastr["success"]("Branch SuccessFully Edited !");
                 var mydata = result.json;// $('#UserDataJson').val();
                 var newdata = JSON.parse(mydata);
 
@@ -460,7 +451,7 @@ function EditNav() {
             }
             else {
 
-                Command: toastr["error"]("This Navigation not Succefully Edit. \n Somthing Went Wrongs.");
+                Command: toastr["error"]("This Branch not Succefully Edit. \n Somthing Went Wrongs.");
                 var mydata = result.json;// $('#UserDataJson').val();
                 var newdata = JSON.parse(mydata);
 
@@ -514,10 +505,10 @@ function SaveBranch() {
         type: 'POST',
         async: false,
         data: { Obj: branchObj },
-        url: '/branch/Upsert',
+        url: '/Branch/Upsert',
         success: function (result) {
             if (result.datasuccess == true) {
-                Command: toastr["success"]("This Role Succefully Saved.");
+                Command: toastr["success"]("This Branch Succefully Saved.");
                 var mydata = result.json;// $('#UserDataJson').val();
                 var newdata = JSON.parse(mydata);
 

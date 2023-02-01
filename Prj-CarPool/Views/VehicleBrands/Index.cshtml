@@ -46,7 +46,7 @@
         <table class="datatables-users-mytable table border-top">
             <thead>
                 <tr>
-                    <th></th>
+                    <th class="visiblityhidden"></th>
                     <th>Id</th>
                     <th>Name</th>
                     <th hidden></th>
@@ -66,46 +66,46 @@
         <!--offcanvasAddUser-->
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-        <div class="modal-header">
-            <h5 id="offcanvasAddUserLabel" class="modal-title">Add Brands</h5>
-            
+                <div class="modal-header">
+                    <h5 id="offcanvasAddUserLabel" class="modal-title">Add Brands</h5>
+
                     <button type="button"
                             class="btn-close"
                             data-bs-dismiss="modal"
                             aria-label="Close"></button>
-        </div>
-            <div class="modal-body">
-            <form class="add-new-user pt-0" id="addNewUserForm" onsubmit="return false">
-
-                @* <div class="col-lg-4 col-md-4 col-xs-12 col-sm-6 visiblityhidden">
-                <div class="form-group">
-
-                <label class="visiblityhidden">ID</label>
-                <input type="text" class="form-control branchId visiblityhidden" value="0" />
                 </div>
-                </div>*@
+                <div class="modal-body">
+                    <form class="add-new-user pt-0" id="addNewUserForm" onsubmit="return false">
 
-                <div class="mb-3">
+                        @* <div class="col-lg-4 col-md-4 col-xs-12 col-sm-6 visiblityhidden">
+                        <div class="form-group">
 
-                    <span class="stred">*</span><label class="form-label">Vehicle Brands Name</label>
-                    <input type="text" class="form-control VCnameadd onlyalphabetallowwithspace" />
-                    <p class="error-message">* Name Required</p>
-                </div>
+                        <label class="visiblityhidden">ID</label>
+                        <input type="text" class="form-control branchId visiblityhidden" value="0" />
+                        </div>
+                        </div>*@
 
-                <div class="mb-3">
+                        <div class="mb-3">
 
-                    <span class="stred">*</span><label class="form-label">Select Company</label>
-                    <select class="form-control select2 companylist"></select>
-                    <p class="error-message">* Name Required</p>
-                </div>
+                            <span class="stred">*</span><label class="form-label">Vehicle Brands Name</label>
+                            <input type="text" class="form-control VCnameadd onlyalphabetallowwithspace" />
+                            <p class="error-message">* Name Required</p>
+                        </div>
 
-                <button type="button" class="btn btn-primary me-sm-3 me-1" onclick="SaveVC()">Submit</button>
+                        <div class="mb-3">
+
+                            <span class="stred">*</span><label class="form-label">Select Company</label>
+                            <select class="form-control select2 companylist"></select>
+                            <p class="error-message">* Name Required</p>
+                        </div>
+
+                        <button type="button" class="btn btn-primary me-sm-3 me-1" onclick="SaveVC()">Submit</button>
                         <button type="reset" class="btn btn-label-secondary" id="btnCancelSave" data-bs-dismiss="modal">Cancel</button>
-            </form>
-       
-        
-        </div>
-        </div>
+                    </form>
+
+
+                </div>
+            </div>
         </div>
 
     </div>

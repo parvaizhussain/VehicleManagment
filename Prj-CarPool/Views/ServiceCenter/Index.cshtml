@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Utility.Models.VehicleCompany>
+﻿@model IEnumerable<Utility.Models.ServiceCenter>
 @using System.Text.Json;
 @{
     ViewData["Title"] = "Vehicle Company";
@@ -37,7 +37,7 @@
 
 <div class="card">
     <div class="card-header border-bottom">
-        <h5 class="card-title mb-3">Vehicle Comapany</h5>
+        <h5 class="card-title mb-3">Service Center</h5>
 
     </div>
 
@@ -46,10 +46,11 @@
         <table class="datatables-users-mytable table border-top">
             <thead>
                 <tr>
-                    <th></th>
+                    <th hidden></th>
                     <th>Id</th>
-                    <th>Name</th>
-                    <th>Status</th>
+                    <th>Service Center Name</th>
+                    <th>Dealer</th>
+                    <th>Dealer Type</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -58,26 +59,24 @@
     </div>
 
 
+
+
+   
+
+
+
+
     <!-- Offcanvas to add new user -->
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddUser" aria-labelledby="offcanvasAddUserLabel">
+    <div class="modal fade" tabindex="-1" id="offcanvasCenter" aria-labelledby="modalAddServCent">
         <!--offcanvasAddUser-->
-
-        <div class="offcanvas-header">
-            <h5 id="offcanvasAddUserLabel" class="offcanvas-title">Add Company</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+          <h5 id="modalAddServCent" class="modal-title">Add Service Center</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="offcanvas-body mx-0 flex-grow-0 pt-0 h-100">
-            <form class="add-new-user pt-0" id="addNewUserForm" onsubmit="return false">
-
-                @* <div class="col-lg-4 col-md-4 col-xs-12 col-sm-6 visiblityhidden">
-                <div class="form-group">
-
-                <label class="visiblityhidden">ID</label>
-                <input type="text" class="form-control branchId visiblityhidden" value="0" />
-                </div>
-                </div>*@
-
-              
+                <div class="modal-body">
+            <form class="add-new-user pt-0" id="addNewUserForm1" onsubmit="return false">
 
                 <div class="mb-3">
 
@@ -135,28 +134,35 @@
 
 
                 <button type="button" class="btn btn-primary me-sm-3 me-1" onclick="SaveVC()">Submit</button>
-                <button type="reset" class="btn btn-label-secondary" id="btnCancelSave" data-bs-dismiss="offcanvas">Cancel</button>
+                <button type="reset" class="btn btn-label-secondary" id="btnCancelSave" data-bs-dismiss="modal">Cancel</button>
             </form>
         </div>
-
+        </div>
+        </div>
     </div>
 
-    <!-- Offcanvas to Edit new Navigation -->
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasEditNav" aria-labelledby="offcanvasEditNavLabel">
-        <!--offcanvasAddUser-->
 
-        <div class="offcanvas-header">
-            <h5 id="offcanvasAddUserLabel" class="offcanvas-title">Edit Vehicile Company</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+
+
+
+
+    <!-- Offcanvas to Edit new Navigation -->
+    <div class="modal fade" tabindex="-1" id="offcanvasEditCenter" aria-labelledby="offcanvasEditCenter">
+        <!--offcanvasAddUser-->
+         <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+                    <h5 id="offcanvasEditCenter" class="offcanvas-title">Edit Service Center</h5>
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="offcanvas-body mx-0 flex-grow-0 pt-0 h-100">
+        <div class="modal-body">
             <form class="add-new-user pt-0" id="EditNewUserForm" onsubmit="return false">
 
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-6 visiblityhidden">
+                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-6">
                     <div class="form-group">
 
-                        <label class="visiblityhidden">ID</label>
-                        <input type="text" class="form-control EditserviceId visiblityhidden" value="0" />
+                        <label>ID</label>
+                        <input disabled="disabled" type="text" class="form-control EditserviceId" value="0" />
                     </div>
                 </div>
 
@@ -187,21 +193,49 @@
                     <input type="text" class="form-control Editserviceaddressadd" />
 
                 </div>
+                        <div class="mb-3">
+                            <span class="stred">*</span><label class="form-label"> Dealer Type</label>
+                            <div class="form-check">
+                                <input name="flexRadioDefault" class="form-check-input isdealer" type="radio" value="" id="authorizeddealer" value="Authorized" checked>
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Authorized Dealer
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input isdealer" type="radio" name="flexRadioDefault" id="unauthorizeddealer" value="Unauthorized">
+                                <label class="form-check-label" for="flexRadioDefault2">
+                                    Unauthorized Dealer
+                                </label>
+                            </div>
+
+                            <p class="error-message">* Dealer Type Required</p>
+                        </div>
+
+                        <div class="mb-3 isdealerauth">
+                            <span class="stred">*</span><label class="form-label">Dealer</label>
+                            <select id="EditDealerList" class="select2 form-select" data-allow-clear="true">
+                            </select>
+                        </div>
 
                 <button type="button" class="btn btn-primary me-sm-3 me-1" onclick="Editservice()">Edit</button>
-                <button type="reset" class="btn btn-label-secondary" id="btnCancelEdit" data-bs-dismiss="offcanvas">Cancel</button>
+                <button type="reset" class="btn btn-label-secondary" id="btnCancelEdit" data-bs-dismiss="modal">Cancel</button>
             </form>
+        </div>
+        </div>
         </div>
 
     </div>
 </div>
-@*<button type="button" class="btn btn-primary me-sm-3 me-1" onclick="btnShow()">Show</button>*@
-@*<div class="block-ui-btn demo-inline-spacing">
-<button type="button" class="btn btn-primary btn-page-block-custom me-sm-3 me-1">Icon</button>
-</div>*@
 
 
+<div class="content-backdrop fade"></div>
 
+
+<style>
+    .error-message {
+        display: none !important;
+    }
+</style>
 
 <script src="~/assets/vendor/libs/block-ui/block-ui.js"></script>
 <script src="~/js/ui-toasts.js"></script>

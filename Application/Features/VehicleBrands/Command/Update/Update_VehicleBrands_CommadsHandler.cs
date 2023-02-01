@@ -34,9 +34,9 @@ namespace Application.Features.VehicleBrands.Command.Update
 
             var validator = new Update_VehicleBrands_CommadsValidators();
             var validationResult = await validator.ValidateAsync(request);
-
+           
             if (validationResult.Errors.Count > 0)
-                throw new ValidationException(validationResult);
+                throw new  ValidationException(validationResult);
 
             _mapper.Map(request, VehicleBrandToUpdate, typeof(Update_VehicleBrands_Commads), typeof(Domain.Entities.VehicleBrands));
 

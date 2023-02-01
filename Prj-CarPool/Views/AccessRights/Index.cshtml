@@ -1,0 +1,674 @@
+﻿@model IEnumerable<Utility.Models.AccessRight>
+@using System.Text.Json;
+@{
+    ViewData["Title"] = "Access Rights";
+    var UserData = JsonSerializer.Deserialize<Domain.ViewModels.UserViewModel>(@ViewBag.JsonUserData);
+}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@tabler/icons@latest/iconfont/tabler-icons.min.css">
+<link rel="stylesheet" href="~/assets/vendor/libs/spinkit/spinkit.css" />
+
+<link href="~/vendor/libs/toastr/toastr.css" rel="stylesheet" />
+@* ************** Content ************** *@
+<input type="hidden" id="UserData" value="@ViewBag.JsonUserData">
+<input type="hidden" id="UserDataJson" value="@ViewBag.JsonData">
+
+<input type="hidden" id="SelectedRegion" value="">
+
+
+@*Menu Items from the database*@
+
+<!-- Toast with Placements -->
+<div class="bs-toast toast toast-placement-ex m-2"
+     role="alert"
+     aria-live="assertive"
+     aria-atomic="true"
+     data-bs-delay="2000">
+    <div class="toast-header">
+        <i class="ti ti-bell ti-xs me-2"></i>
+        <div class="me-auto fw-semibold">Bootstrap</div>
+        <small class="text-muted">11 mins ago</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">Hello, world! This is a toast message.</div>
+</div>
+<!-- Toast with Placements -->
+
+<input type="text" class="form-control navigationId" hidden="hidden" />
+
+<div class="card">
+    <div class="card-header border-bottom">
+        <h5 class="card-title mb-3">Branches</h5>
+
+    </div>
+
+
+    <div class="card-datatable table-responsive mytable">
+        <table class="datatables-users-mytable table border-top">
+            <thead>
+                <tr>
+                    <th hidden="hidden"></th>
+                    <th>Id</th>
+                    <th>Access Name</th>
+                    <th>View</th>
+                    <th>Create</th>
+                    <th>Edit</th>
+                    <th>Email</th>
+                    <th>Download</th>
+                    <th>Approve</th>
+                    <th>Print</th>
+                    <th>Scan</th>
+                    <th>Visible</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+
+    <!-- Offcanvas to add new user -->
+    <div class="modal fade" tabindex="-1" id="offcanvasAddUser" aria-labelledby="offcanvasAddUserLabel">
+        <!--offcanvasAddUser-->
+        <div class="modal-dialog modal-lg modal-simple modal-edit-user">
+            <div class="modal-content p-3 p-md-5">
+               
+                <div class="modal-body">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="text-center mb-4">
+                        <h3 class="mb-2">Add New Access Rights</h3>
+                        @*<p class="text-muted">Updating user details will receive a privacy audit.</p>*@
+                    </div>
+                    <!-- Add role form -->
+                    <form id="addRoleForm" class="row g-3" onsubmit="return false">
+                        <div class="col-6 mb-4">
+                            <label class="form-label" for="addAccessName">Access Name</label>
+                            <input type="text"
+                                   id="addAccessName"
+                                   name="addAccessName"
+                                   class="form-control"
+                                   placeholder="Enter a Access Name"
+                                   tabindex="-1" />
+                        </div>
+                        <div class="col-6 mb-4">
+                            <label class="form-label" for="addShortName">Short Name</label>
+                            <input type="text"
+                                   id="addShortName"
+                                   name="addShortName"
+                                   class="form-control"
+                                   placeholder="Enter a Short Name"
+                                   tabindex="-1" />
+                        </div>
+
+                        <div class="col-12">
+                            <h5>Rights</h5>
+                            <!-- Permission table -->
+                            <div class="table-responsive">
+                                <table class="table table-flush-spacing">
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-nowrap fw-semibold">
+                                                Administrator Access
+                                                <i class="ti ti-info-circle"
+                                                   data-bs-toggle="tooltip"
+                                                   data-bs-placement="top"
+                                                   title="Allows a full access to the system"></i>
+                                            </td>
+                                            <td>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" onchange="SelectAll()" id="selectAllChk" />
+                                                    <label class="form-check-label" for="selectAllChk"> Select All </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-nowrap fw-semibold">View</td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <label class="switch switch-success chk">
+                                                        <input type="checkbox" id="chkView" onchange="textChange(this)" class="switch-input" />
+                                                        <span class="switch-toggle-slider">
+                                                            <span class="switch-on">
+                                                                <i class="ti ti-check"></i>
+                                                            </span>
+                                                            <span class="switch-off" style="background:#ea5455;color:#fff">
+                                                                <i class="ti ti-x"></i>
+                                                            </span>
+                                                        </span>
+                                                        <span class="switch-label textchk">InActive</span>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-nowrap fw-semibold">Create</td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <label class="switch switch-success chk">
+                                                        <input type="checkbox" id="chkCreate" onchange="textChange(this)" class="switch-input" />
+                                                        <span class="switch-toggle-slider">
+                                                            <span class="switch-on">
+                                                                <i class="ti ti-check"></i>
+                                                            </span>
+                                                            <span class="switch-off" style="background:#ea5455;color:#fff">
+                                                                <i class="ti ti-x"></i>
+                                                            </span>
+                                                        </span>
+                                                        <span class="switch-label textchk">InActive</span>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-nowrap fw-semibold">Edit</td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <label class="switch switch-success chk">
+                                                        <input type="checkbox" id="chkEdit" onchange="textChange(this)" class="switch-input" />
+                                                        <span class="switch-toggle-slider">
+                                                            <span class="switch-on">
+                                                                <i class="ti ti-check"></i>
+                                                            </span>
+                                                            <span class="switch-off" style="background:#ea5455;color:#fff">
+                                                                <i class="ti ti-x"></i>
+                                                            </span>
+                                                        </span>
+                                                        <span class="switch-label textchk" >InActive</span>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-nowrap fw-semibold">Email</td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <label class="switch switch-success chk">
+                                                        <input type="checkbox" id="chkEmail" onchange="textChange(this)" class="switch-input" />
+                                                        <span class="switch-toggle-slider">
+                                                            <span class="switch-on">
+                                                                <i class="ti ti-check"></i>
+                                                            </span>
+                                                            <span class="switch-off" style="background:#ea5455;color:#fff">
+                                                                <i class="ti ti-x"></i>
+                                                            </span>
+                                                        </span>
+                                                        <span class="switch-label textchk">InActive</span>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-nowrap fw-semibold">Download</td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <label class="switch switch-success chk">
+                                                        <input type="checkbox" id="chkDownload" onchange="textChange(this)" class="switch-input" />
+                                                        <span class="switch-toggle-slider">
+                                                            <span class="switch-on">
+                                                                <i class="ti ti-check"></i>
+                                                            </span>
+                                                            <span class="switch-off" style="background:#ea5455;color:#fff">
+                                                                <i class="ti ti-x"></i>
+                                                            </span>
+                                                        </span>
+                                                        <span class="switch-label textchk">InActive</span>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-nowrap fw-semibold">Approve</td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <label class="switch switch-success chk">
+                                                        <input type="checkbox" id="chkApprove" onchange="textChange(this)" class="switch-input" />
+                                                        <span class="switch-toggle-slider">
+                                                            <span class="switch-on">
+                                                                <i class="ti ti-check"></i>
+                                                            </span>
+                                                            <span class="switch-off" style="background:#ea5455;color:#fff">
+                                                                <i class="ti ti-x"></i>
+                                                            </span>
+                                                        </span>
+                                                        <span class="switch-label textchk">InActive</span>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-nowrap fw-semibold">Print</td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <label class="switch switch-success chk">
+                                                        <input type="checkbox" id="chkPrint" onchange="textChange(this)" class="switch-input" />
+                                                        <span class="switch-toggle-slider">
+                                                            <span class="switch-on">
+                                                                <i class="ti ti-check"></i>
+                                                            </span>
+                                                            <span class="switch-off" style="background:#ea5455;color:#fff">
+                                                                <i class="ti ti-x"></i>
+                                                            </span>
+                                                        </span>
+                                                        <span class="switch-label textchk">InActive</span>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-nowrap fw-semibold">Scan</td>
+                                            <td>
+                                                <div class="d-flex">
+                                                   <label class="switch switch-success chk">
+                                                        <input type="checkbox" id="chkScan" onchange="textChange(this)" class="switch-input" />
+                                                        <span class="switch-toggle-slider">
+                                                            <span class="switch-on">
+                                                                <i class="ti ti-check"></i>
+                                                            </span>
+                                                            <span class="switch-off" style="background:#ea5455;color:#fff">
+                                                                <i class="ti ti-x"></i>
+                                                            </span>
+                                                        </span>
+                                                        <span class="switch-label textchk">InActive</span>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                       
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- Permission table -->
+                        </div>
+                        <div class="col-12 text-center mt-4">
+                            <button type="button" class="btn btn-primary me-sm-3 me-1" onclick="SaveRights()">Save</button>
+                            <button type="reset"
+                                    class="btn btn-label-secondary"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                    id="btnCancelSave">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                    <!--/ Add role form -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Offcanvas to Edit new Navigation -->
+    <div class="modal fade" tabindex="-1" id="offcanvasEditNav" aria-labelledby="offcanvasEditNavLabel">
+        <!--offcanvasAddUser-->
+        <div class="modal-dialog modal-lg modal-simple modal-edit-user">
+            <div class="modal-content p-3 p-md-5">
+                <div class="modal-body">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="text-center mb-4">
+                        <h3 class="mb-2">Edit Access Rights</h3>
+                        @*<p class="text-muted">Updating user details will receive a privacy audit.</p>*@
+                    </div>
+                    <!-- Add role form -->
+                    <form id="addRoleForm" class="row g-3" onsubmit="return false">
+                        
+                            <input type="text"
+                                   id="editID"
+                                   name="editID"
+                                   class="form-control"
+                                   hidden="hidden"
+                                   tabindex="-1" />
+                        <div class="col-6 mb-4">
+                            <label class="form-label" for="editAccessName">Access Name</label>
+                            <input type="text"
+                                   id="editAccessName"
+                                   name="editAccessName"
+                                   class="form-control"
+                                   placeholder="Enter a Access Name"
+                                   tabindex="-1" />
+                        </div>
+                        <div class="col-6 mb-4">
+                            <label class="form-label" for="editShortName">Short Name</label>
+                            <input type="text"
+                                   id="editShortName"
+                                   name="editShortName"
+                                   class="form-control"
+                                   placeholder="Enter a Short Name"
+                                   tabindex="-1" />
+                        </div>
+
+                        <div class="col-12">
+                            <h5>Rights</h5>
+                            <!-- Permission table -->
+                            <div class="table-responsive">
+                                <table class="table table-flush-spacing">
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-nowrap fw-semibold">
+                                                Administrator Access
+                                                <i class="ti ti-info-circle"
+                                                   data-bs-toggle="tooltip"
+                                                   data-bs-placement="top"
+                                                   title="Allows a full access to the system"></i>
+                                            </td>
+                                            <td>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" onchange="SelectAllEdit()" id="selectAllChkedit" />
+                                                    <label class="form-check-label" for="selectAllChk"> Select All </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-nowrap fw-semibold">View</td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <label class="switch switch-success chk">
+                                                        <input type="checkbox" id="chkViewEdit" onchange="textChange(this)" class="switch-input" />
+                                                        <span class="switch-toggle-slider">
+                                                            <span class="switch-on">
+                                                                <i class="ti ti-check"></i>
+                                                            </span>
+                                                            <span class="switch-off" style="background:#ea5455;color:#fff">
+                                                                <i class="ti ti-x"></i>
+                                                            </span>
+                                                        </span>
+                                                        <span class="switch-label textchk">InActive</span>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-nowrap fw-semibold">Create</td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <label class="switch switch-success chk">
+                                                        <input type="checkbox" id="chkCreateEdit" onchange="textChange(this)" class="switch-input" />
+                                                        <span class="switch-toggle-slider">
+                                                            <span class="switch-on">
+                                                                <i class="ti ti-check"></i>
+                                                            </span>
+                                                            <span class="switch-off" style="background:#ea5455;color:#fff">
+                                                                <i class="ti ti-x"></i>
+                                                            </span>
+                                                        </span>
+                                                        <span class="switch-label textchk">InActive</span>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-nowrap fw-semibold">Edit</td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <label class="switch switch-success chk">
+                                                        <input type="checkbox" id="chkEditEdit" onchange="textChange(this)" class="switch-input" />
+                                                        <span class="switch-toggle-slider">
+                                                            <span class="switch-on">
+                                                                <i class="ti ti-check"></i>
+                                                            </span>
+                                                            <span class="switch-off" style="background:#ea5455;color:#fff">
+                                                                <i class="ti ti-x"></i>
+                                                            </span>
+                                                        </span>
+                                                        <span class="switch-label textchk">InActive</span>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-nowrap fw-semibold">Email</td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <label class="switch switch-success chk">
+                                                        <input type="checkbox" id="chkEmailEdit" onchange="textChange(this)" class="switch-input" />
+                                                        <span class="switch-toggle-slider">
+                                                            <span class="switch-on">
+                                                                <i class="ti ti-check"></i>
+                                                            </span>
+                                                            <span class="switch-off" style="background:#ea5455;color:#fff">
+                                                                <i class="ti ti-x"></i>
+                                                            </span>
+                                                        </span>
+                                                        <span class="switch-label textchk">InActive</span>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-nowrap fw-semibold">Download</td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <label class="switch switch-success chk">
+                                                        <input type="checkbox" id="chkDownloadEdit" onchange="textChange(this)" class="switch-input" />
+                                                        <span class="switch-toggle-slider">
+                                                            <span class="switch-on">
+                                                                <i class="ti ti-check"></i>
+                                                            </span>
+                                                            <span class="switch-off" style="background:#ea5455;color:#fff">
+                                                                <i class="ti ti-x"></i>
+                                                            </span>
+                                                        </span>
+                                                        <span class="switch-label textchk">InActive</span>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-nowrap fw-semibold">Approve</td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <label class="switch switch-success chk">
+                                                        <input type="checkbox" id="chkApproveEdit" onchange="textChange(this)" class="switch-input" />
+                                                        <span class="switch-toggle-slider">
+                                                            <span class="switch-on">
+                                                                <i class="ti ti-check"></i>
+                                                            </span>
+                                                            <span class="switch-off" style="background:#ea5455;color:#fff">
+                                                                <i class="ti ti-x"></i>
+                                                            </span>
+                                                        </span>
+                                                        <span class="switch-label textchk">InActive</span>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-nowrap fw-semibold">Print</td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <label class="switch switch-success chk">
+                                                        <input type="checkbox" id="chkPrintEdit" onchange="textChange(this)" class="switch-input" />
+                                                        <span class="switch-toggle-slider">
+                                                            <span class="switch-on">
+                                                                <i class="ti ti-check"></i>
+                                                            </span>
+                                                            <span class="switch-off" style="background:#ea5455;color:#fff">
+                                                                <i class="ti ti-x"></i>
+                                                            </span>
+                                                        </span>
+                                                        <span class="switch-label textchk">InActive</span>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-nowrap fw-semibold">Scan</td>
+                                            <td>
+                                                <div class="d-flex">
+                                                    <label class="switch switch-success chk">
+                                                        <input type="checkbox" id="chkScanEdit" onchange="textChange(this)" class="switch-input" />
+                                                        <span class="switch-toggle-slider">
+                                                            <span class="switch-on">
+                                                                <i class="ti ti-check"></i>
+                                                            </span>
+                                                            <span class="switch-off" style="background:#ea5455;color:#fff">
+                                                                <i class="ti ti-x"></i>
+                                                            </span>
+                                                        </span>
+                                                        <span class="switch-label textchk">InActive</span>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- Permission table -->
+                        </div>
+                        <div class="col-12 text-center mt-4">
+                            <button type="button" class="btn btn-primary me-sm-3 me-1" onclick="EditRights()">Save</button>
+                            <button type="reset"
+                                    class="btn btn-label-secondary"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                    id="btnCancelEdit">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                    <!--/ Add role form -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+@*<button type="button" class="btn btn-primary me-sm-3 me-1" onclick="btnShow()">Show</button>*@
+@*<div class="block-ui-btn demo-inline-spacing">
+<button type="button" class="btn btn-primary btn-page-block-custom me-sm-3 me-1">Icon</button>
+</div>*@
+
+<style>
+    .error-message {
+        display: none !important;
+    }
+</style>
+
+<script>
+
+    function textChange(item) {
+        if ($(item).is(':checked')) {
+            $(item).closest('.chk').children('.textchk').text("Active");
+        }
+        else{
+            $(item).closest('.chk').children('.textchk').text("InActive");
+        }
+
+    }
+
+    //function textchange(){
+
+        
+
+    //    if ($('#chkEdit').is(':checked')) {
+    //        $('#textchkEdit').text("Active");
+    //    }
+    //    else {
+    //        $('#textchkEdit').text("InActive");
+    //    }
+        
+    //    if ($('#chkCreate').is(':checked')) {
+    //        $('#textchkCreate').text("Active");
+    //    }
+    //    else {
+    //        $('#textchkCreate').text("InActive");
+    //    }
+
+    //    if ($('#chkEmail').is(':checked')) {
+    //        $('#textchkEmail').text("Active");
+    //    }
+    //    else {
+    //        $('#textchkEmail').text("InActive");
+    //    }
+
+    //    if ($('#chkDownload').is(':checked')) {
+    //        $('#textchkDownload').text("Active");
+    //    }
+    //    else {
+    //        $('#textchkDownload').text("InActive");
+    //    }
+
+    //    if ($('#chkApprove').is(':checked')) {
+    //        $('#textchkApprove').text("Active");
+    //    }
+    //    else {
+    //        $('#textchkApprove').text("InActive");
+    //    }
+
+    //    if ($('#chkPrint').is(':checked')) {
+    //        $('#textchkPrint').text("Active");
+    //    }
+    //    else {
+    //        $('#textchkPrint').text("InActive");
+    //    }
+    //    if ($('#chkScan').is(':checked')) {
+    //        $('#textchkScan').text("Active");
+    //    }
+    //    else {
+    //        $('#textchkScan').text("InActive");
+    //    }
+    //}
+    
+    function SelectAllEdit() {
+
+
+
+        if ($('#selectAllChkedit').is(':checked')) {
+            $("#chkViewEdit").prop("checked", true).trigger('change');
+            $("#chkCreateEdit").prop("checked", true).trigger('change');
+            $("#chkEditEdit").prop("checked", true).trigger('change');
+            $("#chkEmailEdit").prop("checked", true).trigger('change');
+            $("#chkDownloadEdit").prop("checked", true).trigger('change');
+            $("#chkApproveEdit").prop("checked", true).trigger('change');
+            $("#chkPrintEdit").prop("checked", true).trigger('change');
+            $("#chkScanEdit").prop("checked", true).trigger('change');
+        }
+        else {
+            $("#chkViewEdit").prop("checked", false).trigger('change');
+            $("#chkCreateEdit").prop("checked", false).trigger('change');
+            $("#chkEditEdit").prop("checked", false).trigger('change');
+            $("#chkEmailEdit").prop("checked", false).trigger('change');
+            $("#chkDownloadEdit").prop("checked", false).trigger('change');
+            $("#chkApproveEdit").prop("checked", false).trigger('change');
+            $("#chkPrintEdit").prop("checked", false).trigger('change');
+            $("#chkScanEdit").prop("checked", false).trigger('change');
+        }
+        //$('#chkView').prop('checked').onChange();
+    }
+    function SelectAll(){
+
+
+
+        if ($('#selectAllChk').is(':checked')) {
+              $("#chkView").prop("checked", true).trigger('change');
+            $("#chkCreate").prop("checked", true).trigger('change');
+            $("#chkEdit").prop("checked", true).trigger('change');
+            $("#chkEmail").prop("checked", true).trigger('change');
+              $("#chkDownload").prop("checked", true).trigger('change');
+              $("#chkApprove").prop("checked", true).trigger('change');
+              $("#chkPrint").prop("checked", true).trigger('change');
+            $("#chkScan").prop("checked", true).trigger('change');
+             }
+        else{
+            $("#chkView").prop("checked", false).trigger('change');
+            $("#chkCreate").prop("checked", false).trigger('change');
+            $("#chkEdit").prop("checked", false).trigger('change');
+            $("#chkEmail").prop("checked", false).trigger('change');
+              $("#chkDownload").prop("checked", false).trigger('change');
+              $("#chkApprove").prop("checked", false).trigger('change');
+              $("#chkPrint").prop("checked", false).trigger('change');
+            $("#chkScan").prop("checked", false).trigger('change');
+        }
+        //$('#chkView').prop('checked').onChange();
+    }
+    
+</script>
+
+<script src="~/assets/vendor/libs/block-ui/block-ui.js"></script>
+<script src="~/js/ui-toasts.js"></script>
+<script src="~/assets/js/extended-ui-blockui.js"></script>
+<script src="~/js/projectjs/AccessRight.js"></script>
+@*  <script src="~/assets/js/app-user-list.js" defer></script>*@
+<script defer>
+
+</script>
+

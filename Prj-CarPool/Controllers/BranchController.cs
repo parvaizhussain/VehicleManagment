@@ -48,7 +48,10 @@ namespace Prj_CarPool.Controllers
                 else
                 {
                     var deptobj = await _BranchRepository.UpdateAsync(Extensions.SharedBag.BranchUpsert, Obj, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
-                    return Json(new { data = deptobj });
+                    var datajson = await _BranchRepository.GetAllAsync(Extensions.SharedBag.Branchlist, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
+
+                    string jsondata = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = datajson.OrderByDescending(x => x.BranchId) });
+                    return Json(new { datasuccess = true, json = jsondata });
 
                 }
             }

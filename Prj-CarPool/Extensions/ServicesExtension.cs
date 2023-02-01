@@ -23,6 +23,10 @@ namespace Prj_CarPool.Extensions
             services.AddSingleton<IVehicleCompanyRepository, VehicleCompanyRepository>();
             services.AddSingleton<IVehicleBrandRepository,VehicleBrandRepository>();
             services.AddSingleton<IVehicleDetailsRepository,VehicleDetailsRepository>();
+            services.AddSingleton<IServiceCenterRepository,ServiceCenterRepository>();
+            services.AddSingleton<IMaintainanceHistoryRepository,MaintainanceHistoryRepository>();
+            services.AddSingleton<IRegionRepository,RegionRepository>();
+            services.AddSingleton<IAccessRightsRepository,AccessRightsRepository>();
 
             return services;
         }

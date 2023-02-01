@@ -1,4 +1,21 @@
-﻿function LoadTable(newdatas) {
+﻿function formatdatewithMonth(itemdate) {
+    if (itemdate == "0001-01-01T00:00:00") {
+        return "-";
+    }
+    else {
+        let monthNames = ["Jan", "Feb", "Mar", "Apr",
+            "May", "Jun", "Jul", "Aug",
+            "Sep", "Oct", "Nov", "Dec"];
+        var date = new Date(itemdate);
+        //day = ("0" + (date.getDate())).slice(-2)
+        day = date.getDate();
+        month = monthNames[date.getMonth()];
+        year = date.getFullYear();
+        return day + "-" + month + "-" + year;
+    }
+}
+
+function LoadTable(newdatas) {
     console.log(newdatas);
     var stutbl = '';
     $(".datatables-users-mytable tbody").html('');
@@ -10,37 +27,26 @@
 
     for (var st = 0; st < newdatas.data.length; st++) {
 
-        var $name = newdatas.data[st].VehicleCompanyName;
-        var $output = '<i class="ti ti-car" data-icon="ti ti-car"></i>';
+       
 
         stutbl += '<tr>';
 
-        stutbl += '<td class="visiblityhidden"></td>';
-        stutbl += '<td id="editVCID">' + newdatas.data[st].VehicleCompanyID + '</td>';
-        stutbl += '<td>';
-        stutbl += '<div id="editVCName" class="d-flex justify-content-start align-items-center user-name">';
-        stutbl += '<div class="avatar-wrapper">';
-        stutbl += '<div class="avatar avatar-sm me-3">';
+        stutbl += '<td class="visiblityhidden" hidden></td>';
+        stutbl += '<td id="editMHID">' + newdatas.data[st].MaintainaceHistoryId + '</td>';
+        stutbl += '<td>' + newdatas.data[st].CarNumber + '</td>';
+        stutbl += '<td>' + newdatas.data[st].InvoiceNo + '</td>';
+        stutbl += '<td>' + newdatas.data[st].MaintainaceLocation + '</td>';
+        stutbl += '<td>' + newdatas.data[st].Amount + '</td>';
+       
+        //if (newdatas.data[st].IsActive === true) {
+        //    stutbl += '<td id="editVCActive"><span class="badge bg-label-danger" text-capitalized>InActive</span></td>';
+        //}
+        //else {
+        //    stutbl += '<td id="editVCActive"><span class="badge bg-label-success" text-capitalized>Active</span></td>';
 
-        stutbl += $output;
-        stutbl += '</div>';
-        stutbl += '</div>';
-        stutbl += '<div class="d-flex flex-column">';
-        stutbl += '<a href="#" class="text-body text-truncate"><span class="fw-semibold">';
-        stutbl += $name;
-        stutbl += '</span></a>';
-        stutbl += '</div>';
-        stutbl += '</div>';
-        stutbl += '</td>';
-        if (newdatas.data[st].IsActive === true) {
-            stutbl += '<td id="editVCActive"><span class="badge bg-label-danger" text-capitalized>InActive</span></td>';
-        }
-        else {
-            stutbl += '<td id="editVCActive"><span class="badge bg-label-success" text-capitalized>Active</span></td>';
-
-        }
+        //}
         stutbl += '<td><div class="d-flex align-items-center">';
-        stutbl += '<a  onclick ="ShowEditBranch(this)" class="text-body" data-bs-toggle="offcanvas" data-bs-target="#offcanvasEditNav" ><i class="ti ti-edit ti-sm me-2"></i></a>';
+        stutbl += '<a  onclick ="ShowEditBranch(this)" class="text-body" data-bs-toggle="modal" data-bs-target="#modalEditMaintain" ><i class="ti ti-edit ti-sm me-2"></i></a>';
         stutbl += '<a href="/" class="text-body delete-record"><i class="ti ti-trash ti-sm mx-2"></i></a>';
         stutbl += '<a href="/" class="text-body dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm mx-1"></i></a>';
         stutbl += '<div class="dropdown-menu dropdown-menu-end m-0">';
@@ -217,122 +223,15 @@
                 ]
             },
             {
-                text: '<i class="ti ti-plus me-0 me-sm-1 ti-xs"></i><span class="d-none d-sm-inline-block">Add New Company</span>',
+                text: '<i class="ti ti-plus me-0 me-sm-1 ti-xs"></i><span class="d-none d-sm-inline-block">Add New Maintainace History</span>',
                 className: 'add-new btn btn-primary',
                 attr: {
-                    'data-bs-toggle': 'offcanvas',
-                    'data-bs-target': '#offcanvasAddUser'
+                    'data-bs-toggle': 'modal',
+                    'data-bs-target': '#modalAddMaintain'
                 }
             }
         ]
-        // For responsive popup
-        //responsive: {
-        //    details: {
-        //        display: $.fn.dataTable.Responsive.display.modal({
-        //            header: function (row) {
-        //                var data = row.data();
-        //                return 'Details of ' + data['full_name'];
-        //            }
-        //        }),
-        //        type: 'column',
-        //        renderer: function (api, rowIdx, columns) {
-        //            var data = $.map(columns, function (col, i) {
-        //                return col.title !== '' // ? Do not show row in modal popup if title is blank (for check box)
-        //                    ? '<tr data-dt-row="' +
-        //                    col.rowIndex +
-        //                    '" data-dt-column="' +
-        //                    col.columnIndex +
-        //                    '">' +
-        //                    '<td>' +
-        //                    col.title +
-        //                    ':' +
-        //                    '</td> ' +
-        //                    '<td>' +
-        //                    col.data +
-        //                    '</td>' +
-        //                    '</tr>'
-        //                    : '';
-        //            }).join('');
-
-        //            return data ? $('<table class="table"/><tbody />').append(data) : false;
-        //        }
-        //    }
-        //},
-        //initComplete: function () {
-        //    // Adding role filter once table initialized
-        //    this.api()
-        //        .columns(2)
-        //        .every(function () {
-        //            var column = this;
-        //            var select = $(
-        //                '<select id="UserRole" class="form-select text-capitalize"><option value=""> Select Role </option></select>'
-        //            )
-        //                .appendTo('.user_role')
-        //                .on('change', function () {
-        //                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
-        //                    column.search(val ? '^' + val + '$' : '', true, false).draw();
-        //                });
-
-        //            column
-        //                .data()
-        //                .unique()
-        //                .sort()
-        //                .each(function (d, j) {
-        //                    select.append('<option value="' + d + '">' + d + '</option>');
-        //                });
-        //        });
-        //    // Adding plan filter once table initialized
-        //    this.api()
-        //        .columns(3)
-        //        .every(function () {
-        //            var column = this;
-        //            var select = $(
-        //                '<select id="UserPlan" class="form-select text-capitalize"><option value=""> Select Plan </option></select>'
-        //            )
-        //                .appendTo('.user_plan')
-        //                .on('change', function () {
-        //                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
-        //                    column.search(val ? '^' + val + '$' : '', true, false).draw();
-        //                });
-
-        //            column
-        //                .data()
-        //                .unique()
-        //                .sort()
-        //                .each(function (d, j) {
-        //                    select.append('<option value="' + d + '">' + d + '</option>');
-        //                });
-        //        });
-        //    // Adding status filter once table initialized
-        //    //this.api()
-        //    //    .columns(5)
-        //    //    .every(function () {
-        //    //        var column = this;
-        //    //        var select = $(
-        //    //            '<select id="FilterTransaction" class="form-select text-capitalize"><option value=""> Select Status </option></select>'
-        //    //        )
-        //    //            .appendTo('.user_status')
-        //    //            .on('change', function () {
-        //    //                var val = $.fn.dataTable.util.escapeRegex($(this).val());
-        //    //                column.search(val ? '^' + val + '$' : '', true, false).draw();
-        //    //            });
-
-        //    //        column
-        //    //            .data()
-        //    //            .unique()
-        //    //            .sort()
-        //    //            .each(function (d, j) {
-        //    //                select.append(
-        //    //                    '<option value="' +
-        //    //                    statusObj[d].title +
-        //    //                    '" class="text-capitalize">' +
-        //    //                    statusObj[d].title +
-        //    //                    '</option>'
-        //    //                );
-        //    //            });
-        //    //    });
-        //},
-
+       
 
     });
 
@@ -348,73 +247,76 @@ $(document).ready(function () {
 });
 
 
-
 function SaveVC() {
 
 
-    var servicename_validation = $(".Addservicenameadd").val();
-    var servicecontact_validation = $(".Addservicecontactadd").val();
-    var servicecontact_validation = $(".Addservicepersonadd").val();
-    var Dealerlist_validation = $(".DealerList").val();
+   // var servicename_validation = $(".AddMaintenanceLocation").val();
+   // var servicecontact_validation = $(".Addmaincarno").val();
+   ///* var servicecontact_validation = $(".Addmaininvoiceno").val();*/
+   // /**Validation**/
+   // $('.AddMaintenanceLocation').on("input", function () {
+   //     $('.AddMaintenanceLocation').next(".error-message").hide();
+   //     $('.AddMaintenanceLocation').css('border', 'none');
+   //     $('.AddMaintenanceLocation').css('background', '#d8f9d8');
+   // });
+   // if (servicename_validation == null || servicename_validation == undefined || servicename_validation == "" || servicename_validation == " ") {
+   //     $('.AddMaintenanceLocation').next(".error-message").text("* Service Name Required");
+   //     $('.AddMaintenanceLocation').next(".error-message").show();
+   //     $('.AddMaintenanceLocation').css('border', '1px solid red');
+   //     $('.AddMaintenanceLocation').css('background', '#fff');
+   //     $('.AddMaintenanceLocation').focus();
+   //     return false;
+   // }
+   // $('.Addmaincarno').on("input", function () {
+   //     $('.Addmaincarno').next(".error-message").hide();
+   //     $('.Addmaincarno').css('border', 'none');
+   //     $('.Addmaincarno').css('background', '#d8f9d8');
+   // });
+   // if (servicecontact_validation == null || servicecontact_validation == undefined || servicecontact_validation == "" || servicecontact_validation == " ") {
+   //     $('.Addmaincarno').next(".error-message").text("* Contact Number Required");
+   //     $('.Addmaincarno').next(".error-message").show();
+   //     $('.Addmaincarno').css('border', '1px solid red');
+   //     $('.Addmaincarno').css('background', '#fff');
+   //     $('.Addmaincarno').focus();
+   //     return false;
+   // }
+
+   // $('.DealerList').change("select", function () {
+   //     $('.DealerList').next(".error-message").hide();
+   //     $('.DealerList').css('border', 'none');
+   //     $('.DealerList').css('background', '#d8f9d8');
+   // });
+   // if (Dealerlist_validation == null || Dealerlist_validation == undefined || Dealerlist_validation == "" || Dealerlist_validation == " ") {
+   //     $('.DealerList').next(".error-message").text("* Dealer Required");
+   //     $('.DealerList').next(".error-message").show();
+   //     $('.DealerList').css('border', '1px solid red');
+   //     $('.DealerList').css('background', '#fff');
+   //     $('.DealerList').focus();
+   //     return false;
+   // }
+
     /**Validation**/
-    $('.Addservicenameadd').on("input", function () {
-        $('.Addservicenameadd').next(".error-message").hide();
-        $('.Addservicenameadd').css('border', 'none');
-        $('.Addservicenameadd').css('background', '#d8f9d8');
-    });
-    if (servicename_validation == null || servicename_validation == undefined || servicename_validation == "" || servicename_validation == " ") {
-        $('.Addservicenameadd').next(".error-message").text("* Service Name Required");
-        $('.Addservicenameadd').next(".error-message").show();
-        $('.Addservicenameadd').css('border', '1px solid red');
-        $('.Addservicenameadd').css('background', '#fff');
-        $('.Addservicenameadd').focus();
-        return false;
-    }
-    $('.Addservicecontactadd').on("input", function () {
-        $('.Addservicecontactadd').next(".error-message").hide();
-        $('.Addservicecontactadd').css('border', 'none');
-        $('.Addservicecontactadd').css('background', '#d8f9d8');
-    });
-    if (servicecontact_validation == null || servicecontact_validation == undefined || servicecontact_validation == "" || servicecontact_validation == " ") {
-        $('.Addservicecontactadd').next(".error-message").text("* Contact Number Required");
-        $('.Addservicecontactadd').next(".error-message").show();
-        $('.Addservicecontactadd').css('border', '1px solid red');
-        $('.Addservicecontactadd').css('background', '#fff');
-        $('.Addservicecontactadd').focus();
-        return false;
-    }
-
-    $('.DealerList').change("select", function () {
-        $('.DealerList').next(".error-message").hide();
-        $('.DealerList').css('border', 'none');
-        $('.DealerList').css('background', '#d8f9d8');
-    });
-    if (Dealerlist_validation == null || Dealerlist_validation == undefined || Dealerlist_validation == "" || Dealerlist_validation == " ") {
-        $('.DealerList').next(".error-message").text("* Dealer Required");
-        $('.DealerList').next(".error-message").show();
-        $('.DealerList').css('border', '1px solid red');
-        $('.DealerList').css('background', '#fff');
-        $('.DealerList').focus();
-        return false;
-    }
-
-    /**Validation**/
 
 
-    var VCObj = {
-        VehicleCompanyID: 0,
-        VehicleCompanyName: $('.VCnameadd').val(),
-
+    var MHObj = {
+        MaintainaceHistoryId: 0,
+        MaintainaceLocation: $('.AddMaintenanceLocation').val(),
+        MaintainaceDateForm: $('.Addmaindatefrom').val(),
+        MaintainaceDateTo: $('.Addmaindateto').val(),
+        CarNumber: $('.Addmaincarno').val(),
+        Issue: $('.Addmainissue').val(),
+        InvoiceNo: $('.Addmaininvoiceno').val(),
+        Amount: $('.Addmainamount').val(),
     }
     $.ajax({
 
         type: 'POST',
         async: false,
-        data: { Obj: VCObj },
-        url: '/VehicleCompany/Upsert',
+        data: { Obj: MHObj },
+        url: '/MaintenanceHistory/Upsert',
         success: function (result) {
             if (result.datasuccess == true) {
-                Command: toastr["success"]("This Vehicle Company Succefully Saved.");
+                Command: toastr["success"]("This Maintenance History Succefully Saved.");
                 var mydata = result.json;// $('#UserDataJson').val();
                 var newdata = JSON.parse(mydata);
 
@@ -436,21 +338,43 @@ function SaveVC() {
 
 function ShowEditBranch(item) {
 
-    var VCId = $(item).closest("tr").find('#editVCID').text();
-    var VCName = $(item).closest("tr").find('#editVCName').text();
+    var MHId = $(item).closest("tr").find('#editMHID').text();
+    $.ajax({
+        type: 'GET',
+        async: false,
+        url: 'https://localhost:7112/api/MaintainaceHistory/' + MHId,
+        success: function (result) {
 
+            $('.EditMaintainHisId').val(MHId);
+            $('.EditMaintenanceLocation').val(result.maintainaceLocation);
+            dateSetflat(result.maintainaceDateForm, $('.Editmaindatefrom'));
+            dateSetflat(result.maintainaceDateTo, $('.Editmaindateto'));
+            $('.Editmaincarno').val(result.carNumber);
+            $('.Editmainissue').val(result.issue);
+            $('.Editmaininvoiceno').val(result.invoiceNo);
+            $('.Editmainamount').val(result.amount);
+           
+        },
+        complete: function (result) {
 
-    $('.EditVCId').val(VCId.trim());
-    $('.EditVCnameadd').val(VCName.trim());
+        },
+        error: function (err) { console.log(JSON.stringify(err)); }
 
+    });
 
 }
 
-function EditVC() {
+function EditMH() {
 
     var VCEditObj = {
-        VehicleCompanyID: parseInt($('.EditVCId').val()),
-        VehicleCompanyName: $(".EditVCnameadd").val(),
+        MaintainaceHistoryId: $('.EditMaintainHisId').val(),
+        MaintainaceLocation: $('.EditMaintenanceLocation').val(),
+        MaintainaceDateForm: $('.Editmaindatefrom').val(),
+        MaintainaceDateTo: $('.Editmaindateto').val(),
+        CarNumber: $('.Editmaincarno').val(),
+        Issue: $('.Editmainissue').val(),
+        InvoiceNo: $('.Editmaininvoiceno').val(),
+        Amount: $('.Editmainamount').val(),
 
 
     }
@@ -459,12 +383,12 @@ function EditVC() {
         type: 'POST',
         async: false,
         data: { Obj: VCEditObj },
-        url: '/VehicleCompany/Upsert',
+        url: '/MaintenanceHistory/Upsert',
         success: function (result) {
 
             if (result.datasuccess == true) {
 
-                Command: toastr["success"]("Vehicle Company SuccessFully Edited !");
+                Command: toastr["success"]("maintenance History SuccessFully Edited !");
                 var mydata = result.json;// $('#UserDataJson').val();
                 var newdata = JSON.parse(mydata);
 
@@ -473,7 +397,7 @@ function EditVC() {
             }
             else {
 
-                Command: toastr["error"]("This Vehicle Company not Succefully Edit. \n Somthing Went Wrongs.");
+                Command: toastr["error"]("This Maintenance History not Succefully Edit. \n Somthing Went Wrongs.");
                 var mydata = result.json;// $('#UserDataJson').val();
                 var newdata = JSON.parse(mydata);
 
@@ -485,7 +409,7 @@ function EditVC() {
 
         },
         error: function (err) {
-            Command: toastr["error"]("This Vehicle Company not Succefully Edit. \n Somthing Went Wrongs.");
+            Command: toastr["error"]("This maintenance History not Succefully Edit. \n Somthing Went Wrongs.");
             // console.log("Error" + err);
         }
     });

@@ -15,7 +15,7 @@ namespace Utility.Models
 
         public int NetworkId { get; set; }
 
-        public Network Network { get; set; }
+        public Network? Network { get; set; }
 
         public bool IsDeleted { get; set; }
         //Commented by raja

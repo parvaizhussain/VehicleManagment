@@ -43,6 +43,9 @@ namespace Persistence
         public DbSet<VehicleCompany> VehicleCompanies { get; set; }
         public DbSet<VehicleBrands> VehicleBrands { get; set; }
         public DbSet<Set_VehicleDetails> Set_VehicleDetails { get; set; }
+        public DbSet<ServiceCenter> ServiceCenters { get; set; }
+        public DbSet<MaintainaceHistory> MaintainaceHistories { get; set; }
+        public DbSet<AccessRights> AccessRights { get; set; }
         
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

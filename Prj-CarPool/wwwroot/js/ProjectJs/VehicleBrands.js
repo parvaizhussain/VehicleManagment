@@ -381,14 +381,45 @@ function SaveVC() {
         VehicleCompanyId: $('.companylist option:selected').val(),
 
     }
+
+  
+    const date = new Date();
+    
+    console.log("Starttime : " + date.getMilliseconds())
+
+
+    //  fetch('https://localhost:7010/vehicleInsert', {
+    //    method: 'POST',
+    //    headers: {
+    //        'Accept': 'application/json',
+    //        'Content-Type': 'application/json'
+    //    },
+    //    body: JSON.stringify(VCObj)
+    //})
+    //    .then(response => response.json())
+    //    .then(() => {
+    //             const Enddate = new Date();
+    //            console.log("Endtime : " + Enddate.getMilliseconds());
+    //        //getItems();
+    //        //addNameTextbox.value = '';
+    //    })
+    //    .catch(error => console.error('Unable to add item.', error));
+
+
+
+
     $.ajax({
 
         type: 'POST',
         async: false,
-        data: { Obj: VCObj },
+        data: { Obj: VCObj},
         url: '/VehicleBrands/Upsert',
+
         success: function (result) {
             if (result.datasuccess == true) {
+                const Enddate = new Date();
+                console.log("Endtime : " + Enddate.getMilliseconds());
+
                 Command: toastr["success"]("This Vehicle Company Succefully Saved.");
                 var mydata = result.json;// $('#UserDataJson').val();
                 var newdata = JSON.parse(mydata);

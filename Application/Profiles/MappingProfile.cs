@@ -1,4 +1,8 @@
-﻿using Application.Features.Branch.Commands.CreateBranch;
+﻿using Application.Features.AccessRights.Commands.CreateAccessRights;
+using Application.Features.AccessRights.Commands.UpdateAccessRights;
+using Application.Features.AccessRights.Queries.GetAccessRightsByID;
+using Application.Features.AccessRights.Queries.GetAccessRightsList;
+using Application.Features.Branch.Commands.CreateBranch;
 using Application.Features.Branch.Commands.UpdateBranch;
 using Application.Features.Branch.Queries.GetBranchByID;
 using Application.Features.Branch.Queries.GetBranchList;
@@ -14,6 +18,10 @@ using Application.Features.Group.Commands.CreateGroup;
 using Application.Features.Group.Commands.UpdateGroup;
 using Application.Features.Group.Queries.GetGroupByID;
 using Application.Features.Group.Queries.GetGroupList;
+using Application.Features.MaintainaceHistory.Command.Create;
+using Application.Features.MaintainaceHistory.Command.Update;
+using Application.Features.MaintainaceHistory.Querys.GetByID;
+using Application.Features.MaintainaceHistory.Querys.GetByList;
 using Application.Features.Network.Commands.CreateNetwork;
 using Application.Features.Network.Commands.UpdateNetwork;
 using Application.Features.Network.Queries.GetNetworkByID;
@@ -23,6 +31,10 @@ using Application.Features.Region.Commands.CreateRegion;
 using Application.Features.Region.Commands.UpdateRegion;
 using Application.Features.Region.Queries.GetRegionByID;
 using Application.Features.Region.Queries.GetRegionList;
+using Application.Features.ServiceCenter.Command.Create;
+using Application.Features.ServiceCenter.Command.Update;
+using Application.Features.ServiceCenter.Querys.GetByID;
+using Application.Features.ServiceCenter.Querys.GetByList;
 using Application.Features.Session.Commands.CreateSession;
 using Application.Features.Session.Commands.UpdateSession;
 using Application.Features.Session.Queries.GetSessionByID;
@@ -121,6 +133,23 @@ namespace Application.Profiles
             CreateMap<Set_VehicleDetails, Update_VehicleDetails_Commads>().ReverseMap();
 
 
+            CreateMap<ServiceCenter, Create_ServiceCenter_Commands>().ReverseMap();
+            CreateMap<ServiceCenter, Create_ServiceCenter_Dto>().ReverseMap();
+            CreateMap<ServiceCenter, Get_ServiceCenter_VM>().ReverseMap();
+            CreateMap<ServiceCenter, Get_ServiceCenter_ListVM>().ReverseMap();
+            CreateMap<ServiceCenter, Update_ServiceCenter_Commads>().ReverseMap();
+
+            CreateMap<MaintainaceHistory, Create_MaintainaceHistory_Commands>().ReverseMap();
+            CreateMap<MaintainaceHistory, Create_MaintainaceHistory_Dto>().ReverseMap();
+            CreateMap<MaintainaceHistory, Get_MaintainaceHistory_VM>().ReverseMap();
+            CreateMap<MaintainaceHistory, Get_MaintainaceHistory_ListVM>().ReverseMap();
+            CreateMap<MaintainaceHistory, Update_MaintainaceHistory_Commads>().ReverseMap();
+
+            CreateMap<AccessRights, CreateAccessRightsDto>().ReverseMap();
+            CreateMap<AccessRights, GetAccessRightsVM>().ReverseMap();
+            CreateMap<AccessRights, GetAccessRightsListVM>().ReverseMap();
+            CreateMap<AccessRights, CreateAccessRightsCommand>().ReverseMap();
+            CreateMap<AccessRights, UpdateAccessRightsCommand>().ReverseMap();
         }
 
 
