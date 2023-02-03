@@ -8,7 +8,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - AspNetApp</title>
+    <title>@ViewData["Title"] - CarPool</title>
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="~/assets/img/favicon/favicon.ico" />
 
@@ -121,7 +121,8 @@
                 <div class="app-brand demo">
                     <a href="index.html" class="app-brand-link">
                         <span class="app-brand-logo demo">
-                            <svg width="32" height="22" viewBox="0 0 32 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <img src="~/img/CityLogo/logo2.gif " width="72" height="72" />
+                            @*   <svg width="32" height="22" viewBox="0 0 32 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd"
                                       clip-rule="evenodd"
                                       d="M0.00172773 0V6.85398C0.00172773 6.85398 -0.133178 9.01207 1.98092 10.8388L13.6912 21.9964L19.7809 21.9181L18.8042 9.88248L16.4951 7.17289L9.23799 0H0.00172773Z"
@@ -140,9 +141,9 @@
                                       clip-rule="evenodd"
                                       d="M7.77295 16.3566L23.6563 0H32V6.88383C32 6.88383 31.8262 9.17836 30.6591 10.4057L19.7824 22H13.6938L7.77295 16.3566Z"
                                       fill="#7367F0" />
-                            </svg>
+                            </svg>*@
                         </span>
-                        <span class="app-brand-text demo menu-text fw-bold">Vuexy</span>
+                        <span class="app-brand-text demo menu-text fw-bold">Car Pool</span>
                     </a>
 
                     <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
@@ -182,7 +183,7 @@
                         <!-- /Search -->
 
                         <ul class="navbar-nav flex-row align-items-center ms-auto">
-                            <!-- Language -->
+                     @*       <!-- Language -->
                             <li class="nav-item dropdown-language dropdown me-2 me-xl-0">
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                                     <i class="fi fi-us fis rounded-circle me-1 fs-3"></i>
@@ -214,7 +215,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            <!--/ Language -->
+                            <!--/ Language -->*@
                             <!-- Style Switcher -->
                             <li class="nav-item me-2 me-xl-0">
                                 <a class="nav-link style-switcher-toggle hide-arrow" href="javascript:void(0);">
@@ -222,7 +223,7 @@
                                 </a>
                             </li>
                             <!--/ Style Switcher -->
-                            <!-- Quick links  -->
+                        @*    <!-- Quick links  -->
                             <li class="nav-item dropdown-shortcuts navbar-dropdown dropdown me-2 me-xl-0">
                                 <a class="nav-link dropdown-toggle hide-arrow"
                                    href="javascript:void(0);"
@@ -552,7 +553,8 @@
                                     </li>
                                 </ul>
                             </li>
-                            <!--/ Notification -->
+                            <!--/ Notification -->*@
+                    
                             <!-- User -->
                             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
@@ -570,8 +572,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="flex-grow-1">
-                                                    <span class="fw-semibold d-block">John Doe</span>
-                                                    <small class="text-muted">Admin</small>
+                                                    <span class="fw-semibold d-block">@User.Identity.Name</span>
+                                                    <small class="text-muted">@User.Identity.AuthenticationType</small>
                                                 </div>
                                             </div>
                                         </a>
@@ -662,7 +664,7 @@
                     <!-- / Content -->
                     <!-- Footer -->
                     <footer class="content-footer footer bg-footer-theme">
-                        <div class="container-xxl">
+                        @*<div class="container-xxl">
                             <div class="footer-container d-flex align-items-center justify-content-between py-2 flex-md-row flex-column">
                                 <div>
                                     ©
@@ -682,7 +684,7 @@
                                     <a href="https://pixinvent.ticksy.com/" target="_blank" class="footer-link d-none d-sm-inline-block">Support</a>
                                 </div>
                             </div>
-                        </div>
+                        </div>*@
                     </footer>
                     <!-- / Footer -->
 
@@ -700,11 +702,11 @@
     </div>
 
 
-    <footer class="border-top footer text-muted">
+ @*   <footer class="border-top footer text-muted">
         <div class="container">
             &copy; @DateTime.Now.Year - AspNetApp
         </div>
-    </footer>
+    </footer>*@
 
 
     <!-- Core JS -->

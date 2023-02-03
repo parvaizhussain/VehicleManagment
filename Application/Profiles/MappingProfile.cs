@@ -14,6 +14,10 @@ using Application.Features.Department.Commands.CreateDepartment;
 using Application.Features.Department.Commands.UpdateDepartment;
 using Application.Features.Department.Queries.GetDepartmentByID;
 using Application.Features.Department.Queries.GetDepartmentList;
+using Application.Features.Driver.Command.Create;
+using Application.Features.Driver.Command.Update;
+using Application.Features.Driver.Querys.GetByID;
+using Application.Features.Driver.Querys.GetByList;
 using Application.Features.Group.Commands.CreateGroup;
 using Application.Features.Group.Commands.UpdateGroup;
 using Application.Features.Group.Queries.GetGroupByID;
@@ -160,7 +164,15 @@ namespace Application.Profiles
             CreateMap<VehicleRequest, Get_VehicleRequest_VM>().ReverseMap();
             CreateMap<VehicleRequest, Get_VehicleRequest_ListVM>().ReverseMap();
             CreateMap<VehicleRequest, Update_VehicleRequest_Commads>().ReverseMap();
-        }
+
+
+			CreateMap<Driver, Create_Driver_Commands>().ReverseMap();
+			CreateMap<Driver, Create_Driver_Dto>().ReverseMap();
+			CreateMap<Driver, Get_Driver_VM>().ReverseMap();
+			CreateMap<Driver, Get_Driver_ListVM>().ReverseMap();
+			CreateMap<Driver, Update_Driver_Commads>().ReverseMap();
+
+		}
 
 
     }

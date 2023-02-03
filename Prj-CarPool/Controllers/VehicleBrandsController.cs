@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Persistence;
+
 using Prj_CarPool.Extensions;
 using Prj_CarPool.IServices;
 
@@ -54,6 +55,26 @@ namespace Prj_CarPool.Controllers
                 }
             }
             return View(Obj);
+        }
+
+        public IActionResult upload()
+        {
+
+            var drives = _db.Drivers.FirstOrDefault();
+
+
+            return Json(drives);
+
+
+
+            //byte[] imageData = System.IO.File.ReadAllBytes("D:\\user\\1.pdf");
+            
+            
+            //var driver =  _db.Drivers.Where(x=>x.DriverID== 1).FirstOrDefault();
+            //driver.DriverImage = imageData;
+            //_db.Drivers.Update(driver);
+            //_db.SaveChanges();
+            //  return View();
         }
     }
 }

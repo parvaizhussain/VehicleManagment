@@ -7,14 +7,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Features\Driver\Command\CreateDriver\**" />
+    <Compile Remove="Features\Driver\Command\DeleteDriver\**" />
+    <Compile Remove="Features\Driver\Command\UpdateDriver\**" />
     <Compile Remove="Features\VehicleBrands\Command\CreateDriver\**" />
     <Compile Remove="Features\VehicleBrands\Command\DeleteDriver\**" />
     <Compile Remove="Features\VehicleBrands\Command\UpdateDriver\**" />
     <Compile Remove="Features\Vehicle\**" />
+    <EmbeddedResource Remove="Features\Driver\Command\CreateDriver\**" />
+    <EmbeddedResource Remove="Features\Driver\Command\DeleteDriver\**" />
+    <EmbeddedResource Remove="Features\Driver\Command\UpdateDriver\**" />
     <EmbeddedResource Remove="Features\VehicleBrands\Command\CreateDriver\**" />
     <EmbeddedResource Remove="Features\VehicleBrands\Command\DeleteDriver\**" />
     <EmbeddedResource Remove="Features\VehicleBrands\Command\UpdateDriver\**" />
     <EmbeddedResource Remove="Features\Vehicle\**" />
+    <None Remove="Features\Driver\Command\CreateDriver\**" />
+    <None Remove="Features\Driver\Command\DeleteDriver\**" />
+    <None Remove="Features\Driver\Command\UpdateDriver\**" />
     <None Remove="Features\VehicleBrands\Command\CreateDriver\**" />
     <None Remove="Features\VehicleBrands\Command\DeleteDriver\**" />
     <None Remove="Features\VehicleBrands\Command\UpdateDriver\**" />
@@ -39,11 +48,6 @@
     <Folder Include="Features\Airport\Command\UpdateAirport\" />
     <Folder Include="Features\Airport\Querys\GetByID\" />
     <Folder Include="Features\Airport\Querys\GetByList\" />
-    <Folder Include="Features\Driver\Command\CreateDriver\" />
-    <Folder Include="Features\Driver\Command\DeleteDriver\" />
-    <Folder Include="Features\Driver\Command\UpdateDriver\" />
-    <Folder Include="Features\Driver\Querys\GetByID\" />
-    <Folder Include="Features\Driver\Querys\GetByList\" />
     <Folder Include="Features\FuelCard\Command\CreateFuelCard\" />
     <Folder Include="Features\FuelCard\Command\DeleteFuelCard\" />
     <Folder Include="Features\FuelCard\Command\UpdateFuelCard\" />

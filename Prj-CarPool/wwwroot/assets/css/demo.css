@@ -12,15 +12,31 @@
 }
 
 .app-brand-logo.demo {
-  -ms-flex-align: center;
-  align-items: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  display: -ms-flexbox;
-  display: flex;
-  width: 34px;
-  height: 24px;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    display: -ms-flexbox;
+    display: flex;
+    width: 70px;
+    height: 80px;
+    /*width: 34px;
+  height: 24px;*/
 }
+
+.app-Login-logo.demo {
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    display: -ms-flexbox;
+    display: flex;
+    width: 200px;
+    height: 200px;
+    /*width: 34px;
+  height: 24px;*/
+}
+
 
 .app-brand-logo.demo svg {
   width: 35px;
