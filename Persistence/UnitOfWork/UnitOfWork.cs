@@ -37,6 +37,7 @@ namespace Persistence.UOW
             ServiceCenter=new ServiceCenterRepository(_dbContext);  
             MaintainaceHistory =  new MaintainaceHistoryRepository(_dbContext);
             AccessRights = new AccessRightsRepository(_dbContext);
+            VehicleRequest = new VehicleRequestRepository(_dbContext);
 
         }
         public IUserRepository User { get; set; }
@@ -56,6 +57,7 @@ namespace Persistence.UOW
         public IServiceCenterRepository ServiceCenter{ get; set; }
         public IMaintainaceHistoryRepository MaintainaceHistory{ get; set; }
         public IAccessRightsRepository AccessRights{ get; set; }
+        public IVehicleRequestRepository VehicleRequest { get; set; }
 
 
 

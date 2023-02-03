@@ -46,7 +46,8 @@ namespace Persistence
         public DbSet<ServiceCenter> ServiceCenters { get; set; }
         public DbSet<MaintainaceHistory> MaintainaceHistories { get; set; }
         public DbSet<AccessRights> AccessRights { get; set; }
-        
+        public DbSet<VehicleRequest> VehicleRequests { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -55,6 +55,10 @@ using Application.Features.VehicleDetails.Command.Create;
 using Application.Features.VehicleDetails.Command.Update;
 using Application.Features.VehicleDetails.Querys.GetByID;
 using Application.Features.VehicleDetails.Querys.GetByList;
+using Application.Features.VehicleRequest.Command.Create;
+using Application.Features.VehicleRequest.Command.Update;
+using Application.Features.VehicleRequest.Querys.GetByID;
+using Application.Features.VehicleRequest.Querys.GetByList;
 using AutoMapper;
 using Domain.Entities;
 using Domain.ViewModels;
@@ -150,6 +154,12 @@ namespace Application.Profiles
             CreateMap<AccessRights, GetAccessRightsListVM>().ReverseMap();
             CreateMap<AccessRights, CreateAccessRightsCommand>().ReverseMap();
             CreateMap<AccessRights, UpdateAccessRightsCommand>().ReverseMap();
+
+            CreateMap<VehicleRequest, Create_VehicleRequest_Commands>().ReverseMap();
+            CreateMap<VehicleRequest, Create_VehicleRequest_Dto>().ReverseMap();
+            CreateMap<VehicleRequest, Get_VehicleRequest_VM>().ReverseMap();
+            CreateMap<VehicleRequest, Get_VehicleRequest_ListVM>().ReverseMap();
+            CreateMap<VehicleRequest, Update_VehicleRequest_Commads>().ReverseMap();
         }
 
 

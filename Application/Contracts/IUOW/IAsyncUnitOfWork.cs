@@ -27,6 +27,7 @@ namespace Application.Contracts.IUOW
         public IServiceCenterRepository ServiceCenter { get; }
         public IMaintainaceHistoryRepository MaintainaceHistory { get; }
         public IAccessRightsRepository AccessRights { get; }
+        public IVehicleRequestRepository VehicleRequest { get; }
 
 
         Task<object> Commit(object obj);
