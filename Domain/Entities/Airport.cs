@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Common;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class Airport
+    public class Airport : AuditableEntity
     {
         [Key]
         public int AirportID { get; set; }
@@ -16,5 +17,9 @@ namespace Domain.Entities
         public int CityID { get; set; }
         [ForeignKey("CityID")]
         public City City { get; set; }
-    }
+
+		public int RegionID { get; set; }
+		[ForeignKey("RegionID")]
+		public virtual Region Region { get; set; }
+	}
 }
