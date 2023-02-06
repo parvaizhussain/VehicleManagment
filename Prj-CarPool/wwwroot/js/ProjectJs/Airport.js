@@ -10,31 +10,20 @@
 
     for (var st = 0; st < newdatas.data.length; st++) {
 
-        var $name = newdatas.data[st].VehicleBrandName;
-        var $output = '<i class="ti ti-car" data-icon="ti ti-car"></i>';
+        var $name = newdatas.data[st].AirportName;
+        // var $output = '<i class="ti ti-car" data-icon="ti ti-car"></i>';
 
         stutbl += '<tr>';
 
         stutbl += '<td class="visiblityhidden"></td>';
-        stutbl += '<td id="editVBID">' + newdatas.data[st].VehicleBrandId + '</td>';
-        stutbl += '<td>';
-        stutbl += '<div id="editVBName" class="d-flex justify-content-start align-items-center user-name">';
-        stutbl += '<div class="avatar-wrapper">';
-        stutbl += '<div class="avatar avatar-sm me-3">';
+        stutbl += '<td id="editAID">' + newdatas.data[st].AirportID + '</td>';
+        stutbl += '<td  id="editAName">' + newdatas.data[st].AirportName + '</td>';
+      
 
-        stutbl += $output;
-        stutbl += '</div>';
-        stutbl += '</div>';
-        stutbl += '<div class="d-flex flex-column">';
-        stutbl += '<a href="#" class="text-body text-truncate"><span class="fw-semibold">';
-        stutbl += $name;
-        stutbl += '</span></a>';
-        stutbl += '</div>';
-        stutbl += '</div>';
-        stutbl += '</td>';
-
-        stutbl += '<td id="editVBCID" hidden="hidden">' + newdatas.data[st].VehicleCompanyId + '</td>';
-        stutbl += '<td id="editVBCName">' + newdatas.data[st].VehicleCompany.VehicleCompanyName + '</td>';
+        stutbl += '<td id="editACity" hidden="hidden">' + newdatas.data[st].City.CityId + '</td>';
+        stutbl += '<td>' + newdatas.data[st].City.CityName + '</td>';
+        stutbl += '<td id="editARegion" hidden="hidden">' + newdatas.data[st].Region.RegionId + '</td>';
+        stutbl += '<td>' + newdatas.data[st].Region.RegionName + '</td>';
         if (newdatas.data[st].IsActive !== true) {
             stutbl += '<td id="editVCActive"><span class="badge bg-label-danger" text-capitalized>InActive</span></td>';
         }
@@ -43,7 +32,7 @@
 
         }
         stutbl += '<td><div class="d-flex align-items-center">';
-        stutbl += '<a  onclick ="ShowEditBranch(this)" class="text-body" data-bs-toggle="modal" data-bs-target="#offcanvasEditNav" ><i class="ti ti-edit ti-sm me-2"></i></a>';
+        stutbl += '<a  onclick ="Edit(this)" class="text-body" data-bs-toggle="modal" data-bs-target="#offcanvasEditNav" ><i class="ti ti-edit ti-sm me-2"></i></a>';
         stutbl += '<a href="/" class="text-body delete-record"><i class="ti ti-trash ti-sm mx-2"></i></a>';
         stutbl += '<a href="/" class="text-body dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm mx-1"></i></a>';
         stutbl += '<div class="dropdown-menu dropdown-menu-end m-0">';
@@ -220,7 +209,7 @@
                 ]
             },
             {
-                text: '<i class="ti ti-plus me-0 me-sm-1 ti-xs"></i><span class="d-none d-sm-inline-block">Add New Brands</span>',
+                text: '<i class="ti ti-plus me-0 me-sm-1 ti-xs"></i><span class="d-none d-sm-inline-block">Add New Airport</span>',
                 className: 'add-new btn btn-primary',
                 attr: {
                     'data-bs-toggle': 'modal',
@@ -228,119 +217,13 @@
                 }
             }
         ]
-        // For responsive popup
-        //responsive: {
-        //    details: {
-        //        display: $.fn.dataTable.Responsive.display.modal({
-        //            header: function (row) {
-        //                var data = row.data();
-        //                return 'Details of ' + data['full_name'];
-        //            }
-        //        }),
-        //        type: 'column',
-        //        renderer: function (api, rowIdx, columns) {
-        //            var data = $.map(columns, function (col, i) {
-        //                return col.title !== '' // ? Do not show row in modal popup if title is blank (for check box)
-        //                    ? '<tr data-dt-row="' +
-        //                    col.rowIndex +
-        //                    '" data-dt-column="' +
-        //                    col.columnIndex +
-        //                    '">' +
-        //                    '<td>' +
-        //                    col.title +
-        //                    ':' +
-        //                    '</td> ' +
-        //                    '<td>' +
-        //                    col.data +
-        //                    '</td>' +
-        //                    '</tr>'
-        //                    : '';
-        //            }).join('');
-
-        //            return data ? $('<table class="table"/><tbody />').append(data) : false;
-        //        }
-        //    }
-        //},
-        //initComplete: function () {
-        //    // Adding role filter once table initialized
-        //    this.api()
-        //        .columns(2)
-        //        .every(function () {
-        //            var column = this;
-        //            var select = $(
-        //                '<select id="UserRole" class="form-select text-capitalize"><option value=""> Select Role </option></select>'
-        //            )
-        //                .appendTo('.user_role')
-        //                .on('change', function () {
-        //                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
-        //                    column.search(val ? '^' + val + '$' : '', true, false).draw();
-        //                });
-
-        //            column
-        //                .data()
-        //                .unique()
-        //                .sort()
-        //                .each(function (d, j) {
-        //                    select.append('<option value="' + d + '">' + d + '</option>');
-        //                });
-        //        });
-        //    // Adding plan filter once table initialized
-        //    this.api()
-        //        .columns(3)
-        //        .every(function () {
-        //            var column = this;
-        //            var select = $(
-        //                '<select id="UserPlan" class="form-select text-capitalize"><option value=""> Select Plan </option></select>'
-        //            )
-        //                .appendTo('.user_plan')
-        //                .on('change', function () {
-        //                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
-        //                    column.search(val ? '^' + val + '$' : '', true, false).draw();
-        //                });
-
-        //            column
-        //                .data()
-        //                .unique()
-        //                .sort()
-        //                .each(function (d, j) {
-        //                    select.append('<option value="' + d + '">' + d + '</option>');
-        //                });
-        //        });
-        //    // Adding status filter once table initialized
-        //    //this.api()
-        //    //    .columns(5)
-        //    //    .every(function () {
-        //    //        var column = this;
-        //    //        var select = $(
-        //    //            '<select id="FilterTransaction" class="form-select text-capitalize"><option value=""> Select Status </option></select>'
-        //    //        )
-        //    //            .appendTo('.user_status')
-        //    //            .on('change', function () {
-        //    //                var val = $.fn.dataTable.util.escapeRegex($(this).val());
-        //    //                column.search(val ? '^' + val + '$' : '', true, false).draw();
-        //    //            });
-
-        //    //        column
-        //    //            .data()
-        //    //            .unique()
-        //    //            .sort()
-        //    //            .each(function (d, j) {
-        //    //                select.append(
-        //    //                    '<option value="' +
-        //    //                    statusObj[d].title +
-        //    //                    '" class="text-capitalize">' +
-        //    //                    statusObj[d].title +
-        //    //                    '</option>'
-        //    //                );
-        //    //            });
-        //    //    });
-        //},
-
+       
 
     });
 
 
 }
+
 $(document).ready(function () {
     var mydata = $('#UserDataJson').val();
 
@@ -349,19 +232,41 @@ $(document).ready(function () {
     LoadTable(newdata);
 
 });
-var Comapnydropdown = "";
+
+var Citydropdown = "";
 $.ajax({
     type: 'GET',
     async: false,
-    url: 'https://localhost:7112/api/VehicleCompany/all',
+    url: 'https://localhost:7112/api/City/all',
     success: function (result) {
-        Comapnydropdown += '<option value="0" style="font-weight: bold;background: #d9d5d5;">No Select</option>';
+        Citydropdown += '<option value="0" style="font-weight: bold;background: #d9d5d5;">No Select</option>';
         for (var i = 0; i < result.length; i++) {
-            Comapnydropdown += '<option value="' + result[i].vehicleCompanyId + '">' + result[i].vehicleCompanyName + '</option>';
+            Citydropdown += '<option value="' + result[i].cityId + '">' + result[i].cityName + '</option>';
         }
-        $(".companylist").html(Comapnydropdown);
-        $(".companylistedit").html(Comapnydropdown);
-      
+        $(".Citylist").html(Citydropdown);
+        $(".EditCitylist").html(Citydropdown);
+
+    },
+    complete: function (result) {
+
+    },
+    error: function (err) { console.log(JSON.stringify(err)); }
+
+});
+
+var Regiondropdown = "";
+$.ajax({
+    type: 'GET',
+    async: false,
+    url: 'https://localhost:7112/api/Region/all',
+    success: function (result) {
+        Regiondropdown += '<option value="0" style="font-weight: bold;background: #d9d5d5;">No Select</option>';
+        for (var i = 0; i < result.length; i++) {
+            Regiondropdown += '<option value="' + result[i].regionId + '">' + result[i].regionName + '</option>';
+        }
+        $(".Regionlist").html(Regiondropdown);
+        $(".EditRegionlist").html(Regiondropdown);
+
     },
     complete: function (result) {
 
@@ -372,55 +277,30 @@ $.ajax({
 
 
 
-function SaveVC() {
+function Save_Airport() {
 
 
-    var VCObj = {
-        VehicleBrandId: 0,
-        VehicleBrandName: $('.VCnameadd').val(),
-        VehicleCompanyId: $('.companylist option:selected').val(),
+    var AddObj = {
+        AirportID: 0,
+        AirportName: $('.Aiportnameadd').val(),
+        CityID: $('.Citylist option:selected').val(),
+        RegionID: $('.Regionlist option:selected').val(),
 
     }
-
-  
-    const date = new Date();
-    
-    console.log("Starttime : " + date.getMilliseconds())
-
-
-    //  fetch('https://localhost:7010/vehicleInsert', {
-    //    method: 'POST',
-    //    headers: {
-    //        'Accept': 'application/json',
-    //        'Content-Type': 'application/json'
-    //    },
-    //    body: JSON.stringify(VCObj)
-    //})
-    //    .then(response => response.json())
-    //    .then(() => {
-    //             const Enddate = new Date();
-    //            console.log("Endtime : " + Enddate.getMilliseconds());
-    //        //getItems();
-    //        //addNameTextbox.value = '';
-    //    })
-    //    .catch(error => console.error('Unable to add item.', error));
-
-
-
 
     $.ajax({
 
         type: 'POST',
         async: false,
-        data: { Obj: VCObj},
-        url: '/VehicleBrands/Upsert',
+        data: { Obj: AddObj },
+        url: '/Airport/Upsert',
 
         success: function (result) {
             if (result.datasuccess == true) {
                 const Enddate = new Date();
                 console.log("Endtime : " + Enddate.getMilliseconds());
 
-                Command: toastr["success"]("This Vehicle Company Succefully Saved.");
+                Command: toastr["success"]("This Airport Succefully Saved.");
                 var mydata = result.json;// $('#UserDataJson').val();
                 var newdata = JSON.parse(mydata);
 
@@ -438,28 +318,30 @@ function SaveVC() {
         }
     });
 }
+function Edit(item) {
+    debugger
+    var AirportId = $(item).closest("tr").find('#editAID').text();
+    var AirportName = $(item).closest("tr").find('#editAName').text();
+    var CityName = $(item).closest("tr").find('#editACity').text();
+    var RegionName = $(item).closest("tr").find('#editARegion').text();
 
 
-function ShowEditBranch(item) {
-
-    var VCId = $(item).closest("tr").find('#editVBID').text();
-    var VCName = $(item).closest("tr").find('#editVBName').text();
-    var CompanyName = $(item).closest("tr").find('#editVBCID').text();
-
-
-    $('.EditVCId').val(VCId.trim());
-    $('.EditVCnameadd').val(VCName.trim());
-    $('.companylistedit').val(CompanyName).trigger('change');
+    $('.EditAirportID').val(AirportId.trim());
+    $('.EditAirportName').val(AirportName.trim());
+    $('.EditCitylist').val(CityName).trigger('change');
+    $('.EditRegionlist').val(RegionName).trigger('change');
 
 
 }
 
-function EditVC() {
 
-    var VCEditObj = {
-        VehicleBrandId: parseInt($('.EditAirport').val()),
-        VehicleBrandName: $(".EditCitylist").val(),
-        VehicleCompanyId: $(".EditRegionlist").val(),
+function Edit_Airport() {
+
+    var objupdate = {
+        AirportId: parseInt($('.EditAirportID').val()),
+        AirportName: $(".EditAirportName").val(),
+        CityID: $(".EditCitylist").val(),
+        RegionID: $(".EditRegionlist").val(),
 
 
     }
@@ -467,13 +349,13 @@ function EditVC() {
 
         type: 'POST',
         async: false,
-        data: { Obj: VCEditObj },
-        url: '/VehicleBrands/Upsert',
+        data: { Obj: objupdate },
+        url: '/Airport/Upsert',
         success: function (result) {
 
             if (result.datasuccess == true) {
 
-                Command: toastr["success"]("Vehicle Brand SuccessFully Edited !");
+                Command: toastr["success"]("Airport SuccessFully Edited !");
                 var mydata = result.json;// $('#UserDataJson').val();
                 var newdata = JSON.parse(mydata);
 
@@ -482,7 +364,7 @@ function EditVC() {
             }
             else {
 
-                Command: toastr["error"]("This Vehicle Brand not Succefully Edit. \n Somthing Went Wrongs.");
+                Command: toastr["error"]("This Airport not Succefully Edit. \n Somthing Went Wrongs.");
                 var mydata = result.json;// $('#UserDataJson').val();
                 var newdata = JSON.parse(mydata);
 
@@ -494,7 +376,7 @@ function EditVC() {
 
         },
         error: function (err) {
-            Command: toastr["error"]("This Vehicle Company not Succefully Edit. \n Somthing Went Wrongs.");
+            Command: toastr["error"]("This Airport not Succefully Edit. \n Somthing Went Wrongs.");
             // console.log("Error" + err);
         }
     });

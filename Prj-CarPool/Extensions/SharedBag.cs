@@ -48,5 +48,10 @@ namespace Prj_CarPool.Extensions
         public const string MainTainanceHistoryUpsert = APIBaseUrl + "api/MaintainaceHistory/";
         public const string MainTainanceHistoryDelete = APIBaseUrl + "api/MaintainaceHistory/DeleteMaintainaceHistory";
         public const string MainTainanceHistorylist = APIBaseUrl + "api/MaintainaceHistory/all";
+
+
+        public const string AirportUpsert = APIBaseUrl + "api/Airport/";
+        public const string AirportDelete = APIBaseUrl + "api/Airport/DeleteAirport";
+        public const string Airportlist = APIBaseUrl + "api/Airport/all";
     }
 }

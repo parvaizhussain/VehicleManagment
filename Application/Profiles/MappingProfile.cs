@@ -2,6 +2,10 @@
 using Application.Features.AccessRights.Commands.UpdateAccessRights;
 using Application.Features.AccessRights.Queries.GetAccessRightsByID;
 using Application.Features.AccessRights.Queries.GetAccessRightsList;
+using Application.Features.Airport.Command.Create;
+using Application.Features.Airport.Command.Update;
+using Application.Features.Airport.Querys.GetByID;
+using Application.Features.Airport.Querys.GetByList;
 using Application.Features.Branch.Commands.CreateBranch;
 using Application.Features.Branch.Commands.UpdateBranch;
 using Application.Features.Branch.Queries.GetBranchByID;
@@ -172,7 +176,14 @@ namespace Application.Profiles
 			CreateMap<Driver, Get_Driver_ListVM>().ReverseMap();
 			CreateMap<Driver, Update_Driver_Commads>().ReverseMap();
 
-		}
+
+
+            CreateMap<Airport, Create_Airport_Commands>().ReverseMap();
+            CreateMap<Airport, Create_Airport_Dto>().ReverseMap();
+            CreateMap<Airport, Get_Airport_VM>().ReverseMap();
+            CreateMap<Airport, Get_Airport_ListVM>().ReverseMap();
+            CreateMap<Airport, Update_Airport_Commads>().ReverseMap();
+        }
 
 
     }

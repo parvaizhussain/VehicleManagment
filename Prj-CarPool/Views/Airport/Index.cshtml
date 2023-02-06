@@ -1,0 +1,182 @@
+﻿@model IEnumerable<Utility.Models.Airport>
+@using System.Text.Json;
+@{
+    ViewData["Title"] = "Airport";
+    var UserData = JsonSerializer.Deserialize<Domain.ViewModels.UserViewModel>(@ViewBag.JsonUserData);
+}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@tabler/icons@latest/iconfont/tabler-icons.min.css">
+<link rel="stylesheet" href="~/assets/vendor/libs/spinkit/spinkit.css" />
+
+<link href="~/vendor/libs/toastr/toastr.css" rel="stylesheet" />
+@* ************** Content ************** *@
+<input type="hidden" id="UserData" value="@ViewBag.JsonUserData">
+<input type="hidden" id="UserDataJson" value="@ViewBag.JsonData">
+
+<input type="hidden" id="SelectedRegion" value="">
+
+
+@*Menu Items from the database*@
+
+<!-- Toast with Placements -->
+<div class="bs-toast toast toast-placement-ex m-2"
+     role="alert"
+     aria-live="assertive"
+     aria-atomic="true"
+     data-bs-delay="2000">
+    <div class="toast-header">
+        <i class="ti ti-bell ti-xs me-2"></i>
+        <div class="me-auto fw-semibold">Bootstrap</div>
+        <small class="text-muted">11 mins ago</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">Hello, world! This is a toast message.</div>
+</div>
+<!-- Toast with Placements -->
+
+<input type="text" class="form-control navigationId" hidden="hidden" />
+
+<div class="card">
+    <div class="card-header border-bottom">
+        <h5 class="card-title mb-3">Airport</h5>
+
+    </div>
+
+
+    <div class="card-datatable table-responsive mytable">
+        <table class="datatables-users-mytable table border-top">
+            <thead>
+                <tr>
+                    <th class="visiblityhidden"></th>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th class="visiblityhidden"></th>
+                    <th>City</th>
+                    <th class="visiblityhidden"></th>
+                    <th>Region</th>
+                    <th>Active</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <div class="modal fade" tabindex="-1" id="offcanvasAddUser" aria-labelledby="offcanvasAddUserLabel">
+        <!--offcanvasAddUser-->
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 id="offcanvasAddUserLabel" class="modal-title">Add Airpot</h5>
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="add-new-user pt-0" id="addNewUserForm" onsubmit="return false">
+
+                        @* <div class="col-lg-4 col-md-4 col-xs-12 col-sm-6 visiblityhidden">
+        <div class="form-group">
+
+        <label class="visiblityhidden">ID</label>
+        <input type="text" class="form-control branchId visiblityhidden" value="0" />
+        </div>
+        </div>*@
+
+                        <div class="mb-3">
+
+                            <span class="stred">*</span><label class="form-label">Aiport Name</label>
+                            <input type="text" class="form-control Aiportnameadd onlyalphabetallowwithspace" />
+                            <p class="error-message">* Name Required</p>
+                        </div>
+
+                        <div class="mb-3">
+
+                            <span class="stred">*</span><label class="form-label">Select City</label>
+                            <select class="form-control select2 Citylist"></select>
+                            <p class="error-message">* City Required</p>
+                        </div>
+                        <div class="mb-3">
+
+                            <span class="stred">*</span><label class="form-label">Select Region</label>
+                            <select class="form-control select2 Regionlist"></select>
+                            <p class="error-message">* Region Required</p>
+                        </div>
+
+                        <button type="button" class="btn btn-primary me-sm-3 me-1" onclick="Save_Airport()">Submit</button>
+                        <button type="reset" class="btn btn-label-secondary" id="btnCancelSave" data-bs-dismiss="modal">Cancel</button>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- Offcanvas to Edit new Navigation -->
+    <div class="modal fade" tabindex="-1" id="offcanvasEditNav" aria-labelledby="offcanvasEditNavLabel">
+        <!--offcanvasAddUser-->
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 id="offcanvasAddUserLabel" class="modal-title">Edit Airport</h5>
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="add-new-user pt-0" id="EditNewUserForm" onsubmit="return false">
+
+                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-6 visiblityhidden">
+                            <div class="form-group">
+
+                                <label class="visiblityhidden">ID</label>
+                                <input type="text" class="form-control EditAirportID visiblityhidden" disabled value="0" />
+                            </div>
+                        </div>
+                        <div class="mb-3">
+
+                            <span class="stred">*</span><label class="form-label">Airport Name</label>
+                            <input type="text" class="form-control EditAirportName onlyalphabetallowwithspace" />
+                            <p class="error-message">* Name Required</p>
+                        </div>
+                        <div class="mb-3">
+
+                            <span class="stred">*</span><label class="form-label">Select City</label>
+                            <select class="form-control select2 EditCitylist"></select>
+                            <p class="error-message">* City Required</p>
+                        </div>
+                        <div class="mb-3">
+
+                            <span class="stred">*</span><label class="form-label">Select Region</label>
+                            <select class="form-control select2 EditRegionlist"></select>
+                            <p class="error-message">* Region Required</p>
+                        </div>
+
+
+                        <button type="button" class="btn btn-primary me-sm-3 me-1" onclick="Edit_Airport()">Edit</button>
+                        <button type="reset" class="btn btn-label-secondary" id="btnCancelEdit" data-bs-dismiss="modal">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="content-backdrop fade"></div>
+
+
+
+<style>
+    .error-message {
+        display: none !important;
+    }
+</style>
+
+<script src="~/assets/vendor/libs/block-ui/block-ui.js"></script>
+<script src="~/js/ui-toasts.js"></script>
+<script src="~/assets/js/extended-ui-blockui.js"></script>
+<script src="~/js/projectjs/Airport.js"></script>
+@*  <script src="~/assets/js/app-user-list.js" defer></script>*@
+<script defer>
+
+</script>
+
