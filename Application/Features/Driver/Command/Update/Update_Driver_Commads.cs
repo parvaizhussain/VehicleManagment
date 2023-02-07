@@ -15,7 +15,7 @@ namespace Application.Features.Driver.Command.Update
         public string DriverContact { get; set; }
         public string DriverCNIC { get; set; }
         public string DriverLicense { get; set; }
-        public byte[] DriverImage { get; set; }
+        public byte[]? DriverImage { get; set; }
         public int RegionID { get; set; }
         public int CityID { get; set; }
     }

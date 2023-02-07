@@ -29,7 +29,7 @@ namespace Prj_CarPool.Extensions
             services.AddSingleton<IAccessRightsRepository,AccessRightsRepository>();
             services.AddSingleton<IAirportRepository, AirpotRepository>();
             services.AddSingleton<ICityRepository, CityRepository>();
-
+            services.AddSingleton<IDriverRepository, DriverRepository>();
             return services;
         }
     }

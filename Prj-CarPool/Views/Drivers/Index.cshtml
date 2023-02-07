@@ -1,0 +1,430 @@
+﻿@model IEnumerable<Utility.Models.Driver>
+@using System.Text.Json;
+@{
+    ViewData["Title"] = "Vehicle Company";
+    var UserData = JsonSerializer.Deserialize<Domain.ViewModels.UserViewModel>(@ViewBag.JsonUserData);
+}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@tabler/icons@latest/iconfont/tabler-icons.min.css">
+<link rel="stylesheet" href="~/assets/vendor/libs/spinkit/spinkit.css" />
+
+<link href="~/vendor/libs/toastr/toastr.css" rel="stylesheet" />
+@* ************** Content ************** *@
+<input type="hidden" id="UserData" value="@ViewBag.JsonUserData">
+<input type="hidden" id="UserDataJson" value="@ViewBag.JsonData">
+
+<input type="hidden" id="SelectedRegion" value="">
+
+
+@*Menu Items from the database*@
+
+<!-- Toast with Placements -->
+<div class="bs-toast toast toast-placement-ex m-2"
+     role="alert"
+     aria-live="assertive"
+     aria-atomic="true"
+     data-bs-delay="2000">
+    <div class="toast-header">
+        <i class="ti ti-bell ti-xs me-2"></i>
+        <div class="me-auto fw-semibold">Bootstrap</div>
+        <small class="text-muted">11 mins ago</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">Hello, world! This is a toast message.</div>
+</div>
+<!-- Toast with Placements -->
+
+<input type="text" class="form-control navigationId" hidden="hidden" />
+
+<div class="card">
+    <div class="card-header border-bottom">
+        <h5 class="card-title mb-3">Drivers</h5>
+
+    </div>
+
+
+    <div class="card-datatable table-responsive mytable">
+        <table class="datatables-users-mytable table border-top">
+            <thead>
+                <tr>
+                    <th class="visiblityhidden"></th>
+                    <th>Driver ID</th>
+                    <th>Driver Name</th>
+                    <th>Driver Contact</th>
+                    <th>Driver ERP</th>
+                    <th>Driver License</th>
+                    <th>Region ID</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+
+
+    <!-- Offcanvas to add new user -->
+    <div class="modal fade" tabindex="-1" id="offcanvasAddUser" aria-labelledby="offcanvasAddUserLabel">
+
+        <div class="modal-dialog modal-lg modal-simple modal-edit-user">
+            <div class="modal-content p-3 p-md-5">
+                
+                <div class="modal-body">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="text-center mb-4">
+                        <h3 class="mb-2">Add Driver Information</h3>
+                        <p class="text-muted">Add new Driver details.</p>
+                    </div>
+                    <form class="row g-3" id="addNewUserForm" onsubmit="return false">
+
+                        @* <div class="col-lg-4 col-md-4 col-xs-12 col-sm-6 visiblityhidden">
+                        <div class="form-group">
+
+                        <label class="visiblityhidden">ID</label>
+                        <input type="text" class="form-control branchId visiblityhidden" value="0" />
+                        </div>
+                        </div>*@
+
+                        <div class="col-12">
+
+                            <span class="stred">*</span><label class="form-label">Driver Full Name</label>
+                            <input type="text" class="form-control addDriverName onlyalphabetallowwithspace" />
+                            <p class="error-message">* Name Required</p>
+                        </div>
+
+
+                        <div class="col-12 col-md-6">
+
+                            <span class="stred">*</span><label class="form-label">Driver Contact</label>
+                            <input type="text" class="form-control addDriverContact prefix-mask" placeholder="0000-0000000" />
+                            <p class="error-message">* Name Required</p>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <span class="stred">*</span><label class="form-label">Driver CNIC</label>
+                            <input type="text" class="form-control addDriverCNIC  NIC-mask" placeholder="00000-0000000-0" />
+                            <p class="error-message">* Name Required</p>
+                        </div>
+
+
+                        <div class="col-12 col-md-6">
+
+                            <span class="stred">*</span><label class="form-label">Driver ERP</label>
+                            <input type="text" class="form-control addDriverERP Number-mask" />
+                            <p class="error-message">* Name Required</p>
+                        </div>
+
+
+                        <div class="col-12 col-md-6">
+
+                            <span class="stred">*</span><label class="form-label">Driver Licence #</label>
+                            <input type="text" class="form-control addDriverLicence Number-mask-Lice" />
+                            <p class="error-message">* Name Required</p>
+                        </div>
+
+
+
+                        <div class="col-12 col-md-6">
+
+                            <span class="stred">*</span><label class="form-label">Select Region</label>
+                            <select class="form-control select2 regionlist"></select>
+                            <p class="error-message">* Name Required</p>
+                        </div>
+
+                        <div class="col-12">
+                            <span class="stred">*</span><label class="form-label">Driver Image </label>
+                            <div class="text-center">
+                            <div class="d-flex align-items-start align-items-sm-center gap-4">
+                                    <div class="button-wrapper">
+                                        <label for="upload" class="btn btn-primary me-2 mb-3" tabindex="0">
+                                            <span class="d-none d-sm-block">Upload new photo</span>
+                                            <i class="ti ti-upload d-block d-sm-none"></i>
+                                            <input type="file"
+                                                   id="upload"
+                                                   class="account-file-input"
+                                                   hidden
+                                                   accept="image/png, image/jpeg" />
+                                        </label>
+                                        <button type="button" class="btn btn-label-secondary account-image-reset mb-3">
+                                            <i class="ti ti-refresh-dot d-block d-sm-none"></i>
+                                            <span class="d-none d-sm-block">Reset</span>
+                                        </button>
+                                        <div class="text-muted">Allowed JPG, GIF or PNG. Max size of 800K</div>
+                                    </div>
+                                    <img src="~/img/CityLogo/defaultAvatar.jpg"
+                                     alt="user-avatar"
+                                     class="d-block w-px-100 h-px-100 rounded"
+                                     id="uploadedAvatar" />
+                              
+                            </div>
+                            </div>
+                        </div>
+
+                      @*  <button type="button" class="btn btn-primary me-sm-3 me-1" onclick="SaveVC()">Submit</button>
+                        <button type="reset" class="btn btn-label-secondary" id="btnCancelSave" data-bs-dismiss="modal">Cancel</button>*@
+
+                        <div class="col-12 text-center">
+
+                            <button type="button" class="btn btn-primary me-sm-3 me-1" onclick="SaveVC()">Submit</button>
+                            <button type="reset" class="btn btn-label-secondary" id="btnEXCancelSave" aria-label="Close" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+
+
+                </div>
+                </div>
+                </div>
+        <!--offcanvasAddUser-->
+      
+
+    </div>
+
+
+
+    <!-- Offcanvas to Edit new Navigation -->
+    <div class="modal fade" tabindex="-1" id="offcanvasEditNav" aria-labelledby="offcanvasEditNavLabel">
+        <!--offcanvasAddUser-->
+        <div class="modal-dialog modal-lg modal-simple modal-edit-user">
+            <div class="modal-content p-3 p-md-5">
+             
+                
+                <div class="modal-body">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="text-center mb-4">
+                        <h3 class="mb-2">Edit Driver Information</h3>
+                        <p class="text-muted">Update Driver details.</p>
+                    </div>
+                    <form class="row g-3" id="editNewUserForm" onsubmit="return false">
+
+                        <div class="col-2">
+                        <span class="stred">*</span><label class="form-label">ID</label>
+                        <input type="text" class="form-control editDriverId" disabled value="0" />
+                       
+                        </div>
+
+                        <div class="col-10">
+
+                            <span class="stred">*</span><label class="form-label">Driver Full Name</label>
+                            <input type="text" class="form-control editDriverName onlyalphabetallowwithspace" />
+                            <p class="error-message">* Name Required</p>
+                        </div>
+
+
+                        <div class="col-12 col-md-6">
+
+                            <span class="stred">*</span><label class="form-label">Driver Contact</label>
+                            <input type="text" class="form-control editDriverContact onlyalphabetallowwithspace" />
+                            <p class="error-message">* Name Required</p>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <span class="stred">*</span><label class="form-label">Driver CNIC</label>
+                            <input type="text" class="form-control editDriverCNIC onlyalphabetallowwithspace" />
+                            <p class="error-message">* Name Required</p>
+                        </div>
+
+
+                        <div class="col-12 col-md-6">
+
+                            <span class="stred">*</span><label class="form-label">Driver ERP</label>
+                            <input type="text" class="form-control editDriverERP onlyalphabetallowwithspace" />
+                            <p class="error-message">* Name Required</p>
+                        </div>
+
+
+                        <div class="col-12 col-md-6">
+
+                            <span class="stred">*</span><label class="form-label">Driver Licence #</label>
+                            <input type="text" class="form-control editDriverLicence onlyalphabetallowwithspace" />
+                            <p class="error-message">* Name Required</p>
+                        </div>
+
+
+
+                        <div class="col-12 col-md-6">
+
+                            <span class="stred">*</span><label class="form-label">Select Region</label>
+                            <select class="form-control select2 editregionlist"></select>
+                            <p class="error-message">* Name Required</p>
+                        </div>
+
+                        <div class="col-12">
+                            <span class="stred">*</span><label class="form-label">Driver Image </label>
+                            <div class="text-center">
+                                <div class="d-flex align-items-start align-items-sm-center gap-4">
+                                    <div class="button-wrapper">
+                                        <label for="editupload" class="btn btn-primary me-2 mb-3" tabindex="0">
+                                            <span class="d-none d-sm-block">Upload new photo</span>
+                                            <i class="ti ti-upload d-block d-sm-none"></i>
+                                            <input type="file"
+                                                   id="editupload"
+                                                   class="edit-account-file-input"
+                                                   hidden
+                                                   accept="image/png, image/jpeg"
+                                                   />
+                                        </label>
+                                        <button type="button" class="btn btn-label-secondary edit-account-image-reset mb-3">
+                                            <i class="ti ti-refresh-dot d-block d-sm-none"></i>
+                                            <span class="d-none d-sm-block">Reset</span>
+                                        </button>
+                                        <div class="text-muted">Allowed JPG, GIF or PNG. Max size of 800K</div>
+                                    </div>
+                                    <img src="~/img/CityLogo/defaultAvatar.jpg"
+                                         alt="user-avatar"
+                                         class="d-block w-px-100 h-px-100 rounded"
+                                         id="edituploadedAvatar" />
+
+                                </div>
+                            </div>
+                        </div>
+
+                        @*  <button type="button" class="btn btn-primary me-sm-3 me-1" onclick="SaveVC()">Submit</button>
+                        <button type="reset" class="btn btn-label-secondary" id="btnCancelSave" data-bs-dismiss="modal">Cancel</button>*@
+
+                        <div class="col-12 text-center">
+
+                            <button type="button" class="btn btn-primary me-sm-3 me-1" onclick="EditVC()">Edit</button>
+                            <button type="reset" class="btn btn-label-secondary" id="btnCancelEdit" aria-label="Close" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Offcanvas to Edit new Navigation -->
+    <div class="modal fade" tabindex="-1" id="offcanvasViewNav" aria-labelledby="offcanvasViewNavLabel">
+        <!--offcanvasAddUser-->
+        <div class="modal-dialog modal-lg modal-simple modal-edit-user">
+            <div class="modal-content p-3 p-md-5">
+
+
+                <div class="modal-body">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    @*<div class="text-center mb-4">
+                        <h3 class="mb-2">View Driver Information</h3>
+                        <p class="text-muted">Update Driver details.</p>
+                    </div>*@
+                    <!-- User Card -->
+                   
+                        
+                           <div class="DetailViewHtml"></div>
+                        
+                  
+                    <!-- /User Card -->
+                 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content-backdrop fade"></div>
+
+
+
+<style>
+    .error-message {
+        display: none !important;
+    }
+</style>
+
+
+<script src="~/assets/vendor/libs/block-ui/block-ui.js"></script>
+<script src="~/js/ui-toasts.js"></script>
+<script src="~/assets/js/extended-ui-blockui.js"></script>
+<script src="~/js/projectjs/Drivers.js"></script>
+<script>
+    //debugger
+    let accountUserImage = document.getElementById('uploadedAvatar');
+    const fileInput = document.querySelector('.account-file-input'),
+      resetFileInput = document.querySelector('.account-image-reset');
+   
+    if (accountUserImage) {
+      const resetImage = accountUserImage.src;
+      fileInput.onchange = () => {
+        if (fileInput.files[0]) {
+
+             //   console.log(((fileInput.files[0].size/1024)/1024).toFixed(4))
+                accountUserImage.src = window.URL.createObjectURL(fileInput.files[0]);
+              //  alert(accountUserImage.src);
+        }
+      };
+      resetFileInput.onclick = () => {
+        fileInput.value = '';
+        accountUserImage.src = resetImage;
+      };
+    }
+    
+    let editaccountUserImage = document.getElementById('edituploadedAvatar');
+    const editfileInput = document.querySelector('.edit-account-file-input'),
+    editresetFileInput = document.querySelector('.edit-account-image-reset');
+
+    if (editaccountUserImage) {
+        const editresetImage = editaccountUserImage.src;
+        editfileInput.onchange = () => {
+            if (editfileInput.files[0]) {
+
+                //console.log(((editfileInput.files[0].size / 1024) / 1024).toFixed(4))
+                editaccountUserImage.src = window.URL.createObjectURL(editfileInput.files[0]);
+              //  alert(editaccountUserImage.src);
+            }
+        };
+        editresetFileInput.onclick = () => {
+            editfileInput.value = '';
+            editaccountUserImage.src = editresetImage;
+        };
+    }
+
+
+      const prefixMask = document.querySelector('.prefix-mask');
+      const NICMask = document.querySelector('.NIC-mask');
+      const NumMask = document.querySelector('.Number-mask');
+    const NumMaskLic = document.querySelector('.Number-mask-Lice');
+
+       // Prefix
+  if (prefixMask) {
+    new Cleave(prefixMask, {
+      delimiter:"-",
+      prefix: '03',
+      blocks: [4,7],
+      numericOnly: true,
+     
+    });
+  }
+
+    if (NICMask) {
+        new Cleave(NICMask, {
+      delimiter:"-",
+      blocks: [5,7,1],
+      numericOnly: true,
+     
+    });
+  }
+
+    if (NumMask) {
+        new Cleave(NumMask, {
+            blocks: [10],
+            numericOnly: true
+        });
+    }
+    if (NumMaskLic) {
+        new Cleave(NumMaskLic, {
+            blocks: [10],
+            numericOnly: true
+        });
+    }
+
+
+</script>
+<script>
+
+   
+
+</script>
+@*<script src="~/assets/js/pages-account-settings-account.js"></script>*@
+
+@*  <script src="~/assets/js/app-user-list.js" defer></script>*@
+<script defer>
+
+</script>
+

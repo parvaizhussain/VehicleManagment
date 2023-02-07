@@ -23,7 +23,7 @@ namespace Application.Features.Driver.Querys.GetByList
 
         public async Task<List<Get_Driver_ListVM>> Handle(Get_Driver_ListQuery request, CancellationToken cancellationToken)
         {
-            var allCity = (await _unitOfWork.Driver.GetAll(null, null, null));
+            var allCity = (await _unitOfWork.Driver.GetAll(null, null, "Region"));
             return _mapper.Map<List<Get_Driver_ListVM>>(allCity);
         }
     }

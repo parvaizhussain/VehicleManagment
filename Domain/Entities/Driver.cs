@@ -4,11 +4,12 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using Domain.Common;
 using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class Driver
+    public class Driver : AuditableEntity
     {
         [Key]
         public int DriverID { get; set; }

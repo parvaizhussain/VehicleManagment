@@ -1,19 +1,4 @@
-﻿function formatdatewithMonth(itemdate) {
-    if (itemdate == "0001-01-01T00:00:00") {
-        return "-";
-    }
-    else {
-        let monthNames = ["Jan", "Feb", "Mar", "Apr",
-            "May", "Jun", "Jul", "Aug",
-            "Sep", "Oct", "Nov", "Dec"];
-        var date = new Date(itemdate);
-        //day = ("0" + (date.getDate())).slice(-2)
-        day = date.getDate();
-        month = monthNames[date.getMonth()];
-        year = date.getFullYear();
-        return day + "-" + month + "-" + year;
-    }
-}
+﻿
 
 function LoadTable(newdatas) {
     console.log(newdatas);
