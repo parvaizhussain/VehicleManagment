@@ -53,5 +53,9 @@ namespace Prj_CarPool.Extensions
         public const string AirportUpsert = APIBaseUrl + "api/Airport/";
         public const string AirportDelete = APIBaseUrl + "api/Airport/DeleteAirport";
         public const string Airportlist = APIBaseUrl + "api/Airport/all";
+
+        public const string CityUpsert = APIBaseUrl + "api/City/";
+        public const string CityDelete = APIBaseUrl + "api/City/DeleteCity";
+        public const string Citylist = APIBaseUrl + "api/City/all";
     }
 }

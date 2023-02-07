@@ -24,7 +24,7 @@ namespace Application.Features.City.Queries.GetCityList
         public async Task<List<GetCityListVM>> Handle(GetCityListQuery request, CancellationToken cancellationToken)
         {
             var allCity = (await _unitOfWork.City.GetAll(null,null,"Region"));
-            return _mapper.Map<List<GetCityListVM>>(allCity);
+            return _mapper.Map<List<GetCityListVM>>(allCity.Where(x=> x.IsDeleted == false));
         }
     }
 }

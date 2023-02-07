@@ -28,6 +28,7 @@ namespace Prj_CarPool.Extensions
             services.AddSingleton<IRegionRepository,RegionRepository>();
             services.AddSingleton<IAccessRightsRepository,AccessRightsRepository>();
             services.AddSingleton<IAirportRepository, AirpotRepository>();
+            services.AddSingleton<ICityRepository, CityRepository>();
 
             return services;
         }

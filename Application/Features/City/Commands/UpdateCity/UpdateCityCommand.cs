@@ -7,6 +7,7 @@ namespace Application.Features.City.Commands.UpdateCity
     {
         public int CityId { get; set; }
         public string CityName { get; set; }
+    public string CityDescription { get; set; }
 
         public string NormalizedName { get; set; }
 

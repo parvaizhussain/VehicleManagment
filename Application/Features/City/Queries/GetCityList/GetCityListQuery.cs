@@ -7,5 +7,6 @@ namespace Application.Features.City.Queries.GetCityList
 {
     public class GetCityListQuery : IRequest<List<GetCityListVM>>
     {
+
     }
 }
