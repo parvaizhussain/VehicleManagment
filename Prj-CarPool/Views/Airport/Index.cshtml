@@ -76,12 +76,12 @@
                     <form class="add-new-user pt-0" id="addNewUserForm" onsubmit="return false">
 
                         @* <div class="col-lg-4 col-md-4 col-xs-12 col-sm-6 visiblityhidden">
-        <div class="form-group">
+                            <div class="form-group">
 
-        <label class="visiblityhidden">ID</label>
-        <input type="text" class="form-control branchId visiblityhidden" value="0" />
-        </div>
-        </div>*@
+                            <label class="visiblityhidden">ID</label>
+                            <input type="text" class="form-control branchId visiblityhidden" value="0" />
+                            </div>
+                            </div>*@
 
                         <div class="mb-3">
 
@@ -159,7 +159,38 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" tabindex="-1" id="offcanvasDeleteNav" aria-labelledby="offcanvasEditNavLabel">
+        <!--offcanvasAddUser-->
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 id="offcanvasAddUserLabel" class="modal-title">City</h5>
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="add-new-user pt-0" id="deleteNewUserForm" onsubmit="return false">
 
+                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-6 visiblityhidden">
+                            <div class="form-group">
+
+
+                                <input type="text" class="form-control EditAirportID visiblityhidden" disabled value="0" />
+                            </div>
+                        </div>
+                        <div class="mb-3">
+
+                            <h3 class="form-label">Are you sure you want to delete this record?</h3>
+
+                        </div>
+
+
+                        <button type="button" class="btn btn-primary me-sm-3 me-1" onclick="Delete_Airport()">Delete</button>
+                        <button type="reset" class="btn btn-label-secondary" id="btnDelete" data-bs-dismiss="modal">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="content-backdrop fade"></div>
 

@@ -19,5 +19,6 @@ namespace Application.Features.Airport.Querys.GetByList
         public int RegionID { get; set; }
 
         public virtual Domain.Entities.Region Region { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

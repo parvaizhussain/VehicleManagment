@@ -10,7 +10,10 @@ namespace Application.Features.Airport.Querys.GetByID
     {
         public int AirportID { get; set; }
         public string AirportName { get; set; }
-        public int CityID { get; set; }
-        public int RegionID { get; set; }
+      //  public int CityID { get; set; }
+        //public int RegionID { get; set; }
+        public bool IsDeleted { get; set; }
+        public Domain.Entities.City City { get; set; }
+        public Domain.Entities.Region Region { get; set; }
     }
 }

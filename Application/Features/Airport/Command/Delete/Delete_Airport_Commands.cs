@@ -12,5 +12,7 @@ namespace Application.Features.Airport.Command.Delete
 {
     public class Delete_Airport_Commands : IRequest<Get_Airport_VM>
     {
+
+        public int AirportID { get; set; }
     }
 }

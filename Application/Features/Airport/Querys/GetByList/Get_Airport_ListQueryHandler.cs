@@ -24,7 +24,7 @@ namespace Application.Features.Airport.Querys.GetByList
         public async Task<List<Get_Airport_ListVM>> Handle(Get_Airport_ListQuery request, CancellationToken cancellationToken)
         {
             var allAirport = (await _unitOfWork.Airport.GetAll(null, null, "Region,City"));
-            return _mapper.Map<List<Get_Airport_ListVM>>(allAirport);
+            return _mapper.Map<List<Get_Airport_ListVM>>(allAirport.Where(x=> x.IsDeleted == false));
         }
     }
 }

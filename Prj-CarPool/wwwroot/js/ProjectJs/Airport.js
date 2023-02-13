@@ -33,7 +33,7 @@
         }
         stutbl += '<td><div class="d-flex align-items-center">';
         stutbl += '<a  onclick ="Edit(this)" class="text-body" data-bs-toggle="modal" data-bs-target="#offcanvasEditNav" ><i class="ti ti-edit ti-sm me-2"></i></a>';
-        stutbl += '<a href="/" class="text-body delete-record"><i class="ti ti-trash ti-sm mx-2"></i></a>';
+        stutbl += '<a onclick ="Delete(this)"  class="text-body delete-record" data-bs-toggle="modal" data-bs-target="#offcanvasDeleteNav"  ><i class="ti ti-trash ti-sm mx-2"></i></a>';
         stutbl += '<a href="/" class="text-body dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm mx-1"></i></a>';
         stutbl += '<div class="dropdown-menu dropdown-menu-end m-0">';
         stutbl += '<a href="/" class="dropdown-item">View</a>';
@@ -380,4 +380,60 @@ function Edit_Airport() {
             // console.log("Error" + err);
         }
     });
+}
+function Delete(item) {
+    debugger
+
+    var AirportId = $(item).closest("tr").find('#editAID').text();
+   
+    $('.EditAirportID').val(AirportId.trim());
+
+}
+
+
+function Delete_Airport() {
+
+    var objDelete = {
+        AirportID: parseInt($('.EditAirportID').val()),
+
+
+
+    }
+    $.ajax({
+
+        type: 'POST',
+        async: false,
+        data: { Obj: objDelete },
+        url: '/Airport/Delete',
+        success: function (result) {
+
+            if (result.datasuccess == true) {
+
+                Command: toastr["success"]("Airport SuccessFully Deleted !");
+                var mydata = result.json;// $('#UserDataJson').val();
+                var newdata = JSON.parse(mydata);
+
+                LoadTable(newdata);
+                $('#btnDelete').click();
+            }
+            else {
+
+                Command: toastr["error"]("This Airport not Succefully Deleted. \n Somthing Went Wrongs.");
+                var mydata = result.json;// $('#UserDataJson').val();
+                var newdata = JSON.parse(mydata);
+
+                LoadTable(newdata);
+                $('#btnDelete').click();
+            }
+        },
+        complete: function (result) {
+
+        },
+        error: function (err) {
+            Command: toastr["error"]("This City not Succefully Deleted. \n Somthing Went Wrongs.");
+            // console.log("Error" + err);
+        }
+    });
+
+
 }

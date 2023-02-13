@@ -57,6 +57,23 @@ namespace Prj_CarPool.Controllers
             return View(Obj);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Delete(Utility.Models.Airport Obj)
+        {
+
+            if (Obj.AirportID != 0)
+            {
+
+                var deptobj = await _AirportRepository.UpdateAsync(Extensions.SharedBag.AirportDelete, Obj, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
+                var datajson = await _AirportRepository.GetAllAsync(Extensions.SharedBag.Airportlist, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
+                string jsondata = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = datajson.OrderByDescending(x => x.AirportID) });
+                return Json(new { datasuccess = deptobj, json = jsondata });
+
+            }
+
+            return View(Obj);
+        }
+
 
     }
 }

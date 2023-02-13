@@ -18,13 +18,13 @@
 
         stutbl += '<td id="editCRegion" hidden="hidden">' + newdatas.data[st].Region.RegionId + '</td>';
         stutbl += '<td>' + newdatas.data[st].Region.RegionName + '</td>';
-        if (newdatas.data[st].IsActive !== true) {
-            stutbl += '<td id="editVCActive"><span class="badge bg-label-danger" text-capitalized>InActive</span></td>';
-        }
-        else {
-            stutbl += '<td id="editVCActive"><span class="badge bg-label-success" text-capitalized>Active</span></td>';
+        //if (newdatas.data[st].IsActive !== true) {
+        //    stutbl += '<td id="editVCActive"><span class="badge bg-label-danger" text-capitalized>InActive</span></td>';
+        //}
+        //else {
+        //    stutbl += '<td id="editVCActive"><span class="badge bg-label-success" text-capitalized>Active</span></td>';
 
-        }
+        //}
         stutbl += '<td><div class="d-flex align-items-center">';
         stutbl += '<a  onclick ="Edit(this)" class="text-body" data-bs-toggle="modal" data-bs-target="#offcanvasEditNav" ><i class="ti ti-edit ti-sm me-2"></i></a>';
         stutbl += '<a onclick ="Delete(this)"  class="text-body delete-record" data-bs-toggle="modal" data-bs-target="#offcanvasDeleteNav"  ><i class="ti ti-trash ti-sm mx-2"></i></a>';
@@ -365,10 +365,7 @@ function Delete_City() {
 
     var objDelete = {
         CityId: parseInt($('.EditCityID').val()),
-      
-
-
-    }
+   }
     $.ajax({
 
         type: 'POST',
