@@ -10,7 +10,6 @@
     <Compile Remove="Features\Driver\Command\CreateDriver\**" />
     <Compile Remove="Features\Driver\Command\DeleteDriver\**" />
     <Compile Remove="Features\Driver\Command\UpdateDriver\**" />
-    <Compile Remove="Features\FuelCard\**" />
     <Compile Remove="Features\VehicleBrands\Command\CreateDriver\**" />
     <Compile Remove="Features\VehicleBrands\Command\DeleteDriver\**" />
     <Compile Remove="Features\VehicleBrands\Command\UpdateDriver\**" />
@@ -18,7 +17,6 @@
     <EmbeddedResource Remove="Features\Driver\Command\CreateDriver\**" />
     <EmbeddedResource Remove="Features\Driver\Command\DeleteDriver\**" />
     <EmbeddedResource Remove="Features\Driver\Command\UpdateDriver\**" />
-    <EmbeddedResource Remove="Features\FuelCard\**" />
     <EmbeddedResource Remove="Features\VehicleBrands\Command\CreateDriver\**" />
     <EmbeddedResource Remove="Features\VehicleBrands\Command\DeleteDriver\**" />
     <EmbeddedResource Remove="Features\VehicleBrands\Command\UpdateDriver\**" />
@@ -26,7 +24,6 @@
     <None Remove="Features\Driver\Command\CreateDriver\**" />
     <None Remove="Features\Driver\Command\DeleteDriver\**" />
     <None Remove="Features\Driver\Command\UpdateDriver\**" />
-    <None Remove="Features\FuelCard\**" />
     <None Remove="Features\VehicleBrands\Command\CreateDriver\**" />
     <None Remove="Features\VehicleBrands\Command\DeleteDriver\**" />
     <None Remove="Features\VehicleBrands\Command\UpdateDriver\**" />

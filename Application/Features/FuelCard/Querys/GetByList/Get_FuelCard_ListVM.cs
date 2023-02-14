@@ -1,16 +1,13 @@
-﻿using Domain.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Entities
+namespace Application.Features.FuelCard.Querys.GetByList
 {
-    public class FuelCard : AuditableEntity
+    public class Get_FuelCard_ListVM
     {
-        [Key]
         public int CardID { get; set; }
         public string CardName { get; set; }
         public string CardNum { get; set; }

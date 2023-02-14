@@ -22,6 +22,10 @@ using Application.Features.Driver.Command.Create;
 using Application.Features.Driver.Command.Update;
 using Application.Features.Driver.Querys.GetByID;
 using Application.Features.Driver.Querys.GetByList;
+using Application.Features.FuelCard.Command.Create;
+using Application.Features.FuelCard.Command.Update;
+using Application.Features.FuelCard.Querys.GetByID;
+using Application.Features.FuelCard.Querys.GetByList;
 using Application.Features.Group.Commands.CreateGroup;
 using Application.Features.Group.Commands.UpdateGroup;
 using Application.Features.Group.Queries.GetGroupByID;
@@ -183,6 +187,12 @@ namespace Application.Profiles
             CreateMap<Airport, Get_Airport_VM>().ReverseMap();
             CreateMap<Airport, Get_Airport_ListVM>().ReverseMap();
             CreateMap<Airport, Update_Airport_Commads>().ReverseMap();
+
+            CreateMap<FuelCard, Create_FuelCard_Commands>().ReverseMap();
+            CreateMap<FuelCard, Create_FuelCard_Dto>().ReverseMap();
+            CreateMap<FuelCard, Get_FuelCard_VM>().ReverseMap();
+            CreateMap<FuelCard, Get_FuelCard_ListVM>().ReverseMap();
+            CreateMap<FuelCard, Update_FuelCard_Commands>().ReverseMap();
         }
 
 
