@@ -906,6 +906,22 @@ table.dataTable.dtr-column > tbody > tr > th.control:before {
   color: #fff !important;
 }
 
+.flatpickr-monthSelect-month.today {
+    border-color: #7367f0;
+}
+
+    .flatpickr-monthSelect-month.inRange, .flatpickr-monthSelect-month.nextMonthDay.inRange, .flatpickr-monthSelect-month.prevMonthDay.inRange, .flatpickr-monthSelect-month.today.inRange, .flatpickr-monthSelect-month.nextMonthDay.today.inRange, .flatpickr-monthSelect-month.prevMonthDay.today.inRange {
+        border-color: #3a3b64 !important;
+        background: #3a3b64 !important;
+        color: #7367f0 !important;
+    }
+
+.flatpickr-monthSelect-month.selected, .flatpickr-monthSelect-month.selected.inRange, .flatpickr-monthSelect-month.selected:focus, .flatpickr-monthSelect-month.selected:hover, .flatpickr-monthSelect-month.selected.prevMonthDay, .flatpickr-monthSelect-month.selected.nextMonthDay, .flatpickr-monthSelect-month.startRange, .flatpickr-monthSelect-month.startRange.inRange, .flatpickr-monthSelect-month.startRange:focus, .flatpickr-monthSelect-month.startRange:hover, .flatpickr-monthSelect-month.startRange.prevMonthDay, .flatpickr-monthSelect-month.startRange.nextMonthDay, .flatpickr-monthSelect-month.endRange, .flatpickr-monthSelect-month.endRange.inRange, .flatpickr-monthSelect-month.endRange:focus, .flatpickr-monthSelect-month.endRange:hover, .flatpickr-monthSelect-month.endRange.nextMonthDay, .flatpickr-monthSelect-month.endRange.prevMonthDay, .flatpickr-monthSelect-month.week.selected {
+    background: #7367f0 !important;
+    border-color: #7367f0 !important;
+    color: #fff !important;
+}
+
 .daterangepicker td.active:not(.off) {
   background: #7367f0 !important;
   color: #fff;

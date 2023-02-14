@@ -905,10 +905,24 @@ table.dataTable.dtr-column > tbody > tr > th.control:before {
   background: #F94A29 !important;
   border-color: #F94A29 !important;
 }
+.flatpickr-monthSelect-month.today {
+    border-color: #F94A29;
+}
+.flatpickr-monthSelect-month.inRange, .flatpickr-monthSelect-month.nextMonthDay.inRange, .flatpickr-monthSelect-month.prevMonthDay.inRange, .flatpickr-monthSelect-month.today.inRange, .flatpickr-monthSelect-month.prevMonthDay.today.inRange, .flatpickr-monthSelect-month.nextMonthDay.today.inRange {
+  color: #F94A29 !important;
+  background: #e9e7fd !important;
+  border-color: #e9e7fd !important;
+}
+.flatpickr-monthSelect-month.selected, .flatpickr-monthSelect-month.selected.inRange, .flatpickr-monthSelect-month.selected:focus, .flatpickr-monthSelect-month.selected:hover, .flatpickr-monthSelect-month.selected.nextMonthDay, .flatpickr-monthSelect-month.selected.prevMonthDay, .flatpickr-monthSelect-month.startRange, .flatpickr-monthSelect-month.startRange.inRange, .flatpickr-monthSelect-month.startRange:focus, .flatpickr-monthSelect-month.startRange:hover, .flatpickr-monthSelect-month.startRange.nextMonthDay, .flatpickr-monthSelect-month.startRange.prevMonthDay, .flatpickr-monthSelect-month.endRange, .flatpickr-monthSelect-month.endRange.inRange, .flatpickr-monthSelect-month.endRange:focus, .flatpickr-monthSelect-month.endRange:hover, .flatpickr-monthSelect-month.endRange.nextMonthDay, .flatpickr-monthSelect-month.endRange.prevMonthDay, .flatpickr-monthSelect-month.week.selected {
+  color: #fff !important;
+  background: #F94A29 !important;
+  border-color: #F94A29 !important;
+}
+
 
 .daterangepicker td.active:not(.off) {
-  background: #F94A29 !important;
-  color: #fff;
+    background: #F94A29 !important;
+    color: #fff;
 }
 
 .daterangepicker .start-date:not(.end-date):not(.off),
