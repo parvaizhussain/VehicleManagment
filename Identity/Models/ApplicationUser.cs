@@ -18,6 +18,7 @@ namespace Identity.Models
 
         public bool IsCluster { get; set; }
         public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
         public byte[]? UserImage { get; set; }
     }
 }

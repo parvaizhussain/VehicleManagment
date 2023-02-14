@@ -19,6 +19,7 @@ namespace Prj_CarPool.Controllers
             _memoryCache = memoryCache;
             _db = db;
         }
+        
         public async Task<IActionResult> Index()
         
         {

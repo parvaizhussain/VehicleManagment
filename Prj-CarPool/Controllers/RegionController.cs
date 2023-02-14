@@ -27,7 +27,7 @@ namespace Prj_CarPool.Controllers
             ViewBag.JsonUserData = _memoryCache.Get(SharedBag.UserAccountDetail);
             // List<Domain.Entities.Branch> branch = _db.Branch.ToList();
             List<Region> branch = (List<Region>)await _regionRepository.GetAllAsync(Extensions.SharedBag.Regionlist, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
-            string json = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = branch.OrderByDescending(x => x.RegionId) });
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = branch.Where(x => x.IsDeleted == false).OrderByDescending(x => x.RegionId) });
 
             ViewBag.JsonData = json;
             return View(branch);
@@ -43,7 +43,7 @@ namespace Prj_CarPool.Controllers
                     var deptobj = await _regionRepository.CreateAsyncJson(Extensions.SharedBag.RegionUpsert, Obj, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
                     var datajson = await _regionRepository.GetAllAsync(Extensions.SharedBag.Regionlist, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
 
-                    string jsondata = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = datajson.OrderByDescending(x => x.RegionId) });
+                    string jsondata = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = datajson.Where(x => x.IsDeleted == false).OrderByDescending(x => x.RegionId) });
                     return Json(new { datasuccess = true, json = jsondata });
 
                 }
@@ -52,11 +52,27 @@ namespace Prj_CarPool.Controllers
                     var deptobj = await _regionRepository.UpdateAsync(Extensions.SharedBag.RegionUpsert, Obj, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
                     var datajson = await _regionRepository.GetAllAsync(Extensions.SharedBag.Regionlist, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
 
-                    string jsondata = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = datajson.OrderByDescending(x => x.RegionId) });
+                    string jsondata = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = datajson.Where(x => x.IsDeleted == false).OrderByDescending(x => x.RegionId) });
                     return Json(new { datasuccess = true, json = jsondata });
 
                 }
             }
+            return View(Obj);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(Utility.Models.Region Obj)
+        {
+
+            if (Obj.RegionId != 0)
+            {
+                var deptobj = await _regionRepository.UpdateAsync(Extensions.SharedBag.RegionDelete, Obj, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
+                var datajson = await _regionRepository.GetAllAsync(Extensions.SharedBag.Regionlist, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
+                string jsondata = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = datajson.Where(x=>x.IsDeleted == false).OrderByDescending(x => x.RegionId) });
+                return Json(new { datasuccess = deptobj, json = jsondata });
+
+            }
+
             return View(Obj);
         }
     }

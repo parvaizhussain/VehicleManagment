@@ -41,7 +41,7 @@ namespace Prj_CarPool.IServices.Services
                                   ParentMenuName = m.NavigationMenu.ParentNavigationMenu.Name,
                                   Visible = m.NavigationMenu.Visible,
 								  CssClass = m.NavigationMenu.CssClass,
-							  }).Distinct().ToListAsync();
+							  }).Distinct().OrderBy(x => x.DisplayOrder).ToListAsync();
 
 			return data;
 		}

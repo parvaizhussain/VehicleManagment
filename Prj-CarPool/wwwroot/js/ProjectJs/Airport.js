@@ -35,7 +35,7 @@
         }
         stutbl += '<td><div class="d-flex align-items-center">';
         stutbl += '<a  onclick ="Edit(this)" class="text-body" data-bs-toggle="modal" data-bs-target="#offcanvasEditNav" ><i class="ti ti-edit ti-sm me-2"></i></a>';
-        stutbl += '<a onclick ="Delete(this)"  class="text-body delete-record" data-bs-toggle="modal" data-bs-target="#offcanvasDeleteNav"  ><i class="ti ti-trash ti-sm mx-2"></i></a>';
+        stutbl += '<a onclick ="Delete(this)"  class="text-body delete-record"><i class="ti ti-trash ti-sm mx-2"></i></a>';
         stutbl += '<a href="/" class="text-body dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm mx-1"></i></a>';
         stutbl += '<div class="dropdown-menu dropdown-menu-end m-0">';
         stutbl += '<a href="/" class="dropdown-item">View</a>';
@@ -388,56 +388,109 @@ function Edit_Airport() {
     });
 }
 
-function Delete(item) {
-    debugger
+//function Delete(item) {
+//    debugger
 
-    var AirportId = $(item).closest("tr").find('#editAID').text();
+//    var AirportId = $(item).closest("tr").find('#editAID').text();
    
-    $('.EditAirportID').val(AirportId.trim());
+//    $('.EditAirportID').val(AirportId.trim());
 
-}
+//}
 
 
-function Delete_Airport() {
+//function Delete_Airport() {
 
+//    var objDelete = {
+//        AirportID: parseInt($('.EditAirportID').val()),
+//    }
+//    $.ajax({
+
+//        type: 'POST',
+//        async: false,
+//        data: { Obj: objDelete },
+//        url: '/Airport/Delete',
+//        success: function (result) {
+
+//            if (result.datasuccess == true) {
+
+//                Command: toastr["success"]("Airport SuccessFully Deleted !");
+//                var mydata = result.json;// $('#UserDataJson').val();
+//                var newdata = JSON.parse(mydata);
+
+//                LoadTable(newdata);
+//                $('#btnDelete').click();
+//            }
+//            else {
+
+//                Command: toastr["error"]("This Airport not Succefully Deleted. \n Somthing Went Wrongs.");
+//                var mydata = result.json;// $('#UserDataJson').val();
+//                var newdata = JSON.parse(mydata);
+
+//                LoadTable(newdata);
+//                $('#btnDelete').click();
+//            }
+//        },
+//        complete: function (result) {
+
+//        },
+//        error: function (err) {
+//            Command: toastr["error"]("This City not Succefully Deleted. \n Somthing Went Wrongs.");
+//            // console.log("Error" + err);
+//        }
+//    });
+
+
+//}
+
+
+function Delete(item) {
+    var AirportId = $(item).closest("tr").find('#editAID').text();
     var objDelete = {
-        AirportID: parseInt($('.EditAirportID').val()),
+        AirportID: AirportId,
     }
-    $.ajax({
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        customClass: {
+            confirmButton: 'btn btn-primary me-3',
+            cancelButton: 'btn btn-label-secondary'
+        },
+        buttonsStyling: false
+    }).then(function (result) {
+        if (result.value) {
 
-        type: 'POST',
-        async: false,
-        data: { Obj: objDelete },
-        url: '/Airport/Delete',
-        success: function (result) {
+            $.ajax({
 
-            if (result.datasuccess == true) {
-
-                Command: toastr["success"]("Airport SuccessFully Deleted !");
+                type: 'POST',
+                async: false,
+                data: { Obj: objDelete },
+                url: '/Airport/Delete',
+                success: function (result) {
                 var mydata = result.json;// $('#UserDataJson').val();
                 var newdata = JSON.parse(mydata);
 
                 LoadTable(newdata);
-                $('#btnDelete').click();
-            }
-            else {
+               
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Deleted!',
+                        text: 'Your file has been deleted.',
+                        customClass: {
+                            confirmButton: 'btn btn-success'
+                        }
+                    });
+                }
+            });
 
-                Command: toastr["error"]("This Airport not Succefully Deleted. \n Somthing Went Wrongs.");
-                var mydata = result.json;// $('#UserDataJson').val();
-                var newdata = JSON.parse(mydata);
+           
 
-                LoadTable(newdata);
-                $('#btnDelete').click();
-            }
-        },
-        complete: function (result) {
 
-        },
-        error: function (err) {
-            Command: toastr["error"]("This City not Succefully Deleted. \n Somthing Went Wrongs.");
-            // console.log("Error" + err);
+
         }
     });
-
-
 }
+
+   

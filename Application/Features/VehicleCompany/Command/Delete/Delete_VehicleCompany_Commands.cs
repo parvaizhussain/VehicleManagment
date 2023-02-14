@@ -11,6 +11,5 @@ namespace Application.Features.VehicleCompany.Command.Delete
     public class Delete_VehicleCompany_Commands : IRequest<Get_VehicleCompany_VM>
     {
         public int VehicleCompanyId { get; set; }
-        public string VehicleCompanyName { get; set; }
     }
 }

@@ -24,7 +24,7 @@ namespace Application.Features.AccessRights.Queries.GetAccessRightsList
         public async Task<List<GetAccessRightsListVM>> Handle(GetAccessRightsListQuery request, CancellationToken cancellationToken)
         {
             var allAccessRights = (await _unitOfWork.AccessRights.ListAllAsync());
-            return _mapper.Map<List<GetAccessRightsListVM>>(allAccessRights);
+            return _mapper.Map<List<GetAccessRightsListVM>>(allAccessRights.Where(x=>x.IsDeleted == false));
         }
     }
 }

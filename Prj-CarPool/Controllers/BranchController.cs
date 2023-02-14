@@ -27,7 +27,7 @@ namespace Prj_CarPool.Controllers
             ViewBag.JsonUserData = _memoryCache.Get(SharedBag.UserAccountDetail);
             // List<Domain.Entities.Branch> branch = _db.Branch.ToList();
             List<Utility.Models.Branch> branch = (List<Utility.Models.Branch>)await _BranchRepository.GetAllAsync(Extensions.SharedBag.Branchlist, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
-            string json = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = branch.OrderByDescending(x => x.BranchId) });
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = branch.Where(x => x.IsDeleted == false).OrderByDescending(x => x.BranchId) });
 
             ViewBag.JsonData = json;
             return View(branch);
@@ -42,7 +42,7 @@ namespace Prj_CarPool.Controllers
                    var deptobj = await _BranchRepository.CreateAsyncJson(Extensions.SharedBag.BranchUpsert, Obj, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
                    var datajson = await _BranchRepository.GetAllAsync(Extensions.SharedBag.Branchlist, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
 
-                    string jsondata = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = datajson.OrderByDescending(x => x.BranchId) });
+                    string jsondata = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = datajson.Where(x=>x.IsDeleted == false).OrderByDescending(x => x.BranchId) });
                     return Json(new { datasuccess = true , json  = jsondata });
 
                 }
@@ -51,7 +51,7 @@ namespace Prj_CarPool.Controllers
                     var deptobj = await _BranchRepository.UpdateAsync(Extensions.SharedBag.BranchUpsert, Obj, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
                     var datajson = await _BranchRepository.GetAllAsync(Extensions.SharedBag.Branchlist, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
 
-                    string jsondata = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = datajson.OrderByDescending(x => x.BranchId) });
+                    string jsondata = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = datajson.Where(x => x.IsDeleted == false).OrderByDescending(x => x.BranchId) });
                     return Json(new { datasuccess = true, json = jsondata });
 
                 }
@@ -60,17 +60,22 @@ namespace Prj_CarPool.Controllers
         }
 
 
-        [HttpPatch]
-        public async Task<IActionResult> deleteBranch(Branch deleteObj)
+        [HttpPost]
+        public async Task<IActionResult> Delete(Utility.Models.Branch Obj)
         {
-            if (ModelState.IsValid)
+
+            if (Obj.BranchId != 0)
             {
-                var deptobj = await _BranchRepository.UpdateAsync(Extensions.SharedBag.BranchDelete, deleteObj, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
-                return Json(new { data = deptobj });
+
+                var deptobj = await _BranchRepository.UpdateAsync(Extensions.SharedBag.BranchDelete, Obj, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
+                var datajson = await _BranchRepository.GetAllAsync(Extensions.SharedBag.Branchlist, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
+                string jsondata = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = datajson.Where(x => x.IsDeleted == false).OrderByDescending(x => x.BranchId) });
+                return Json(new { datasuccess = deptobj, json = jsondata });
 
             }
-            return View(deleteObj);
+
+            return View(Obj);
         }
-    
+
     }
 }

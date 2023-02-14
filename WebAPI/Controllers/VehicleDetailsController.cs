@@ -47,7 +47,7 @@ namespace WebAPI.Controllers
             return Ok(response);
         }
 
-        [HttpPatch("DeleteVB", Name = "DeleteVD_ById")]
+        [HttpPatch("DeleteVD", Name = "DeleteVD_ById")]
         public async Task<ActionResult<Get_VehicleDetails_VM>> DeleteCityById([FromBody] Delete_VehicleDetails_Commands DeleteCityCommand)
         {
             var response = await _mediator.Send(DeleteCityCommand);

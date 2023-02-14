@@ -61,10 +61,10 @@ namespace Prj_CarPool.Controllers
                                      on us.RegionId equals reg.RegionId into _reg
                                      from reg in _reg.DefaultIfEmpty()
                                      where us.RegionId == UserData.RegionId
-                                     select us).ToListAsync();
+                                     select us).Where(x => x.IsDeleted == false).ToListAsync();
                
                 var userView = new List<UserViewModel>();
-                var userFinddetails = _dbi.Users.Include(x => x.AccessRights).Include(x => x.Region).ToList();
+                var userFinddetails = _dbi.Users.Where(x => x.IsDeleted == false).Include(x => x.AccessRights).Include(x => x.Region).ToList();
 
                 foreach (var item in userFinddetails)
                 {
@@ -163,7 +163,7 @@ namespace Prj_CarPool.Controllers
 
 
                         var userView = new List<UserViewModel>();
-                        var userFinddetails = _dbi.Users.Include(x => x.AccessRights).Include(x => x.Region).ToList();
+                        var userFinddetails = _dbi.Users.Where(x => x.IsDeleted == false).Include(x => x.AccessRights).Include(x => x.Region).ToList();
 
                         foreach (var item in userFinddetails)
                         {
@@ -243,7 +243,7 @@ namespace Prj_CarPool.Controllers
                     await _userManager.RemoveFromRolesAsync(user, userRoles);
                     await _userManager.AddToRolesAsync(user, viewModel.Roles.Select(x => x.Name));
                     var userView = new List<UserViewModel>();
-                    var userFinddetails = _dbi.Users.Include(x => x.AccessRights).Include(x => x.Region).ToList();
+                    var userFinddetails = _dbi.Users.Where(x => x.IsDeleted == false).Include(x => x.AccessRights).Include(x => x.Region).ToList();
 
                     foreach (var item in userFinddetails)
                     {
@@ -289,10 +289,77 @@ namespace Prj_CarPool.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> DeleteUser(string Uid)
+        {
+            try
+            {
+
+                if (ModelState.IsValid)
+                {
+                    var user = await _dbi.Users
+                      //.Include(x => x.Region)
+                      .Include(x => x.AccessRights)
+                      .Where(x => x.Id == Uid).FirstOrDefaultAsync();
+                    
+                    user.IsDeleted = true;
+
+                    _dbi.SaveChanges();
+
+                    var userRoles = await _userManager.GetRolesAsync(user);
+
+                    await _userManager.RemoveFromRolesAsync(user, userRoles);
+                   
+                    var userView = new List<UserViewModel>();
+                    var userFinddetails = _dbi.Users.Where(x=>x.IsDeleted).Include(x => x.AccessRights).Include(x => x.Region).ToList();
+
+                    foreach (var item in userFinddetails)
+                    {
+                        var userRoleId = await _dbi.UserRoles.Where(x => x.UserId == item.Id).Select(x => x.RoleId).FirstOrDefaultAsync();
+                        var allRoles = await _dbi.Roles.Where(x => x.Id == userRoleId).ToListAsync();
+                        userView.Add(new UserViewModel()
+                        {
+
+                            UserName = item.UserName,
+                            FirstName = item.FirstName,
+                            LastName = item.LastName,
+                            Email = item.Email,
+                            Id = item.Id,
+                            AccessRightsId = item.AccessRightsId,
+                            RegionId = item.RegionId,
+                            IsActive = item.IsActive,
+                            UserImage = item.UserImage,
+                            AccessRights = item.AccessRights,
+                            Region = item.Region,
+                            Roles = allRoles.Select(x => new RoleViewModel()
+                            {
+                                Id = x.Id,
+                                Name = x.Name,
+                                Group = x.Group
+                            }).ToArray()
+
+
+                        });
+
+                    }
+
+                    string json = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = userView });
+                    return Json(new { Messeage = "User Edited Successfully!", Deleted = true, dataresult = json });
+                }
+                else
+                    return Json(new { Deleted = false });
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        [HttpPost]
         public async Task<IActionResult> UserFind(string id)
         {
             var userView = new List<UserViewModel>();
-            var userFinddetails = _dbi.Users.Include(x => x.AccessRights).Include(x => x.Region).Where(x => x.Id == id).ToList();
+            var userFinddetails = _dbi.Users.Where(x => x.IsDeleted == false).Include(x => x.AccessRights).Include(x => x.Region).Where(x => x.Id == id).ToList();
 
             foreach (var item in userFinddetails)
             {

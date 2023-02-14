@@ -43,7 +43,7 @@ namespace Prj_CarPool.Controllers
             var navigationViewModel = new List<NavigationMenuViewModel>();
             try
             {
-                var navigations = _dbi.NavigationMenu.Include(x => x.ParentNavigationMenu).ToList();
+                var navigations = _dbi.NavigationMenu.Where(x => x.IsDeleted == false).Include(x => x.ParentNavigationMenu).ToList();
                 foreach (var item in navigations)
                 {
                     navigationViewModel.Add(new NavigationMenuViewModel()
@@ -76,7 +76,7 @@ namespace Prj_CarPool.Controllers
         {
             try
             {
-                var navigations = _dbi.NavigationMenu.ToList();
+                var navigations = _dbi.NavigationMenu.Where(x => x.IsDeleted == false).ToList();
                 if (navigations != null)
                     return Json(navigations);
                 else
@@ -97,7 +97,7 @@ namespace Prj_CarPool.Controllers
             try
             {
                 var NavigationMenuValueViewModel = new List<NavigationMenuValueViewModel>();
-                var navigations = _dbi.NavigationMenu.ToList();
+                var navigations = _dbi.NavigationMenu.Where(x => x.IsDeleted == false).ToList();
                 foreach (var item in navigations)
                 {
                     NavigationMenuValueViewModel.Add(new NavigationMenuValueViewModel()
@@ -177,7 +177,7 @@ namespace Prj_CarPool.Controllers
                     var navigationViewModel = new List<NavigationMenuViewModel>();
                     try
                     {
-                        var navigations = _dbi.NavigationMenu.Include(x => x.ParentNavigationMenu).ToList();
+                        var navigations = _dbi.NavigationMenu.Where(x => x.IsDeleted == false).Include(x => x.ParentNavigationMenu).ToList();
                         foreach (var item in navigations)
                         {
                             navigationViewModel.Add(new NavigationMenuViewModel()
@@ -214,7 +214,6 @@ namespace Prj_CarPool.Controllers
         }
 
         [HttpPost]
-
         public async Task<IActionResult> EditNavigation(NavigationMenuViewModel viewModel)
         {
             try
@@ -240,7 +239,7 @@ namespace Prj_CarPool.Controllers
                     var navigationViewModel = new List<NavigationMenuViewModel>();
                     try
                     {
-                        var navigations = _dbi.NavigationMenu.Include(x => x.ParentNavigationMenu).ToList();
+                        var navigations = _dbi.NavigationMenu.Where(x => x.IsDeleted == false).Include(x => x.ParentNavigationMenu).ToList();
                         foreach (var item in navigations)
                         {
                             navigationViewModel.Add(new NavigationMenuViewModel()
@@ -277,12 +276,72 @@ namespace Prj_CarPool.Controllers
             }
         }
 
+
+        [HttpPost]
+        public async Task<IActionResult> DeletedNavigation(int id)
+        {
+            try
+            {
+
+                if (ModelState.IsValid)
+                {
+
+                    var nav = _dbi.NavigationMenu.Where(x => x.Id == id).FirstOrDefault();
+
+                  
+                    //nav.Permitted = viewModel.Permitted;
+                     nav.IsDeleted = true;
+
+
+                    await _dbi.SaveChangesAsync();
+
+                    var navigationViewModel = new List<NavigationMenuViewModel>();
+                    try
+                    {
+                        var navigations = _dbi.NavigationMenu.Where(x=>x.IsDeleted == false).Include(x => x.ParentNavigationMenu).ToList();
+                        foreach (var item in navigations)
+                        {
+                            navigationViewModel.Add(new NavigationMenuViewModel()
+                            {
+                                Id = item.Id,
+                                Name = item.Name,
+                                ControllerName = item.ControllerName,
+                                Visible = item.Visible,
+                                DisplayOrder = item.DisplayOrder,
+                                ParentMenuId = item.ParentNavigationMenu != null ? item.ParentNavigationMenu.Id : 0,
+                                CssClass = item.CssClass,
+                                ParentMenuName = item.ParentNavigationMenu != null ? item.ParentNavigationMenu.Name : ""
+                            });
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger?.LogError(ex, ex.GetBaseException().Message);
+                    }
+
+                    string json = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = navigationViewModel.OrderByDescending(x => x.Id) });
+
+
+                    return Json(new { datasuccess = true, json = json });
+
+                    //  return Json(true);
+                }
+                else
+                    return Json(false);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+
         [HttpGet]
         public IActionResult MenuListForSearch()
         {
             try
             {
-                var navigations = _dbi.NavigationMenu.Select(x=> new { x.Name, x.ControllerName,x.CssClass}).ToList();
+                var navigations = _dbi.NavigationMenu.Where(x => x.IsDeleted == false).Select(x=> new { x.Name, x.ControllerName,x.CssClass}).ToList();
                               
                 var userSearchViewModels = new List<UserSearchViewModel>();
                 try

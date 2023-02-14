@@ -59,6 +59,21 @@ namespace Prj_CarPool.Controllers
             }
             return View(Obj);
         }
+        [HttpPost]
+        public async Task<IActionResult> Delete(Utility.Models.AccessRight Obj)
+        {
+
+            if (Obj.AccessId != 0)
+            {
+                var deptobj = await _accessRightsRepository.UpdateAsync(Extensions.SharedBag.AccessRightsDelete, Obj, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
+                var datajson = await _accessRightsRepository.GetAllAsync(Extensions.SharedBag.AccessRightslist, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
+                string jsondata = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = datajson.OrderByDescending(x => x.AccessId) });
+                return Json(new { datasuccess = deptobj, json = jsondata });
+
+            }
+
+            return View(Obj);
+        }
 
     }
 }

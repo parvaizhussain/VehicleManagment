@@ -11,12 +11,6 @@ namespace Application.Features.MaintainaceHistory.Command.Delete
     public class Delete_MaintainaceHistory_Commands : IRequest<Get_MaintainaceHistory_VM>
     {
         public int MaintainaceHistoryId { get; set; }
-        public string? MaintainaceLocation { get; set; }
-        public DateTime MaintainaceDateForm { get; set; }
-        public DateTime MaintainaceDateTo { get; set; }
-        public string? CarNumber { get; set; }
-        public string? Issue { get; set; }
-        public string? InvoiceNo { get; set; }
-        public decimal Amount { get; set; }
+      
     }
 }

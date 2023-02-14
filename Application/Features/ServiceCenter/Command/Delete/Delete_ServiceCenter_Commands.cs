@@ -11,5 +11,7 @@ namespace Application.Features.ServiceCenter.Command.Delete
 {
     public class Delete_ServiceCenter_Commands : IRequest<Get_ServiceCenter_VM>
     {
+        public int ServiceCenterId { get; set; }
+
     }
 }

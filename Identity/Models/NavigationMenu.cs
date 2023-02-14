@@ -44,6 +44,8 @@ namespace Identity.Models
 		public bool? Permitted { get; set; }
 
 		public bool Visible { get; set; }
+		public bool IsActive { get; set; }
+		public bool IsDeleted { get; set; }
 		public string? CssClass { get; set; }
 		public string? IdClass { get; set; }
 	}

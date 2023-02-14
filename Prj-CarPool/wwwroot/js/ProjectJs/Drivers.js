@@ -65,7 +65,7 @@
         var objPass = JSON.stringify(newdatas.data[st]);
         stutbl += '<td><div class="d-flex align-items-center">';
         stutbl += '<a  onclick ="ShowEditBranch(this)" class="text-body" data-bs-toggle="modal" data-bs-target="#offcanvasEditNav" ><i class="ti ti-edit ti-sm me-2"></i></a>';
-        stutbl += '<a href="/" class="text-body delete-record"><i class="ti ti-trash ti-sm mx-2"></i></a>';
+        stutbl += '<a onclick ="Delete(this)" class="text-body delete-record"><i class="ti ti-trash ti-sm mx-2"></i></a>';
         stutbl += '<a  onclick="ViewDetails(' + "'" + objPass.replaceAll('"', '...') + "'" + ')" class="text-body" data-bs-toggle="modal" data-bs-target="#offcanvasViewNav" ><i class="ti ti-eye ti-sm me-2"></i></a>';
        /* stutbl += '<a href="/" class="text-body dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm mx-1"></i></a>';*/
         //stutbl += '<div class="dropdown-menu dropdown-menu-end m-0">';
@@ -763,4 +763,53 @@ function ViewDetails(data) {
     details += '</div>';
 
     $('.DetailViewHtml').html(details);
+}
+function Delete(item) {
+    var driverID = $(item).closest("tr").find('#editVBID').text();
+    var objDelete = {
+        DriverID: driverID,
+    }
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        customClass: {
+            confirmButton: 'btn btn-primary me-3',
+            cancelButton: 'btn btn-label-secondary'
+        },
+        buttonsStyling: false
+    }).then(function (result) {
+        if (result.value) {
+
+            $.ajax({
+
+                type: 'POST',
+                async: false,
+                data: { Obj: objDelete },
+                url: '/Drivers/Delete',
+                success: function (result) {
+                    var mydata = result.json;// $('#UserDataJson').val();
+                    var newdata = JSON.parse(mydata);
+
+                    LoadTable(newdata);
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Deleted!',
+                        text: 'Your file has been deleted.',
+                        customClass: {
+                            confirmButton: 'btn btn-success'
+                        }
+                    });
+                }
+            });
+
+
+
+
+
+        }
+    });
 }

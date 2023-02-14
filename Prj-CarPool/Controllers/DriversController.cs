@@ -26,7 +26,7 @@ namespace Prj_CarPool.Controllers
         {
             ViewBag.JsonUserData = _memoryCache.Get(SharedBag.UserAccountDetail);
             List<Driver> DriverList = (List<Driver>)await _driverRepository.GetAllAsync(Extensions.SharedBag.Driverlist, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
-            string json = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = DriverList.OrderByDescending(x => x.DriverID) });
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = DriverList.Where(x => x.IsDeleted == false).OrderByDescending(x => x.DriverID) });
 
             ViewBag.JsonData = json;
             return View(DriverList);
@@ -46,7 +46,7 @@ namespace Prj_CarPool.Controllers
                         var deptobj = await _driverRepository.CreateAsyncJson(Extensions.SharedBag.DriverUpsert, Obj, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
                         var datajson = await _driverRepository.GetAllAsync(Extensions.SharedBag.Driverlist, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
 
-                        string jsondata = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = datajson.OrderByDescending(x => x.DriverID) });
+                        string jsondata = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = datajson.Where(x => x.IsDeleted == false).OrderByDescending(x => x.DriverID) });
                         return Json(new { datasuccess = true, json = jsondata });
                     }
                     else
@@ -58,11 +58,29 @@ namespace Prj_CarPool.Controllers
                 {
                     var deptobj = await _driverRepository.UpdateAsync(Extensions.SharedBag.DriverUpsert, Obj, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
                     var datajson = await _driverRepository.GetAllAsync(Extensions.SharedBag.Driverlist, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
-                    string jsondata = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = datajson.OrderByDescending(x => x.DriverID) });
+                    string jsondata = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = datajson.Where(x => x.IsDeleted == false).OrderByDescending(x => x.DriverID) });
                     return Json(new { datasuccess = deptobj, json = jsondata });
 
                 }
             }
+            return View(Obj);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(Utility.Models.Driver Obj)
+        {
+
+            if (Obj.DriverID != 0)
+            {
+
+                var deptobj = await _driverRepository.UpdateAsync(Extensions.SharedBag.DriverDelete, Obj, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
+                var datajson = await _driverRepository.GetAllAsync(Extensions.SharedBag.Driverlist, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
+                string jsondata = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = datajson.Where(x=>x.IsDeleted == false).OrderByDescending(x => x.DriverID) });
+                return Json(new { datasuccess = deptobj, json = jsondata });
+
+            }
+
             return View(Obj);
         }
     }

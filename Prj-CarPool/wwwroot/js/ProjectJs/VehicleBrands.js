@@ -46,7 +46,7 @@
         }
         stutbl += '<td><div class="d-flex align-items-center">';
         stutbl += '<a  onclick ="ShowEditBranch(this)" class="text-body" data-bs-toggle="modal" data-bs-target="#offcanvasEditNav" ><i class="ti ti-edit ti-sm me-2"></i></a>';
-        stutbl += '<a href="/" class="text-body delete-record"><i class="ti ti-trash ti-sm mx-2"></i></a>';
+        stutbl += '<a onclick ="Delete(this)" class="text-body delete-record"><i class="ti ti-trash ti-sm mx-2"></i></a>';
         stutbl += '<a href="/" class="text-body dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm mx-1"></i></a>';
         stutbl += '<div class="dropdown-menu dropdown-menu-end m-0">';
         stutbl += '<a href="/" class="dropdown-item">View</a>';
@@ -499,6 +499,56 @@ function EditVC() {
         error: function (err) {
             Command: toastr["error"]("This Vehicle Company not Succefully Edit. \n Somthing Went Wrongs.");
             // console.log("Error" + err);
+        }
+    });
+}
+
+function Delete(item) {
+    var vehicleBrandId = $(item).closest("tr").find('#editVBID').text();
+    var objDelete = {
+        VehicleBrandId: vehicleBrandId,
+    }
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        customClass: {
+            confirmButton: 'btn btn-primary me-3',
+            cancelButton: 'btn btn-label-secondary'
+        },
+        buttonsStyling: false
+    }).then(function (result) {
+        if (result.value) {
+
+            $.ajax({
+
+                type: 'POST',
+                async: false,
+                data: { Obj: objDelete },
+                url: '/VehicleBrands/Delete',
+                success: function (result) {
+                    var mydata = result.json;// $('#UserDataJson').val();
+                    var newdata = JSON.parse(mydata);
+
+                    LoadTable(newdata);
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Deleted!',
+                        text: 'Your file has been deleted.',
+                        customClass: {
+                            confirmButton: 'btn btn-success'
+                        }
+                    });
+                }
+            });
+
+
+
+
+
         }
     });
 }

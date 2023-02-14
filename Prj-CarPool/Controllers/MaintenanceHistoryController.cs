@@ -24,7 +24,7 @@ namespace Prj_CarPool.Controllers
         {
             ViewBag.JsonUserData = _memoryCache.Get(SharedBag.UserAccountDetail);
             List<Utility.Models.MaintainaceHistory> vehicleComapanylist = (List<Utility.Models.MaintainaceHistory>)await _maintainanceHistoryRepository.GetAllAsync(Extensions.SharedBag.MainTainanceHistorylist, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
-            string json = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = vehicleComapanylist.OrderByDescending(x => x.MaintainaceHistoryId) });
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = vehicleComapanylist.Where(x => x.IsDeleted == false).OrderByDescending(x => x.MaintainaceHistoryId) });
 
             ViewBag.JsonData = json;
             return View(vehicleComapanylist);
@@ -41,7 +41,7 @@ namespace Prj_CarPool.Controllers
                     var deptobj = await _maintainanceHistoryRepository.CreateAsyncJson(Extensions.SharedBag.MainTainanceHistoryUpsert, Obj, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
                     var datajson = await _maintainanceHistoryRepository.GetAllAsync(Extensions.SharedBag.MainTainanceHistorylist, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
 
-                    string jsondata = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = datajson.OrderByDescending(x => x.MaintainaceHistoryId) });
+                    string jsondata = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = datajson.Where(x => x.IsDeleted == false).OrderByDescending(x => x.MaintainaceHistoryId) });
                     return Json(new { datasuccess = true, json = jsondata });
 
                 }
@@ -49,11 +49,29 @@ namespace Prj_CarPool.Controllers
                 {
                     var deptobj = await _maintainanceHistoryRepository.UpdateAsync(Extensions.SharedBag.MainTainanceHistoryUpsert, Obj, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
                     var datajson = await _maintainanceHistoryRepository.GetAllAsync(Extensions.SharedBag.MainTainanceHistorylist, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
-                    string jsondata = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = datajson.OrderByDescending(x => x.MaintainaceHistoryId) });
+                    string jsondata = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = datajson.Where(x => x.IsDeleted == false).OrderByDescending(x => x.MaintainaceHistoryId) });
                     return Json(new { datasuccess = deptobj, json = jsondata });
 
                 }
             }
+            return View(Obj);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(Utility.Models.MaintainaceHistory Obj)
+        {
+
+            if (Obj.MaintainaceHistoryId != 0)
+            {
+
+                var deptobj = await _maintainanceHistoryRepository.UpdateAsync(Extensions.SharedBag.MainTainanceHistoryDelete, Obj, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
+                var datajson = await _maintainanceHistoryRepository.GetAllAsync(Extensions.SharedBag.MainTainanceHistorylist, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
+                string jsondata = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = datajson.Where(x=>x.IsDeleted == false).OrderByDescending(x => x.MaintainaceHistoryId) });
+                return Json(new { datasuccess = deptobj, json = jsondata });
+
+            }
+
             return View(Obj);
         }
 

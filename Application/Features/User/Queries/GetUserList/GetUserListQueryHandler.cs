@@ -24,7 +24,7 @@ namespace Application.Features.User.Queries.GetUserList
         {
            
             var allSubject = (await _unitOfWork.User.ListAllAsync());
-            return _mapper.Map<List<GetUserListVM>>(allSubject);
+            return _mapper.Map<List<GetUserListVM>>(allSubject.Where(x=>x.IsDeleted == false));
         }
     }
 }

@@ -11,5 +11,7 @@ namespace Application.Features.Driver.Command.Delete
 {
     public class Delete_Driver_Commands : IRequest<Get_Driver_VM>
     {
+        public int DriverID { get; set; }
+
     }
 }

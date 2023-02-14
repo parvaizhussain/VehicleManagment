@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Utility.Models.City>
 @using System.Text.Json;
 @{
-    ViewData["Title"] = "Airport";
+    ViewData["Title"] = "City";
     var UserData = JsonSerializer.Deserialize<Domain.ViewModels.UserViewModel>(@ViewBag.JsonUserData);
 }
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@tabler/icons@latest/iconfont/tabler-icons.min.css">
@@ -37,7 +37,7 @@
 
 <div class="card">
     <div class="card-header border-bottom">
-        <h5 class="card-title mb-3">Airport</h5>
+        <h5 class="card-title mb-3">City</h5>
 
     </div>
 

@@ -60,7 +60,7 @@ namespace Prj_CarPool.Extensions
 
 
         public const string DriverUpsert = APIBaseUrl + "api/Driver/";
-        public const string DriverDelete = APIBaseUrl + "api/Driver/DeleteVB";
+        public const string DriverDelete = APIBaseUrl + "api/Driver/DeleteDriver";
         public const string Driverlist = APIBaseUrl + "api/Driver/all";
     }
 }
