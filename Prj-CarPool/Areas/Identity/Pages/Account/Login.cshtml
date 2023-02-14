@@ -133,11 +133,12 @@
                     <!-- /Logo -->
                     <h3 class="mb-1 fw-bold">Welcome to Car Pool! 👋</h3>
                     <p class="mb-4">Please sign-in to your account!</p>
+                    <div asp-validation-summary="All" class="text-danger"></div>
 
                     <form id="account" class="mb-3" method="post">
                         <div class="mb-3">
                             <label for="email" class="form-label">Email or Username</label>
-                            <input asp-for="Input.Email" class="form-control" autocomplete="username" value="admin@admin.com" aria-required="true" />
+                            <input asp-for="Input.Email" class="form-control" autocomplete="username" value="admin@csn.edu.pk" aria-required="true" />
                             
                             
                            @* <input type="text"

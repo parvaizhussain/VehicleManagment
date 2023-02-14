@@ -155,6 +155,7 @@
                     <th>Controller</th>
                     <th>Parent Menu</th>
                     <th class="visiblityhidden"></th>
+                    <th class="visiblityhidden"></th>
                     <th>Visible</th>
                     <th>display Order</th>
                     <th>Actions</th>
@@ -166,84 +167,97 @@
 
 
     <!-- Offcanvas to add new user -->
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddUser" aria-labelledby="offcanvasAddUserLabel">
+    <div class="modal fade" tabindex="-1" id="offcanvasAddUser" aria-labelledby="offcanvasAddUserLabel">
         <!--offcanvasAddUser-->
+        <div class="modal-dialog modal-lg modal-simple modal-edit-user">
+            <div class="modal-content p-3 p-md-5">
 
-        <div class="offcanvas-header">
-            <h5 id="offcanvasAddUserLabel" class="offcanvas-title">Add Navigation</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+
+                @*<div class="offcanvas-header">
+                <h5 id="offcanvasAddUserLabel" class="offcanvas-title">Add Navigation</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>*@
+                <div class="modal-body">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="text-center mb-4">
+                        <h3 class="mb-2">Add Navigation</h3>
+                        <p class="text-muted">Add New Navigation.</p>
+                    </div>
+                    <form class="row g-3" id="addNewUserForm" onsubmit="return false">
+
+                        <div class="col-12 col-md-12">
+                            <span class="stred">*</span><label class="form-label" for="add-user-fullname">Name</label>
+                            <input type="text" class="form-control menuName onlyalphabetallow" tabindex="1" autofocus />
+                            <p class="error-message">*Name Required</p>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" for="multicol-country">Parent Menu</label>
+                            <select id="multicol-countryAdd" class="select2 form-select navigationparentmenu" data-allow-clear="true">
+                            </select>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label for="selectpickerIcons" class="form-label">Icons</label>
+                            <select class="selectpicker show-tick myselectpickerIcons"
+                                    id="selectpickerIcons"
+                                    data-icon-base="ti"
+                                    data-tick-icon="ti-check"
+                                    data-style="btn-default"
+                                    data-live-search="true">
+                                @*<option data-icon="ti ti-brand-instagram">Instagram</option>
+                                <option data-icon="ti ti-brand-pinterest">Pinterest</option>
+                                <option data-icon="ti ti-brand-twitch">Twitch</option>*@
+                            </select>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <span class="stred">*</span><label class="form-label"> Controller</label>
+                            <input type="text" class="form-control menuController" />
+                            <p class="error-message">* Controller Required</p>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <span class="stred">*</span><label class="form-label" for="add-user-fullname">Dispaly Order</label>
+                            <input type="text" class="form-control menuDisplayorder" tabindex="1" autofocus />
+                            <p class="error-message">*Display Order Required</p>
+                        </div>
+
+                        <div class="text-center">
+                        <button type="button" class="btn btn-primary me-sm-3 me-1" onclick="SaveNavigation()">Submit</button>
+                        <button type="reset" class="btn btn-label-secondary" id="btnCancel" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="offcanvas-body mx-0 flex-grow-0 pt-0 h-100">
-            <form class="add-new-user pt-0" id="addNewUserForm" onsubmit="return false">
-
-                <div class="mb-3">
-                    <span class="stred">*</span><label class="form-label" for="add-user-fullname">Name</label>
-                    <input type="text" class="form-control menuName onlyalphabetallow" tabindex="1" autofocus />
-                    <p class="error-message">*Name Required</p>
-                </div>
-
-                <div class="mb-3">   
-                      <label class="form-label" for="multicol-country">Parent Menu</label>
-                    <select id="multicol-countryAdd" class="select2 form-select navigationparentmenu" data-allow-clear="true">
-                       </select>
-                </div>
-                <div class="mb-3">
-                    <label for="selectpickerIcons" class="form-label">Icons</label>
-                    <select class="selectpicker show-tick myselectpickerIcons"
-                            id="selectpickerIcons"
-                            data-icon-base="ti"
-                            data-tick-icon="ti-check"
-                            data-style="btn-default"
-                            data-live-search="true">
-                        @*<option data-icon="ti ti-brand-instagram">Instagram</option>
-                        <option data-icon="ti ti-brand-pinterest">Pinterest</option>
-                        <option data-icon="ti ti-brand-twitch">Twitch</option>*@
-                    </select>
-                </div>
-
-                <div class="mb-3">
-                    <span class="stred">*</span><label class="form-label"> Controller</label>
-                    <input type="text" class="form-control menuController" />
-                    <p class="error-message">* Controller Required</p>
-                </div>
-
-               <div class="mb-3">
-                    <span class="stred">*</span><label class="form-label" for="add-user-fullname">Dispaly Order</label>
-                    <input type="text" class="form-control menuDisplayorder" tabindex="1" autofocus />
-                    <p class="error-message">*Display Order Required</p>
-                </div>
-               
-               
-                <button type="button" class="btn btn-primary me-sm-3 me-1" onclick="SaveNavigation()">Submit</button>
-                <button type="reset" class="btn btn-label-secondary" id="btnCancel" data-bs-dismiss="offcanvas">Cancel</button>
-            </form>
-        </div>
-
     </div>
 
 
     <!-- Offcanvas to Edit new Navigation -->
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasEditNav" aria-labelledby="offcanvasEditNavLabel">
+    <div class="modal fade" tabindex="-1" id="offcanvasEditNav" aria-labelledby="offcanvasEditNavLabel">
         <!--offcanvasAddUser-->
+         <div class="modal-dialog modal-lg modal-simple modal-edit-user">
+            <div class="modal-content p-3 p-md-5">
+       
+        <div class="modal-body">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="text-center mb-4">
+                        <h3 class="mb-2">Edit Navigation</h3>
+                        <p class="text-muted">Update Navigation.</p>
+                    </div>
+            <form class="row g-3" id="EditNavForm" onsubmit="return false">
 
-        <div class="offcanvas-header">
-            <h5 id="offcanvasEditNavLabel" class="offcanvas-title">Edit Navigation</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body mx-0 flex-grow-0 pt-0 h-100">
-            <form class="add-new-user pt-0" id="EditNavForm" onsubmit="return false">
-               
-                 <div class="mb-3">
+                        <div class="col-12 col-md-12">
                     <span class="stred">*</span><label class="form-label" for="add-user-fullname">ID</label>
                     <input type="text" class="form-control editmenuID" tabindex="1" autofocus />
                     <p class="error-message">*Name Required</p>
                 </div>
-                <div class="mb-3">
+                        <div class="col-12 col-md-12">
                     <span class="stred">*</span><label class="form-label" for="add-user-fullname">Name</label>
                     <input type="text" class="form-control editmenuName onlyalphabetallow" tabindex="1" autofocus />
                     <p class="error-message">*Name Required</p>
                 </div>
-                <div class="mb-3">
+                        <div class="col-12 col-md-6">
                     <label for="selectpickerIcons" class="form-label">Icons</label>
                     <select class="selectpicker show-tick editmyselectpickerIcons" name="selValue"
                             id="selectpickerIcons"
@@ -259,33 +273,37 @@
 
                 </div>
 
-                <div class="mb-3">
+                        <div class="col-12 col-md-6">
                     <label class="form-label" for="multicol-country">Parent Menu</label>
                     <select id="multicol-country" class="select2 form-select editSnavigationparentmenu" data-allow-clear="true">
                     </select>
                 </div>
 
-                <div class="mb-3">
+                        <div class="col-12 col-md-6">
                     <span class="stred">*</span><label class="form-label">Controller</label>
                     <input type="text" class="form-control editmenuController" />
                     <p class="error-message">* Controller Required</p>
                 </div>
 
-                <div class="mb-3">
+                        <div class="col-12 col-md-6">
                     <span class="stred">*</span><label class="form-label" for="add-user-fullname">Dispaly Order</label>
                     <input type="text" class="form-control editmenuDisplayorder" tabindex="1" autofocus />
                     <p class="error-message">*Display Order Required</p>
                 </div>
-
-                <div class="form-check form-switch mb-2">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked />
-                    <label class="form-check-label" for="flexSwitchCheckChecked">Visible</label>
-                </div>
-                
-
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" for="chkactive">Visble Navigation</label>
+                            <div class="form-check form-switch mb-2 mt-0 ms-2">
+                                <input class="form-check-input" type="checkbox" id="chkactive" checked />
+                                <label class="form-check-label" for="flexSwitchCheckChecked">Visible</label>
+                            </div>
+                        </div>
+               <div class="text-center">
                 <button type="button" class="btn btn-primary me-sm-3 me-1" onclick="EditNav()">Edit</button>
-                <button type="reset" class="btn btn-label-secondary" id="btnCancelEdit" data-bs-dismiss="offcanvas">Cancel</button>
+                <button type="reset" class="btn btn-label-secondary" id="btnCancelEdit" data-bs-dismiss="modal">Cancel</button>
+                </div>
             </form>
+        </div>
+        </div>
         </div>
 
     </div>
@@ -300,6 +318,8 @@
     .error-message {
         display: none !important;
     }
+
+   
 </style>
 
 <script src="~/assets/vendor/libs/block-ui/block-ui.js"></script>

@@ -11,5 +11,6 @@ namespace Application.Features.VehicleCompany.Querys.GetByList
         public int VehicleCompanyId { get; set; }
         public string VehicleCompanyName { get; set; }
         public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

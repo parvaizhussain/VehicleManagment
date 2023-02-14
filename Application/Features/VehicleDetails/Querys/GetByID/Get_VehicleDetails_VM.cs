@@ -22,6 +22,8 @@ namespace Application.Features.VehicleDetails.Querys.GetByID
         public string VehicleModel { get; set; }
         public string FuelType { get; set; }
         public int RegionID { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
         public Domain.Entities.Region Region { get; set; }
     }
 }

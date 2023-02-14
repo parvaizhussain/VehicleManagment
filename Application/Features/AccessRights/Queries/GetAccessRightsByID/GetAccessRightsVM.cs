@@ -17,5 +17,7 @@ namespace Application.Features.AccessRights.Queries.GetAccessRightsByID
         public bool Approve { get; set; }
         public bool Print { get; set; }
         public bool Scan { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

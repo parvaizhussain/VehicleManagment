@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Persistence;
 using Prj_CarPool.Extensions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Prj_CarPool.Controllers
 {
@@ -18,6 +19,7 @@ namespace Prj_CarPool.Controllers
             _memoryCache = memoryCache;
             _db = db;
         }
+        [Authorize("Authorization")]
         public async Task<IActionResult> Index()
         {
             ViewBag.JsonUserData = _memoryCache.Get(SharedBag.UserAccountDetail);

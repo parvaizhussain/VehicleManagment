@@ -15,6 +15,8 @@ namespace Utility.Models
         public int CityID { get; set; }
         public City? City { get; set; }
         public int RegionID { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
         public Region? Region { get; set; }
 
 

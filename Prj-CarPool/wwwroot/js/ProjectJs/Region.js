@@ -19,15 +19,15 @@ function LoadTable(newdatas) {
         stutbl += '<td id="editregionname"> <span class="fw-semibold">' + newdatas.data[st].RegionName + '</span></td>';
         stutbl += '<td id="editregionCode">' + newdatas.data[st].RegionCode + '</td>';
         stutbl += '<td id="editregionNorm">' + newdatas.data[st].NormalizedName + '</td>';
+        stutbl += '<td id="IsVisibleChk"  hidden="hidden">' + newdatas.data[st].IsActive + '</td>';
        
-        if (newdatas.data[st].IsDeleted == true) {
-            stutbl += '<td id="editBranchVisible"><span class="badge bg-label-secondary" text-capitalized>InActive</span></td>';
+        if (newdatas.data[st].IsActive == true) {
+            stutbl += '<td id="editBranchVisible"><span class="badge bg-label-danger" text-capitalized>InActive</span></td>';
         }
         else {
             stutbl += '<td id="editBranchVisible"><span class="badge bg-label-success" text-capitalized>Active</span></td>';
 
         }
-
 
         stutbl += '<td><div class="d-flex align-items-center">';
         stutbl += '<a  onclick ="ShowEditBranch(this)" class="text-body" data-bs-toggle="modal" data-bs-target="#offcanvasEditNav" ><i class="ti ti-edit ti-sm me-2"></i></a>';
@@ -235,33 +235,32 @@ $(document).ready(function () {
 
 
 
-
-
-
-
-
 function ShowEditBranch(item) {
 
     var RegionId = $(item).closest("tr").find('#editregionID').text();
     var RegionName = $(item).closest("tr").find('#editregionname').text();
     var RegionCOde = $(item).closest("tr").find('#editregionCode').text();
     var Regionnorm = $(item).closest("tr").find('#editregionNorm').text();
+    var IsVisibleChkedit = JSON.parse($(item).closest("tr").find('#IsVisibleChk').text());
 
 
     $('.EditregionId').val(RegionId.trim());
     $('.Editregionnameadd').val(RegionName.trim());
     $('.Editregionshortnameadd').val(Regionnorm.trim());
     $('.Editregioncodeadd').val(RegionCOde.trim());
- 
+    $('#chkactive').attr("checked", IsVisibleChkedit);
+
 
 }
 function EditBranch() {
+    let isChecked = $('#chkactive').is(':checked');
 
     var RegionObj = {
         RegionId: $('.EditregionId').val(),
         RegionName: $('.Editregionnameadd').val(),
         NormalizedName: $('.Editregionshortnameadd').val().toUpperCase(),
         RegionCode: $('.Editregioncodeadd').val(),
+        IsActive: isChecked
     }
     $.ajax({
 

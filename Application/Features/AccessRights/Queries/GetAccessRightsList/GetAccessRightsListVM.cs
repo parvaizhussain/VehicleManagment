@@ -19,6 +19,7 @@ namespace Application.Features.AccessRights.Queries.GetAccessRightsList
         public bool Scan { get; set; }
 
         public bool IsDeleted { get; set; }
+        public bool IsActive { get; set; }
     }
 }
 

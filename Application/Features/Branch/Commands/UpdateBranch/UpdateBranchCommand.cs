@@ -10,5 +10,6 @@ namespace Application.Features.Branch.Commands.UpdateBranch
         public string NormalizedName { get; set; }
         public string BranchCode { get; set; }
         public int NetworkId { get; set; }
+        public bool IsActive { get; set; }
     }
 }

@@ -13,6 +13,8 @@ namespace Application.Features.VehicleBrands.Command.Update
         public int VehicleBrandId { get; set; }
         public string VehicleBrandName { get; set; }
         public int VehicleCompanyId { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
        
     }
 }

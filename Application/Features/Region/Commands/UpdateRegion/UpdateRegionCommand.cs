@@ -11,5 +11,7 @@ namespace Application.Features.Region.Commands.UpdateRegion
         public string RegionCode { get; set; }
 
         public string NormalizedName { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

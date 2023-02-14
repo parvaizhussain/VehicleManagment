@@ -36,6 +36,7 @@ namespace Prj_CarPool.Controllers
             _logger = logger;
             _memoryCache = memoryCache;
         }
+        [Authorize("Authorization")]
         public IActionResult Index()
         {
             ViewBag.JsonUserData = _memoryCache.Get(SharedBag.UserAccountDetail);

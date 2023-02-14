@@ -16,12 +16,12 @@ namespace Domain.ViewModels
 
 		public string Name { get; set; }
 
-		public string ShortName { get; set; }
+		public string? ShortName { get; set; }
 
 		public bool Selected { get; set; }
 
-		public int GroupId { get; set; }
-		public Group Group { get; set; }
-		public List<RoleUserViewModel> roleUsers { get; set; }
+		public int? GroupId { get; set; }
+		public Group? Group { get; set; }
+		public List<RoleUserViewModel>? roleUsers { get; set; }
 	}
 }

@@ -23,6 +23,8 @@ namespace Utility.Models
         public string FuelType { get; set; }
         public int RegionID { get; set; }
         public int VehicleBrandsVehicleBrandId { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
         
        // public Region Region { get; set; }
     }

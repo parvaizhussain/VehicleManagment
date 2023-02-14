@@ -22,18 +22,19 @@ namespace Domain.ViewModels
         public RoleViewModel[] Roles { get; set; }
 
 		public int? AccessRightsId { get; set; }
-		public AccessRights AccessRights { get; set; }
-	
-		//public int? RegionId { get; set; }
-		//public Region Region { get; set; }
+		public AccessRights? AccessRights { get; set; }
 
-		public List<User_Region> User_Region { get; set; }
-		public List<Cluster_Branch> Cluster_Branch { get; set; }
-		public List<UserCity_Network_Branch> City_Network_Branch { get; set; }
+		public int? RegionId { get; set; }
+		public Region? Region { get; set; }
+
+		//public List<User_Region> User_Region { get; set; }
+		//public List<Cluster_Branch> Cluster_Branch { get; set; }
+		//public List<UserCity_Network_Branch> City_Network_Branch { get; set; }
 		public string pwd { get; set; }
-		public List<Tuple<int,int?>>SessionId { get; set; }
-		public string Token { get; set; }
-		public bool IsCluster { get; set; }
+		//public List<Tuple<int,int?>>SessionId { get; set; }
+		public string? Token { get; set; }
+		//public bool IsCluster { get; set; }
 		public bool IsActive { get; set; }
-    }
+		public byte[]? UserImage { get; set; }
+	}
 }

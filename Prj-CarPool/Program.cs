@@ -13,6 +13,9 @@ using Identity.Seed;
 using Domain.Entities;
 using Application.Contracts;
 using System.Diagnostics;
+using Microsoft.Identity.Web;
+using Microsoft.AspNetCore.Authorization;
+using Prj_CarPool.Handlers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -75,17 +78,17 @@ builder.Services.AddAntiforgery(options =>
 });
 
 
-
-
-
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    
 }).AddCookie()
  .AddMicrosoftAccount(microsoftOptions =>
    {
        microsoftOptions.ClientId = "5f5da1aa-71af-4f81-bf0e-793bd0449d2e";//builder.Configuration["Authentication:Microsoft:ClientId"];
        microsoftOptions.ClientSecret = "-o78Q~4parDr7XW9iT.gcqJ_oL6nk7vb2knUHa5b";//builder.Configuration["Authentication:Microsoft:ClientSecret"];
+       microsoftOptions.Scope.Add("user.read");
+       microsoftOptions.SaveTokens = true;
    });
    
 
@@ -116,17 +119,17 @@ app.UseEndpoints(endpoints =>
     endpoints.MapRazorPages();
 });
 
-app.MapGet("/vehicleMy", async (ApplicationDbContext appdb) => {
+//app.MapGet("/vehicleMy", async (ApplicationDbContext appdb) => {
 
-    var starttime = DateTime.Now;
-    for (int i = 0; i < 1000000; i++)
-    {
+//    var starttime = DateTime.Now;
+//    for (int i = 0; i < 1000000; i++)
+//    {
 
-    }
-    //await appdb.SetIcons.ToListAsync();
-    var Endtime = DateTime.Now;
-    return Results.Json("startTime " + starttime.Millisecond + " || Endtime " + Endtime.Millisecond);
-});
+//    }
+//    //await appdb.SetIcons.ToListAsync();
+//    var Endtime = DateTime.Now;
+//    return Results.Json("startTime " + starttime.Millisecond + " || Endtime " + Endtime.Millisecond);
+//});
 
 //app.MapPost("/vehicleInsert", async (VehicleBrands Obj, ApplicationDbContext appdb) => {
 //    //Obj.CreatedBy = "admin";

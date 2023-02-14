@@ -16,5 +16,7 @@ namespace Application.Features.AccessRights.Commands.UpdateAccessRights
         public bool Approve { get; set; }
         public bool Print { get; set; }
         public bool Scan { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

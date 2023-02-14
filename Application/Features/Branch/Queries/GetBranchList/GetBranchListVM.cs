@@ -13,6 +13,7 @@ namespace Application.Features.Branch.Queries.GetBranchList
         public Domain.Entities.Network Network { get; set; }
 
         public bool IsDeleted { get; set; }
+        public bool IsActive { get; set; }
     }
 }
 

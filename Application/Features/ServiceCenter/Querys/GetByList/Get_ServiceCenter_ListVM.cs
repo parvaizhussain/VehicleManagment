@@ -16,6 +16,8 @@ namespace Application.Features.ServiceCenter.Querys.GetByList
         public bool DealerType { get; set; }
     
         public int DealerID { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
         public Domain.Entities.VehicleCompany? VehicleCompany { get; set; }
     }
 }

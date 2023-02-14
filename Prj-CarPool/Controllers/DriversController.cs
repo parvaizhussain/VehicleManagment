@@ -21,8 +21,8 @@ namespace Prj_CarPool.Controllers
 			_memoryCache = memoryCache;
 			_db = db;
 		}
-
-		public async Task<IActionResult> Index()
+        [Authorize("Authorization")]
+        public async Task<IActionResult> Index()
         {
             ViewBag.JsonUserData = _memoryCache.Get(SharedBag.UserAccountDetail);
             List<Driver> DriverList = (List<Driver>)await _driverRepository.GetAllAsync(Extensions.SharedBag.Driverlist, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));

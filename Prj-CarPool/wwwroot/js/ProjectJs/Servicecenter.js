@@ -22,10 +22,18 @@
       
 
         if (newdatas.data[st].DealerType === true) {
-            stutbl += '<td id="editVCActive"><span class="badge bg-label-warning" text-capitalized>Authorized Dealer</span></td>';
+            stutbl += '<td id="editVCdealer"><span class="badge bg-label-warning" text-capitalized>Authorized Dealer</span></td>';
         }
         else {
-            stutbl += '<td id="editVCActive"><span class="badge bg-label-secondary" text-capitalized>UnAuthorized Dealer</span></td>';
+            stutbl += '<td id="editVCdealer"><span class="badge bg-label-secondary" text-capitalized>UnAuthorized Dealer</span></td>';
+
+        }
+
+        if (newdatas.data[st].IsActive === true) {
+            stutbl += '<td id="editVCActive"><span class="badge bg-label-success" text-capitalized>Active</span></td>';
+        }
+        else {
+            stutbl += '<td id="editVCActive"><span class="badge bg-label-danger" text-capitalized>InActive</span></td>';
 
         }
         stutbl += '<td><div class="d-flex align-items-center">';
@@ -364,6 +372,7 @@ function ShowEditBranch(item) {
             $('.Editservicepersonadd').val(result.contactPersonName);
             //$('#editvehicleColor').val(result.dealerType);
             $('#EditDealerList').val(result.dealerID).trigger('change');
+            $('#chkactive').attr("checked", result.isActive);
           //  Editserviceaddressadd
 
         },
@@ -378,6 +387,7 @@ function ShowEditBranch(item) {
 }
 
 function Editservice() {
+    let isChecked = $('#chkactive').is(':checked');
 
     var SCEditObj = {
         ServiceCenterId: $('.EditserviceId').val(),
@@ -385,7 +395,8 @@ function Editservice() {
         ContactNo: $('.Editservicecontactadd').val(),
         ContactPersonName: $('.Editservicepersonadd').val(),
         DealerType: true,//$('.VCnameadd').val(),
-        DealerID: $('#EditDealerList option:selected').val()
+        DealerID: $('#EditDealerList option:selected').val(),
+        IsActive: isChecked
 
 
     }

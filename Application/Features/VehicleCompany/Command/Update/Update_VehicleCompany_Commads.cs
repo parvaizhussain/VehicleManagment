@@ -11,5 +11,8 @@ namespace Application.Features.VehicleCompany.Command.Update
     {
         public int VehicleCompanyId { get; set; }
         public string VehicleCompanyName { get; set; }
+
+        public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

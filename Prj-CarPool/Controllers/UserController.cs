@@ -12,10 +12,15 @@ using Persistence;
 using System.Text.Json;
 using System.Text;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using System.Linq.Expressions;
+using Domain.Entities;
+using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.Graph;
 
 namespace Prj_CarPool.Controllers
 {
     [Authorize]
+   // [Route("[controller]/[action]/{id?}")]
     public class UserController : Controller
     {
         private readonly ApplicationIdentityDbContext _dbi;
@@ -24,7 +29,7 @@ namespace Prj_CarPool.Controllers
         private readonly RoleManager<ApplicationRole> _roleManager;
         private readonly ILogger<UserController> _logger;
         private readonly IMemoryCache _memoryCache;
-
+        internal DbSet<UserViewModel> _dbSet;
         public UserController(
                 ApplicationIdentityDbContext dbi,
                 ApplicationDbContext db,
@@ -40,7 +45,8 @@ namespace Prj_CarPool.Controllers
             _logger = logger;
             _memoryCache = memoryCache;
         }
-       // [Authorize("Authorization")]
+        // [Authorize("Authorization")]
+        [Authorize("Authorization")]
         public async Task<IActionResult> Index()
         {
             var Data = _memoryCache.Get(SharedBag.UserAccountDetail);
@@ -50,30 +56,68 @@ namespace Prj_CarPool.Controllers
 
             try
             {
-                List<int> BranchIds = new List<int>();
-                if (!UserData.IsCluster)
-                    BranchIds.AddRange(UserData.City_Network_Branch.Select(x => Convert.ToInt32(x.BranchId)).Distinct().ToList());
-                else
-                    BranchIds.AddRange(UserData.Cluster_Branch.Select(x => Convert.ToInt32(x.BranchId)).Distinct().ToList());
+               var newdata = await (from us in _dbi.Users
+                                     join reg in _dbi.Region
+                                     on us.RegionId equals reg.RegionId into _reg
+                                     from reg in _reg.DefaultIfEmpty()
+                                     where us.RegionId == UserData.RegionId
+                                     select us).ToListAsync();
+               
+                var userView = new List<UserViewModel>();
+                var userFinddetails = _dbi.Users.Include(x => x.AccessRights).Include(x => x.Region).ToList();
 
-                var users = await(from u in _dbi.Users
-                                  join ucb in _dbi.Cluster_Branch
-                                  on u.Id equals ucb.UserId into u_c_b
-                                  from ucb in u_c_b.DefaultIfEmpty()
-                                  join ucnb in _dbi.UserCity_Network_Branch
-                                  on u.Id equals ucnb.UserId into u_c_n_b
-                                  from ucnb in u_c_n_b.DefaultIfEmpty()
-                                  where BranchIds.Contains(ucb.BranchId) || BranchIds.Contains((int)ucnb.BranchId)
-                                  select u).ToListAsync();
+                foreach (var item in userFinddetails)
+                {
+                    var userRoleId = await _dbi.UserRoles.Where(x => x.UserId == item.Id).Select(x => x.RoleId).FirstOrDefaultAsync();
+                    var allRoles = await _dbi.Roles.Where(x => x.Id == userRoleId).ToListAsync();
+                    userView.Add(new UserViewModel()
+                    {
 
-                var users2 = await(from u in _dbi.Users where u.PasswordHash == null select u).ToListAsync();
-                users.AddRange(users2);
+                        UserName = item.UserName,
+                        FirstName = item.FirstName,
+                        LastName = item.LastName,
+                        Email = item.Email,
+                        Id = item.Id,
+                        AccessRightsId = item.AccessRightsId,
+                        RegionId = item.RegionId,
+                        IsActive = item.IsActive,
+                        UserImage = item.UserImage,
+                        AccessRights= item.AccessRights,
+                        Region= item.Region,
+                        Roles = allRoles.Select(x => new RoleViewModel()
+                        {
+                            Id = x.Id,
+                            Name = x.Name,
+                            Group = x.Group
+                        }).ToArray()
 
-                string json = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = users });
+
+                });
+
+                }
+
+
+
+
+
+                var userFinddetailsnew = userView;// _dbi.Users.Include(x => x.AccessRights).Include(x => x.Region).ToList();
+
+                //var result = _dbi.Users.GroupJoin(_dbi.Region, maintbl => maintbl.RegionId, regiontbl => regiontbl.RegionId, (maintbl, regiontbl) => new { maintbl, regiontbl }).SelectMany(
+                //    result => result.regiontbl,(result, regiontbl) => new { result.maintbl, regiontbl }).GroupJoin(
+                //    _dbi.AccessRights, result => result.maintbl.AccessRightsId, accestbl => accestbl.AccessId, (result, accestbl) => new { result.maintbl, result.regiontbl, accestbl }).SelectMany(
+                //    result => result.accestbl.DefaultIfEmpty(), (result, accestbl) => new { result.maintbl, result.regiontbl, accestbl });
+
+
+
+                var users2 = userView;//await(from u in _dbi.Users where u.RegionId == UserData.RegionId select u).ToListAsync();
+
+               // users.AddRange(users2);
+
+                string json = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = users2 });
 
                 ViewBag.JsonData = json;
 
-                ViewBag.Users = users.Distinct().ToList();
+               // ViewBag.Users = users2.Distinct().ToList();
 
             }
             catch (Exception ex)
@@ -85,5 +129,210 @@ namespace Prj_CarPool.Controllers
            // return View();
 
         }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateUser(UserViewModel userViewModel)
+        {
+            try
+            {
+                var applicationUser = new ApplicationUser
+                {
+                    FirstName = userViewModel.FirstName,
+                    LastName = userViewModel.LastName,
+                    UserName = userViewModel.UserName,
+                    Email = userViewModel.Email,
+                    AccessRightsId = userViewModel.AccessRightsId,
+                    RegionId = userViewModel.RegionId,
+                    UserImage = userViewModel.UserImage,
+                    EmailConfirmed = true,
+                    pwd = userViewModel.Password
+                };
+
+                //if (userViewModel.RegionId == 0)
+                //	applicationUser.RegionId = null;
+
+                var user = await _userManager.FindByEmailAsync(applicationUser.Email);
+
+                if (user == null)
+                {
+                    var CreateUser = await _userManager.CreateAsync(applicationUser, userViewModel.Password);
+                    if (CreateUser.Succeeded)
+                    {
+                        await _userManager.AddToRolesAsync(applicationUser, userViewModel.Roles.Select(x => x.Name));
+                        var LastAddedUserId = await _dbi.Users.Where(x => x.Email == applicationUser.Email).Select(x => x.Id).FirstOrDefaultAsync();
+
+
+                        var userView = new List<UserViewModel>();
+                        var userFinddetails = _dbi.Users.Include(x => x.AccessRights).Include(x => x.Region).ToList();
+
+                        foreach (var item in userFinddetails)
+                        {
+                            var userRoleId = await _dbi.UserRoles.Where(x => x.UserId == item.Id).Select(x => x.RoleId).FirstOrDefaultAsync();
+                            var allRoles = await _dbi.Roles.Where(x => x.Id == userRoleId).ToListAsync();
+                            userView.Add(new UserViewModel()
+                            {
+
+                                UserName = item.UserName,
+                                FirstName = item.FirstName,
+                                LastName = item.LastName,
+                                Email = item.Email,
+                                Id = item.Id,
+                                AccessRightsId = item.AccessRightsId,
+                                RegionId = item.RegionId,
+                                IsActive = item.IsActive,
+                                UserImage = item.UserImage,
+                                AccessRights = item.AccessRights,
+                                Region = item.Region,
+                                Roles = allRoles.Select(x => new RoleViewModel()
+                                {
+                                    Id = x.Id,
+                                    Name = x.Name,
+                                    Group = x.Group
+                                }).ToArray()
+
+
+                            });
+
+                        }
+
+                        string json = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = userView });
+
+                        return Json(new { Messeage = "User Created Successfully!", Created = true, dataresult = json });
+                    }
+                    else
+                        return Json(new { Messeage = "User Not Created!", Created = false });
+                }
+                else
+                    return Json(new { Messeage = "User Already Exists!", Created = false });
+
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> EditUser(UserViewModel viewModel)
+        {
+            try
+            {
+
+                if (!ModelState.IsValid)
+                {
+                    var user = await _dbi.Users
+                      //.Include(x => x.Region)
+                      .Include(x => x.AccessRights)
+                      .Where(x => x.Id == viewModel.Id).FirstOrDefaultAsync();
+                    //var user = await _userManager.FindByIdAsync(viewModel.Id);
+                    user.FirstName = viewModel.FirstName;
+                    user.LastName = viewModel.LastName;
+                    user.UserName = viewModel.UserName;
+                    user.Email = viewModel.Email;
+                    user.AccessRightsId = viewModel.AccessRightsId;
+                    user.RegionId = viewModel.RegionId;
+                    user.IsActive = viewModel.IsActive;
+                   
+                    _dbi.SaveChanges();
+
+                    var userRoles = await _userManager.GetRolesAsync(user);
+
+                    await _userManager.RemoveFromRolesAsync(user, userRoles);
+                    await _userManager.AddToRolesAsync(user, viewModel.Roles.Select(x => x.Name));
+                    var userView = new List<UserViewModel>();
+                    var userFinddetails = _dbi.Users.Include(x => x.AccessRights).Include(x => x.Region).ToList();
+
+                    foreach (var item in userFinddetails)
+                    {
+                        var userRoleId = await _dbi.UserRoles.Where(x => x.UserId == item.Id).Select(x => x.RoleId).FirstOrDefaultAsync();
+                        var allRoles = await _dbi.Roles.Where(x => x.Id == userRoleId).ToListAsync();
+                        userView.Add(new UserViewModel()
+                        {
+
+                            UserName = item.UserName,
+                            FirstName = item.FirstName,
+                            LastName = item.LastName,
+                            Email = item.Email,
+                            Id = item.Id,
+                            AccessRightsId = item.AccessRightsId,
+                            RegionId = item.RegionId,
+                            IsActive = item.IsActive,
+                            UserImage = item.UserImage,
+                            AccessRights = item.AccessRights,
+                            Region = item.Region,
+                            Roles = allRoles.Select(x => new RoleViewModel()
+                            {
+                                Id = x.Id,
+                                Name = x.Name,
+                                Group = x.Group
+                            }).ToArray()
+
+
+                        });
+
+                    }
+
+                    string json = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = userView });
+                    return Json(new { Messeage = "User Edited Successfully!", Edited = true, dataresult = json });
+                }
+                else
+                    return Json(new { Edited = false });
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UserFind(string id)
+        {
+            var userView = new List<UserViewModel>();
+            var userFinddetails = _dbi.Users.Include(x => x.AccessRights).Include(x => x.Region).Where(x => x.Id == id).ToList();
+
+            foreach (var item in userFinddetails)
+            {
+                var userRoleId = await _dbi.UserRoles.Where(x => x.UserId == item.Id).Select(x => x.RoleId).FirstOrDefaultAsync();
+                var allRoles = await _dbi.Roles.Where(x => x.Id == userRoleId).ToListAsync();
+                userView.Add(new UserViewModel()
+                {
+
+                    UserName = item.UserName,
+                    FirstName = item.FirstName,
+                    LastName = item.LastName,
+                    Email = item.Email,
+                    Id = item.Id,
+                    AccessRightsId = item.AccessRightsId,
+                    RegionId = item.RegionId,
+                    IsActive = item.IsActive,
+                    UserImage = item.UserImage,
+                    AccessRights = item.AccessRights,
+                    Region = item.Region,
+                    Roles = allRoles.Select(x => new RoleViewModel()
+                    {
+                        Id = x.Id,
+                        Name = x.Name,
+                        Group = x.Group
+                    }).ToArray()
+
+
+                });
+
+            }
+
+            //string json = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = userView });
+            //var userFinddetails = _dbi.Users.Include(x=>x.AccessRights).Include(x=>x.Region).Where(x=>x.Id== id).FirstOrDefault();
+            if(userView.Count > 0)
+            {
+                return Json(new {data = userView.FirstOrDefault()});
+
+            }
+            return Json("error");
+        }
+
     }
 }

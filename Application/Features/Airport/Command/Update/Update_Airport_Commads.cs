@@ -13,5 +13,7 @@ namespace Application.Features.Airport.Command.Update
         public string AirportName { get; set; }
         public int CityID { get; set; }
         public int RegionID { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

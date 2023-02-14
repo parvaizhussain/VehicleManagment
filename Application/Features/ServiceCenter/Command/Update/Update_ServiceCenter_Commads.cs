@@ -17,6 +17,8 @@ namespace Application.Features.ServiceCenter.Command.Update
         public bool DealerType { get; set; }
         
         public int DealerID { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
        
     }
 }

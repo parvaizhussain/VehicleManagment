@@ -17,5 +17,7 @@ namespace Application.Features.MaintainaceHistory.Command.Update
         public string? Issue { get; set; }
         public string? InvoiceNo { get; set; }
         public decimal Amount { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

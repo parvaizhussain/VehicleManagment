@@ -23,13 +23,13 @@ function LoadTable(newdatas) {
         stutbl += '<td>' + newdatas.data[st].MaintainaceLocation + '</td>';
         stutbl += '<td>' + newdatas.data[st].Amount + '</td>';
        
-        //if (newdatas.data[st].IsActive === true) {
-        //    stutbl += '<td id="editVCActive"><span class="badge bg-label-danger" text-capitalized>InActive</span></td>';
-        //}
-        //else {
-        //    stutbl += '<td id="editVCActive"><span class="badge bg-label-success" text-capitalized>Active</span></td>';
+        if (newdatas.data[st].IsActive === false) {
+            stutbl += '<td id="editVCActive"><span class="badge bg-label-danger" text-capitalized>InActive</span></td>';
+        }
+        else {
+            stutbl += '<td id="editVCActive"><span class="badge bg-label-success" text-capitalized>Active</span></td>';
 
-        //}
+        }
         stutbl += '<td><div class="d-flex align-items-center">';
         stutbl += '<a  onclick ="ShowEditBranch(this)" class="text-body" data-bs-toggle="modal" data-bs-target="#modalEditMaintain" ><i class="ti ti-edit ti-sm me-2"></i></a>';
         stutbl += '<a href="/" class="text-body delete-record"><i class="ti ti-trash ti-sm mx-2"></i></a>';
@@ -338,6 +338,7 @@ function ShowEditBranch(item) {
             $('.Editmainissue').val(result.issue);
             $('.Editmaininvoiceno').val(result.invoiceNo);
             $('.Editmainamount').val(result.amount);
+            $('#chkactive').attr("checked", result.isActive);
            
         },
         complete: function (result) {
@@ -350,6 +351,7 @@ function ShowEditBranch(item) {
 }
 
 function EditMH() {
+    let isChecked = $('#chkactive').is(':checked');
 
     var VCEditObj = {
         MaintainaceHistoryId: $('.EditMaintainHisId').val(),
@@ -360,7 +362,7 @@ function EditMH() {
         Issue: $('.Editmainissue').val(),
         InvoiceNo: $('.Editmaininvoiceno').val(),
         Amount: $('.Editmainamount').val(),
-
+        IsActive: isChecked
 
     }
     $.ajax({

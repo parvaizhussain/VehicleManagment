@@ -488,6 +488,7 @@ function ShowEditBranch(item) {
             $('.editDriverContact').val(result.driverContact);
             $('.editDriverCNIC').val(result.driverCNIC);
             $('.editDriverLicence').val(result.driverLicense);
+            $('#chkactive').attr("checked",result.isActive);
             if (result.driverImage !== "") {
                 seditaccountUserImage.src = "data:image/png;base64," + result.driverImage;
             }
@@ -504,6 +505,8 @@ function ShowEditBranch(item) {
 }
 
 async function EditVC() {
+    let isChecked = $('#chkactive').is(':checked');
+
     const editfileInput = document.querySelector('.edit-account-file-input');
     if (editfileInput.files.length !== 0) {
 
@@ -531,8 +534,8 @@ async function EditVC() {
         DriverLicense: $('.editDriverLicence').val(),
         DriverImage: editbase64Data,
         RegionID: $('.editregionlist option:selected').val(),
-        CityID: 1// $('.companylist option:selected').val(),
-
+        CityID: 1,// $('.companylist option:selected').val(),
+        IsActive: isChecked
 
     }
     $.ajax({

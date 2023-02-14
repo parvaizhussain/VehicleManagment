@@ -32,7 +32,8 @@
         stutbl += '</div>';
         stutbl += '</div>';
         stutbl += '</td>';
-        if (newdatas.data[st].IsActive === true) {
+        stutbl += '<td id="IsVisibleChk" class="visiblityhidden">' + newdatas.data[st].IsActive + '</td>';
+        if (newdatas.data[st].IsActive === false) {
             stutbl += '<td id="editVCActive"><span class="badge bg-label-danger" text-capitalized>InActive</span></td>';
         }
         else {
@@ -389,20 +390,20 @@ function ShowEditBranch(item) {
 
     var VCId = $(item).closest("tr").find('#editVCID').text();
     var VCName = $(item).closest("tr").find('#editVCName').text();
-   
+    var IsVisibleChkedit = JSON.parse($(item).closest("tr").find('#IsVisibleChk').text());
    
     $('.EditVCId').val(VCId.trim());
     $('.EditVCnameadd').val(VCName.trim());
-    
+    $('#chkactive').attr("checked", IsVisibleChkedit);
 
 }
 
 function EditVC() {
-
+    let isChecked = $('#chkactive').is(':checked');
    var VCEditObj = {
        VehicleCompanyID: parseInt($('.EditVCId').val()),
        VehicleCompanyName: $(".EditVCnameadd").val(),
-       
+       IsActive: isChecked
 
     }
     $.ajax({

@@ -45,6 +45,7 @@
     <link rel="stylesheet" href="~/assets/vendor/libs/typeahead-js/typeahead.css" />
     <link href="~/assets/vendor/libs/flatpickr/flatpickr.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/assets/vendor/libs/bootstrap-select/bootstrap-select.css" />
+    <link rel="stylesheet" href="~/assets/vendor/libs/formvalidation/dist/css/formValidation.min.css" />
 
 
 
@@ -573,7 +574,8 @@
                                                 </div>
                                                 <div class="flex-grow-1">
                                                     <span class="fw-semibold d-block">@User.Identity.Name</span>
-                                                    <small class="text-muted">@User.Identity.AuthenticationType</small>
+                                                    <small class="text-muted">@User.Identity.Name</small>
+                                                    @*<small class="text-muted">@User.Identity.AuthenticationType</small>*@
                                                 </div>
                                             </div>
                                         </a>
@@ -719,7 +721,9 @@
     <script src="~/assets/vendor/libs/bloodhound/bloodhound.js"></script>
     <script src="~/assets/vendor/libs/cleavejs/cleave.js"></script>
     <script src="~/assets/vendor/libs/cleavejs/cleave-phone.js"></script>
-
+    <script src="~/assets/vendor/libs/formvalidation/dist/js/FormValidation.min.js"></script>
+    <script src="~/assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js"></script>
+    <script src="~/assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"></script>
 
 
 

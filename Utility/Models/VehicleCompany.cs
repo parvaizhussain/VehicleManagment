@@ -11,5 +11,6 @@ namespace Utility.Models
         public int VehicleCompanyID { get; set; }
         public string VehicleCompanyName { get; set; }
         public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

@@ -13,10 +13,11 @@ namespace Identity.Models
         public int? AccessRightsId { get; set; }
         public AccessRights AccessRights {get; set;}
 
-        //public int? RegionId { get; set; }
-        //public Region Region {get; set;}
+        public int? RegionId { get; set; }
+        public Region Region { get; set; }
 
         public bool IsCluster { get; set; }
         public bool IsActive { get; set; }
+        public byte[]? UserImage { get; set; }
     }
 }

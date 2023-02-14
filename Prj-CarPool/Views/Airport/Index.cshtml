@@ -53,6 +53,7 @@
                     <th>City</th>
                     <th class="visiblityhidden"></th>
                     <th>Region</th>
+                    <th class="visiblityhidden"></th>
                     <th>Active</th>
                     <th>Actions</th>
                 </tr>
@@ -150,7 +151,13 @@
                             <select class="form-control select2 EditRegionlist"></select>
                             <p class="error-message">* Region Required</p>
                         </div>
-
+                         <div class="col-12 col-md-6">
+                            <label class="form-label" for="chkactive">Is Active?</label>
+                           <div class="form-check form-switch mb-2 mt-0 ms-2">
+                                <input class="form-check-input" type="checkbox" id="chkactive" checked />
+                                <label class="form-check-label" for="flexSwitchCheckChecked">Active</label>
+                            </div>
+                        </div>
 
                         <button type="button" class="btn btn-primary me-sm-3 me-1" onclick="Edit_Airport()">Edit</button>
                         <button type="reset" class="btn btn-label-secondary" id="btnCancelEdit" data-bs-dismiss="modal">Cancel</button>

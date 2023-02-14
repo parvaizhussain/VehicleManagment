@@ -24,6 +24,8 @@
         stutbl += '<td>' + newdatas.data[st].City.CityName + '</td>';
         stutbl += '<td id="editARegion" hidden="hidden">' + newdatas.data[st].Region.RegionId + '</td>';
         stutbl += '<td>' + newdatas.data[st].Region.RegionName + '</td>';
+        stutbl += '<td id="IsVisibleChk" hidden="hidden">' + newdatas.data[st].IsActive + '</td>';
+
         if (newdatas.data[st].IsActive !== true) {
             stutbl += '<td id="editVCActive"><span class="badge bg-label-danger" text-capitalized>InActive</span></td>';
         }
@@ -324,24 +326,28 @@ function Edit(item) {
     var AirportName = $(item).closest("tr").find('#editAName').text();
     var CityName = $(item).closest("tr").find('#editACity').text();
     var RegionName = $(item).closest("tr").find('#editARegion').text();
+    var IsVisibleChkedit = JSON.parse($(item).closest("tr").find('#IsVisibleChk').text());
 
 
     $('.EditAirportID').val(AirportId.trim());
     $('.EditAirportName').val(AirportName.trim());
     $('.EditCitylist').val(CityName).trigger('change');
     $('.EditRegionlist').val(RegionName).trigger('change');
+    $('#chkactive').attr("checked", IsVisibleChkedit);
 
 
 }
 
 
 function Edit_Airport() {
+    let isChecked = $('#chkactive').is(':checked');
 
     var objupdate = {
         AirportId: parseInt($('.EditAirportID').val()),
         AirportName: $(".EditAirportName").val(),
         CityID: $(".EditCitylist").val(),
         RegionID: $(".EditRegionlist").val(),
+        IsActive: isChecked,
 
 
     }
@@ -381,6 +387,7 @@ function Edit_Airport() {
         }
     });
 }
+
 function Delete(item) {
     debugger
 
@@ -395,9 +402,6 @@ function Delete_Airport() {
 
     var objDelete = {
         AirportID: parseInt($('.EditAirportID').val()),
-
-
-
     }
     $.ajax({
 

@@ -13,6 +13,7 @@ namespace Application.Features.Region.Queries.GetRegionList
         public string RegionCode { get; set; }
 
         public bool IsDeleted { get; set;}
+        public bool IsActive { get; set;}
     }
 }
 

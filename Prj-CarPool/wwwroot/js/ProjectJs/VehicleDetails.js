@@ -24,13 +24,13 @@
         stutbl += '<td id="editVBCName">' + newdatas.data[st].VehicleBrands.VehicleBrandName + '</td>';
        
        
-        //if (newdatas.data[st].IsActive !== true) {
-        //    stutbl += '<td id="editVCActive"><span class="badge bg-label-danger" text-capitalized>InActive</span></td>';
-        //}
-        //else {
-        //    stutbl += '<td id="editVCActive"><span class="badge bg-label-success" text-capitalized>Active</span></td>';
+        if (newdatas.data[st].IsActive !== true) {
+            stutbl += '<td id="editVCActive"><span class="badge bg-label-danger" text-capitalized>InActive</span></td>';
+        }
+        else {
+            stutbl += '<td id="editVCActive"><span class="badge bg-label-success" text-capitalized>Active</span></td>';
 
-        //}
+        }
         stutbl += '<td><div class="d-flex align-items-center">';
         stutbl += '<a  onclick ="ShowEditBranch(this)" class="text-body" data-bs-toggle="modal" data-bs-target="#offcanvasEditNav" ><i class="ti ti-edit ti-sm me-2"></i></a>';
         stutbl += '<a href="/" class="text-body delete-record"><i class="ti ti-trash ti-sm mx-2"></i></a>';
@@ -449,6 +449,7 @@ function ShowEditBranch(item) {
             $('#editFuelType').val(result.fuelType);
             $('#editvehicleRegion').val(result.regionID).trigger('change');
             $('#editvehicleID').val(result.vehicleID);
+            $('#chkactive').attr("checked", result.isActive);
 
         },
         complete: function (result) {
@@ -461,6 +462,7 @@ function ShowEditBranch(item) {
 }
 
 function EditVC() {
+    let isChecked = $('#chkactive').is(':checked');
 
     var VCEditObj = {
         VehicleID: $('#editvehicleID').val(),
@@ -476,6 +478,7 @@ function EditVC() {
         VehicleModel: $('#editvehicleModel').val(),
         FuelType: $('#editFuelType').val(),
         RegionID: $('#editvehicleRegion option:selected').val(),
+        IsActive: isChecked
 
 
     }

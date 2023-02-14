@@ -27,8 +27,8 @@ function LoadTable(newdatas) {
         stutbl += newdatas.data[st].Scan ? '<td class="text-center"><i class="ti ti-circle-check" style="color:green"></></td>' : '<td  class="text-center"><i class="ti ti-circle-x" style="color:red"></i></td>';
        
 
-        if (newdatas.data[st].IsDeleted == true) {
-            stutbl += '<td id="editBranchVisible"><span class="badge bg-label-secondary" text-capitalized>InActive</span></td>';
+        if (newdatas.data[st].IsActive == false) {
+            stutbl += '<td id="editBranchVisible"><span class="badge bg-label-danger" text-capitalized>InActive</span></td>';
         }
         else {
             stutbl += '<td id="editBranchVisible"><span class="badge bg-label-success" text-capitalized>Active</span></td>';
@@ -255,7 +255,7 @@ function ShowEditAccessRight(item) {
         async: false,
         url: 'https://localhost:7112/api/AccessRights/' + AccessId,
         success: function (result) {
-
+            console.log(result)
             $('#editID').val(AccessId);
             $('#editAccessName').val(result.accessName);
             $('#editShortName').val(result.normalizedName);
@@ -268,6 +268,7 @@ function ShowEditAccessRight(item) {
             $("#chkApproveEdit").prop("checked", result.approve).trigger('change');
             $("#chkPrintEdit").prop("checked", result.print).trigger('change');
             $("#chkScanEdit").prop("checked", result.scan).trigger('change');
+            $("#chkactive").prop("checked", result.isActive).trigger('change');
           },
         complete: function (result) {
 
@@ -282,9 +283,9 @@ function ShowEditAccessRight(item) {
 
 }
 function EditRights() {
-
+    
     var AccessRightObj = {
-        AccessId: 0,
+        AccessId: $('#editID').val(),
         AccessName: $('#editAccessName').val(),
         NormalizedName: $('#editShortName').val().toUpperCase(),
         View: $('#chkViewEdit').is(':checked') ? true : false,
@@ -295,6 +296,7 @@ function EditRights() {
         Approve: $('#chkApproveEdit').is(':checked') ? true : false,
         Print: $('#chkPrintEdit').is(':checked') ? true : false,
         Scan: $('#chkScanEdit').is(':checked') ? true : false,
+        IsActive: $('#chkactive').is(':checked') ? true : false,
     }
 
     $.ajax({

@@ -18,6 +18,7 @@ namespace Utility.Models
         public Network? Network { get; set; }
 
         public bool IsDeleted { get; set; }
+        public bool IsActive { get; set; }
         //Commented by raja
 
     }

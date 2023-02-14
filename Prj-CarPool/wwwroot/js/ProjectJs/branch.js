@@ -58,8 +58,9 @@ function LoadTable(newdatas) {
         stutbl += '<td id="editBranchNorm">' + newdatas.data[st].NormalizedName + '</td>';
         stutbl += '<td id="editBranchNetworkID">' + newdatas.data[st].Network.NetworkId + '</td>';
         stutbl += '<td id="editBranchNetworkName">' + newdatas.data[st].Network.NetworkName + '</td>';
-        if (newdatas.data[st].IsDeleted == true) {
-            stutbl += '<td id="editBranchVisible"><span class="badge bg-label-secondary" text-capitalized>InActive</span></td>';
+        stutbl += '<td id="chkActiveEdit" hidden="hidden">' + newdatas.data[st].IsActive + '</td>';
+        if (newdatas.data[st].IsActive == false) {
+            stutbl += '<td id="editBranchVisible"><span class="badge bg-label-danger" text-capitalized>InActive</span></td>';
         }
         else {
             stutbl += '<td id="editBranchVisible"><span class="badge bg-label-success" text-capitalized>Active</span></td>';
@@ -412,8 +413,8 @@ function ShowEditBranch(item) {
     var branchnorm = $(item).closest("tr").find('#editBranchNorm').text();
     var networkID = $(item).closest("tr").find('#editBranchNetworkID').text();
     //var navigationvisibleedit = true;//$(item).closest("tr").find('.editBranchVisible input').prop('checked') == true ? "checked" : "";
-
-
+    var IsVisibleChkedit = JSON.parse($(item).closest("tr").find('#chkActiveEdit').text());
+    
 
 
     $('.EditbranchId').val(branchId.trim());
@@ -422,16 +423,18 @@ function ShowEditBranch(item) {
     $('.Editbranchshortnameadd').val(branchnorm.trim());
     $('.Editnetworklist').val(networkID).trigger('change');
     // $('.editmenuName').val(navigationvisibleedit);
-
+    $('#chkactive').attr("checked", IsVisibleChkedit);
 }
 function EditBranch() {
+    let isChecked = $('#chkactive').is(':checked');
 
     var EditbranchObj = {
         branchId: $('.EditbranchId').val(), 
         branchName: $('.Editbranchnameadd').val(),
         NormalizedName: $('.Editbranchshortnameadd').val().toUpperCase(),
         branchCode: $('.Editbranchcodeadd').val(),
-        networkId: $('.Editnetworklist option:selected').val()
+        networkId: $('.Editnetworklist option:selected').val(),
+        IsActive: isChecked
     }
     $.ajax({
 

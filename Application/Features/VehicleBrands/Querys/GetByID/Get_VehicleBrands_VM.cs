@@ -12,6 +12,8 @@ namespace Application.Features.VehicleBrands.Querys.GetByID
         public string VehicleBrandName { get; set; }
 
         public int VehicleCompanyId { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
         public Domain.Entities.VehicleCompany VehicleCompany { get; set; }
     }
 }

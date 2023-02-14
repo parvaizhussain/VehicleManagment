@@ -15,5 +15,6 @@ namespace Application.Features.Airport.Querys.GetByID
         public bool IsDeleted { get; set; }
         public Domain.Entities.City City { get; set; }
         public Domain.Entities.Region Region { get; set; }
+        public bool IsActive { get; set; }
     }
 }

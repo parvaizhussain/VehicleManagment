@@ -47,9 +47,7 @@ namespace Prj_CarPool.Extensions
                 string Session = "";
                 if (_memoryCache.Get(cacheKey) == null)
                 {
-                    
-
-                        var user = await _dbi.Users.Where(x => x.UserName == Name).Include(x => x.AccessRights).FirstOrDefaultAsync();
+                    var user = await _dbi.Users.Where(x => x.UserName == Name).Include(x => x.AccessRights).FirstOrDefaultAsync();
                         string UserId = user.Id;
                         if (user != null)
                         {
@@ -62,8 +60,9 @@ namespace Prj_CarPool.Extensions
                             UserDetail.AccessRightsId = user.AccessRightsId;
                             UserDetail.AccessRights = user.AccessRights;
                             UserDetail.pwd = user.pwd;
-                            UserDetail.IsCluster = user.IsCluster;
-
+                           // UserDetail.IsCluster = user.IsCluster;
+                            UserDetail.UserImage = user.UserImage;
+                            UserDetail.RegionId = user.RegionId;  
                             var userRoleId = await _dbi.UserRoles.Where(x => x.UserId == UserId).Select(x => x.RoleId).FirstOrDefaultAsync();
                             var allRoles = await _dbi.Roles.Where(x => x.Id == userRoleId).Include(x => x.Group.Department).ToListAsync();
                             if (allRoles.Count > 0)
@@ -76,82 +75,82 @@ namespace Prj_CarPool.Extensions
                                 }).ToArray();
                             }
 
-                            var r = await _dbi.User_Region.Where(x => x.UserId == UserId).Include(x => x.Region).ToListAsync();
-                            var urList = new List<User_Region>();
-                            for (int i = 0; i < r.Count; i++)
-                            {
-                                var ur = new User_Region();
-                                ur.UserId = UserId;
-                                ur.RegionId = Convert.ToInt32(r[i].RegionId);
-                                ur.Region = r[i].Region;
-                                urList.Add(ur);
-                            }
-                            UserDetail.User_Region = urList;
+                            //var r = await _dbi.User_Region.Where(x => x.UserId == UserId).Include(x => x.Region).ToListAsync();
+                            //var urList = new List<User_Region>();
+                            //for (int i = 0; i < r.Count; i++)
+                            //{
+                            //    var ur = new User_Region();
+                            //    ur.UserId = UserId;
+                            //    ur.RegionId = Convert.ToInt32(r[i].RegionId);
+                            //    ur.Region = r[i].Region;
+                            //    urList.Add(ur);
+                            //}
+                            //UserDetail.User_Region = urList;
 
-                            //if (user.RegionId != null)
-                            //{                         
-                            if (UserDetail.IsCluster)
-                            {
-                                var cb = await _dbi.Cluster_Branch
-                                  .Where(x => x.UserId == UserId)
-                                  .Include(x => x.Branch.Network.City)
-                                  .ToListAsync();
+                            ////if (user.RegionId != null)
+                            ////{                         
+                            //if (UserDetail.IsCluster)
+                            //{
+                            //    var cb = await _dbi.Cluster_Branch
+                            //      .Where(x => x.UserId == UserId)
+                            //      .Include(x => x.Branch.Network.City)
+                            //      .ToListAsync();
 
-                                var ucbList = new List<Cluster_Branch>();
-                                for (int i = 0; i < cb.Count; i++)
-                                {
-                                    var ucb = new Cluster_Branch();
-                                    ucb.UserId = UserId;
-                                    ucb.BranchId = Convert.ToInt32(cb[i].BranchId);
-                                    ucb.Branch = cb[i].Branch;
-                                    ucbList.Add(ucb);
-                                }
-                                UserDetail.Cluster_Branch = ucbList;
-                            }
-                            else
-                            {
-                                var cnb = await _dbi.UserCity_Network_Branch
-                                .Where(x => x.UserId == UserId)
-                                .Include(x => x.City)
-                                .Include(x => x.Network)
-                                .Include(x => x.Branch)
-                                .ToListAsync();
+                            //    var ucbList = new List<Cluster_Branch>();
+                            //    for (int i = 0; i < cb.Count; i++)
+                            //    {
+                            //        var ucb = new Cluster_Branch();
+                            //        ucb.UserId = UserId;
+                            //        ucb.BranchId = Convert.ToInt32(cb[i].BranchId);
+                            //        ucb.Branch = cb[i].Branch;
+                            //        ucbList.Add(ucb);
+                            //    }
+                            //    UserDetail.Cluster_Branch = ucbList;
+                            //}
+                            //else
+                            //{
+                            //    var cnb = await _dbi.UserCity_Network_Branch
+                            //    .Where(x => x.UserId == UserId)
+                            //    .Include(x => x.City)
+                            //    .Include(x => x.Network)
+                            //    .Include(x => x.Branch)
+                            //    .ToListAsync();
 
-                                var ucnbList = new List<UserCity_Network_Branch>();
-                                for (int i = 0; i < cnb.Count; i++)
-                                {
-                                    var ucnb = new UserCity_Network_Branch();
-                                    ucnb.UserId = UserId;
-                                    ucnb.CityId = Convert.ToInt32(cnb[i].CityId);
-                                    ucnb.City = cnb[i].City;
-                                    ucnb.NetworkId = Convert.ToInt32(cnb[i].NetworkId);
-                                    ucnb.Network = cnb[i].Network;
-                                    ucnb.BranchId = Convert.ToInt32(cnb[i].BranchId);
-                                    ucnb.Branch = cnb[i].Branch;
-                                    ucnbList.Add(ucnb);
-                                }
-                                UserDetail.City_Network_Branch = ucnbList;
-                            }
+                            //    var ucnbList = new List<UserCity_Network_Branch>();
+                            //    for (int i = 0; i < cnb.Count; i++)
+                            //    {
+                            //        var ucnb = new UserCity_Network_Branch();
+                            //        ucnb.UserId = UserId;
+                            //        ucnb.CityId = Convert.ToInt32(cnb[i].CityId);
+                            //        ucnb.City = cnb[i].City;
+                            //        ucnb.NetworkId = Convert.ToInt32(cnb[i].NetworkId);
+                            //        ucnb.Network = cnb[i].Network;
+                            //        ucnb.BranchId = Convert.ToInt32(cnb[i].BranchId);
+                            //        ucnb.Branch = cnb[i].Branch;
+                            //        ucnbList.Add(ucnb);
+                            //    }
+                            //    UserDetail.City_Network_Branch = ucnbList;
+                            //}
                             // For Session
-                            int CurrentYear = DateTime.Now.Year;
-                            int CurrentMonth = DateTime.Now.Month;
-                            List<Tuple<int,int?>> SessionIds = new List<Tuple<int, int?>>();
-                            for (int a = 0; a < r.Count; a++)
-                            {
+                            //int CurrentYear = DateTime.Now.Year;
+                            //int CurrentMonth = DateTime.Now.Month;
+                            //List<Tuple<int,int?>> SessionIds = new List<Tuple<int, int?>>();
+                            //for (int a = 0; a < r.Count; a++)
+                            //{
 
-                                if (CurrentMonth < 8)
-                                    Session = Convert.ToString(CurrentYear - 1 + "-" + CurrentYear + " " + r[a].Region.NormalizedName);
-                                else
-                                    Session = Convert.ToString(CurrentYear + "-" + (CurrentYear + 1).ToString() + " " + r[a].Region.NormalizedName);
+                            //    if (CurrentMonth < 8)
+                            //        Session = Convert.ToString(CurrentYear - 1 + "-" + CurrentYear + " " + r[a].Region.NormalizedName);
+                            //    else
+                            //        Session = Convert.ToString(CurrentYear + "-" + (CurrentYear + 1).ToString() + " " + r[a].Region.NormalizedName);
 
-                                if (Session != null)
-                                {
-                                int SessionId = _db.Sessions.Where(x => x.Name == Session).Select(x => x.SessionID).FirstOrDefault();
-                                int? regionID = _db.Sessions.Where(x => x.Name == Session).Select(x => x.RegionId).FirstOrDefault();
-                                SessionIds.Add(new Tuple<int, int?>(SessionId, regionID));
-                                UserDetail.SessionId = SessionIds;
-                                }
-                            }
+                            //    if (Session != null)
+                            //    {
+                            //    int SessionId = _db.Sessions.Where(x => x.Name == Session).Select(x => x.SessionID).FirstOrDefault();
+                            //    int? regionID = _db.Sessions.Where(x => x.Name == Session).Select(x => x.RegionId).FirstOrDefault();
+                            //    SessionIds.Add(new Tuple<int, int?>(SessionId, regionID));
+                            //    UserDetail.SessionId = SessionIds;
+                            //    }
+                            //}
 
                         }
                         var cacheExpiryOptions = new MemoryCacheEntryOptions

@@ -27,6 +27,8 @@ namespace Application.Features.VehicleDetails.Command.Update
         public string VehicleModel { get; set; }
         public string FuelType { get; set; }
         public int RegionID { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
        
     }
 }

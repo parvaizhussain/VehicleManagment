@@ -15,6 +15,8 @@ namespace Utility.Models
         public string NormalizedName { get; set; }
 
         public string RegionCode { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
 
     }
 }

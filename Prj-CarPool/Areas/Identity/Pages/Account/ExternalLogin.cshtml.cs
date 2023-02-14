@@ -22,6 +22,8 @@ using Prj_CarPool.IServices.Services;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Org.BouncyCastle.Asn1.Ocsp;
 using System.Security.Policy;
+using Newtonsoft.Json;
+using System.Net.Http.Headers;
 
 namespace AspNetApp.Areas.Identity.Pages.Account
 {
@@ -115,14 +117,18 @@ namespace AspNetApp.Areas.Identity.Pages.Account
             var info = await _signInManager.GetExternalLoginInfoAsync();
             if (info == null)
             {
+
                 ErrorMessage = "Error loading external login information.";
                 return RedirectToPage("./Login", new { ReturnUrl = returnUrl });
             }
-
+           
             // Sign in the user with this external login provider if the user already has a login.
             var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
             if (result.Succeeded)
             {
+                
+                //ViewData["ProfileImg"] = imageData;
+              //  var photoUrl = userProfile.photo;
                 _logger.LogInformation("{Name} logged in with {LoginProvider} provider.", info.Principal.Identity.Name, info.LoginProvider);
                 return LocalRedirect(returnUrl);
             }
@@ -157,6 +163,22 @@ namespace AspNetApp.Areas.Identity.Pages.Account
                 return RedirectToPage("./Login", new { ReturnUrl = returnUrl });
             }
 
+
+            var userId = info.Principal.Claims.FirstOrDefault().Value;
+
+            var httpClient = new HttpClient();
+            var accessToken = info.AuthenticationTokens.Where(t => t.Name.Equals("access_token")).First().Value;
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
+            //httpClient.SetBearerToken();
+            var pictureResult = await httpClient.GetAsync("https://graph.microsoft.com/v1.0/me/photos/48x48/$value");
+            pictureResult.EnsureSuccessStatusCode();
+            var content = await pictureResult.Content.ReadAsByteArrayAsync();
+
+            byte[] imageData = content;
+
+
+
             if (ModelState.IsValid)
             {
                 string FirstName = "", LastName = "";
@@ -172,6 +194,7 @@ namespace AspNetApp.Areas.Identity.Pages.Account
 
                 var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, EmailConfirmed = true, FirstName = FirstName, LastName = LastName };
                 user.pwd = "Microsoft";
+                user.UserImage = imageData;
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
@@ -226,6 +249,13 @@ namespace AspNetApp.Areas.Identity.Pages.Account
                     $"Ensure that '{nameof(IdentityUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
                     $"override the external login page in /Areas/Identity/Pages/Account/ExternalLogin.cshtml");
             }
+        }
+
+        public class MicrosoftUserProfile
+        {
+           
+            public byte[]? photo { get; set; }
+            // ...
         }
 
         //private IUserEmailStore<IdentityUser> GetEmailStore()

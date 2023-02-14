@@ -1,6 +1,6 @@
 ﻿/***parent menu**/
 function LoadTable(newdatas) {
-  
+    console.log(newdatas);
     var stutbl = '';
     $(".datatables-users-mytable tbody").html('');
     var statusObj = {
@@ -56,18 +56,20 @@ function LoadTable(newdatas) {
         stutbl += '</td>';
         stutbl += '<td id="editNavControllerName"> <span class="fw-semibold">' + newdatas.data[st].ControllerName + '</span></td>';
         stutbl += '<td id="editNavParentMenuName">' + newdatas.data[st].ParentMenuName + '</td>';
-        stutbl += '<td id="editNavParentMenuID" class="visiblityhidden">' + newdatas.data[st].ParentMenuId + '</td>';
+        stutbl += '<td id="editNavParentMenuID"  class="visiblityhidden">' + newdatas.data[st].ParentMenuId + '</td>';
+        stutbl += '<td id="IsVisibleChk" class="visiblityhidden">' + newdatas.data[st].Visible + '</td>';
+
         if (newdatas.data[st].Visible == true) {
-            stutbl += '<td id="editNavVisible"><span class="badge bg-label-secondary" text-capitalized>Active</span></td>';
+            stutbl += '<td id="editNavVisible"><span class="badge bg-label-success" text-capitalized>Active</span></td>';
         }
         else {
-            stutbl += '<td id="editNavVisible"><span class="badge bg-label-success" text-capitalized>Inactive</span></td>';
+            stutbl += '<td id="editNavVisible"><span class="badge bg-label-danger" text-capitalized>Inactive</span></td>';
 
         }
         stutbl += '<td id="editNavDisplayOrder">' + newdatas.data[st].DisplayOrder + '</td>';
 
         stutbl += '<td><div class="d-flex align-items-center">';
-        stutbl += '<a  onclick ="ShowEditNavigations(this)" class="text-body" data-bs-toggle="offcanvas" data-bs-target="#offcanvasEditNav" ><i class="ti ti-edit ti-sm me-2"></i></a>';
+        stutbl += '<a  onclick ="ShowEditNavigations(this)" class="text-body" data-bs-toggle="modal" data-bs-target="#offcanvasEditNav" ><i class="ti ti-edit ti-sm me-2"></i></a>';
         stutbl += '<a href="/" class="text-body delete-record"><i class="ti ti-trash ti-sm mx-2"></i></a>';
         stutbl += '<a href="/" class="text-body dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm mx-1"></i></a>';
         stutbl += '<div class="dropdown-menu dropdown-menu-end m-0">';
@@ -250,7 +252,7 @@ function LoadTable(newdatas) {
                 text: '<i class="ti ti-plus me-0 me-sm-1 ti-xs"></i><span class="d-none d-sm-inline-block">Add New Navigation</span>',
                 className: 'add-new btn btn-primary',
                 attr: {
-                    'data-bs-toggle': 'offcanvas',
+                    'data-bs-toggle': 'modal',
                     'data-bs-target': '#offcanvasAddUser'
                 }
             }
@@ -431,7 +433,8 @@ function ShowEditNavigations(item) {
     var navigationvisibleedit = true;//$(item).closest("tr").find('.navigationvisibleedit input').prop('checked') == true ? "checked" : "";
     var navigationdisplayorderedit = $(item).closest("tr").find('#editNavDisplayOrder').text();
     var navigationdIconedit = $(item).closest("tr").find('#editNavIcon').data('icon');
-    
+    var IsVisibleChkedit = JSON.parse($(item).closest("tr").find('#IsVisibleChk').text());
+   
 
     
 
@@ -442,6 +445,7 @@ function ShowEditNavigations(item) {
    // $('.editmenuName').val(navigationvisibleedit);
     $('.editmenuDisplayorder').val(navigationdisplayorderedit.trim());
     $('.selectpicker').selectpicker('val', navigationdIconedit);
+    $('#chkactive').attr("checked", IsVisibleChkedit);
 
 }
 function EditNav() {
@@ -450,7 +454,8 @@ function EditNav() {
     navid = parseInt(navid);
     var val = $('.editmyselectpickerIcons option:selected').data('icon');
     var navigationparentmenuvalidation = $(".editSnavigationparentmenu option:Selected").val();
-
+    let isChecked = $('#chkactive').is(':checked');
+   
 
     var navigationObj = {
         Id: parseInt(navid),
@@ -458,7 +463,7 @@ function EditNav() {
         ControllerName: $(".editmenuController").val(),
         ParentMenuId: navigationparentmenuvalidation,
         DisplayOrder: parseInt($(".editmenuDisplayorder").val()),
-        Visible: true,//$('#visiblecheckbox').is(':checked'),
+        Visible: isChecked,//$('#visiblecheckbox').is(':checked'),
         CssClass: val
 
     }

@@ -19,5 +19,7 @@ namespace Application.Features.Driver.Querys.GetByList
         public int RegionID { get; set; }
         public Domain.Entities.Region Region { get; set; }
         public int CityID { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

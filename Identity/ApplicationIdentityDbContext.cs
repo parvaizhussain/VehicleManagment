@@ -19,7 +19,8 @@ namespace Identity
         public DbSet<UserCity_Network_Branch> UserCity_Network_Branch { get; set; }
         public DbSet<Cluster_Branch> Cluster_Branch { get; set; }
         public DbSet<User_Region> User_Region { get; set; }
-
+        public virtual DbSet<Region>  Region { get; set; }
+        public virtual DbSet<AccessRights>  AccessRights { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 

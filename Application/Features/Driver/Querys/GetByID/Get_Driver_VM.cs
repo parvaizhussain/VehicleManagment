@@ -17,5 +17,7 @@ namespace Application.Features.Driver.Querys.GetByID
         public byte[] DriverImage { get; set; }
         public int RegionID { get; set; }
         public int CityID { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

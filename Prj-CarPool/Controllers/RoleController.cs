@@ -39,7 +39,8 @@ namespace Prj_CarPool.Controllers
             _logger = logger;
             _memoryCache = memoryCache;
         }
-
+       
+        [Authorize("Authorization")]
         public async Task<IActionResult> Index()
         {
             try
@@ -329,7 +330,7 @@ namespace Prj_CarPool.Controllers
                     viewModel.AccessRights = user.AccessRights;
                     //viewModel.RegionId = user.RegionId;
                     //viewModel.Region = user.Region;
-                    viewModel.IsCluster = user.IsCluster;
+                   // viewModel.IsCluster = user.IsCluster;
                     var userRoleId = await _dbi.UserRoles.Where(x => x.UserId == id).Select(x => x.RoleId).FirstOrDefaultAsync();
                     var allRoles = await _roleManager.Roles.Where(x => x.Id == userRoleId).Include(x => x.Group.Department).ToListAsync();
                     viewModel.Roles = allRoles.Select(x => new RoleViewModel()
@@ -353,50 +354,50 @@ namespace Prj_CarPool.Controllers
                         ur.Region = r[i].Region;
                         urList.Add(ur);
                     }
-                    viewModel.User_Region = urList;
+                    //viewModel.User_Region = urList;
 
-                    if (viewModel.IsCluster)
-                    {
-                        var cb = await _dbi.Cluster_Branch
-                        .Where(x => x.UserId == id)
-                        .Include(x => x.Branch.Network.City)
-                        .ToListAsync();
+                    //if (viewModel.IsCluster)
+                    //{
+                    //    var cb = await _dbi.Cluster_Branch
+                    //    .Where(x => x.UserId == id)
+                    //    .Include(x => x.Branch.Network.City)
+                    //    .ToListAsync();
 
-                        var ucbList = new List<Cluster_Branch>();
-                        for (int i = 0; i < cb.Count; i++)
-                        {
-                            var ucb = new Cluster_Branch();
-                            ucb.UserId = id;
-                            ucb.BranchId = Convert.ToInt32(cb[i].BranchId);
-                            ucb.Branch = cb[i].Branch;
-                            ucbList.Add(ucb);
-                        }
-                        viewModel.Cluster_Branch = ucbList;
-                    }
-                    else
-                    {
-                        var cnb = await _dbi.UserCity_Network_Branch
-                        .Where(x => x.UserId == id)
-                        .Include(x => x.City)
-                        .Include(x => x.Network)
-                        .Include(x => x.Branch)
-                        .ToListAsync();
+                    //    var ucbList = new List<Cluster_Branch>();
+                    //    for (int i = 0; i < cb.Count; i++)
+                    //    {
+                    //        var ucb = new Cluster_Branch();
+                    //        ucb.UserId = id;
+                    //        ucb.BranchId = Convert.ToInt32(cb[i].BranchId);
+                    //        ucb.Branch = cb[i].Branch;
+                    //        ucbList.Add(ucb);
+                    //    }
+                    //    viewModel.Cluster_Branch = ucbList;
+                    //}
+                    //else
+                    //{
+                    //    var cnb = await _dbi.UserCity_Network_Branch
+                    //    .Where(x => x.UserId == id)
+                    //    .Include(x => x.City)
+                    //    .Include(x => x.Network)
+                    //    .Include(x => x.Branch)
+                    //    .ToListAsync();
 
-                        var ucnbList = new List<UserCity_Network_Branch>();
-                        for (int i = 0; i < cnb.Count; i++)
-                        {
-                            var ucnb = new UserCity_Network_Branch();
-                            ucnb.UserId = id;
-                            ucnb.CityId = Convert.ToInt32(cnb[i].CityId);
-                            ucnb.City = cnb[i].City;
-                            ucnb.NetworkId = Convert.ToInt32(cnb[i].NetworkId);
-                            ucnb.Network = cnb[i].Network;
-                            ucnb.BranchId = Convert.ToInt32(cnb[i].BranchId);
-                            ucnb.Branch = cnb[i].Branch;
-                            ucnbList.Add(ucnb);
-                        }
-                        viewModel.City_Network_Branch = ucnbList;
-                    }
+                    //    var ucnbList = new List<UserCity_Network_Branch>();
+                    //    for (int i = 0; i < cnb.Count; i++)
+                    //    {
+                    //        var ucnb = new UserCity_Network_Branch();
+                    //        ucnb.UserId = id;
+                    //        ucnb.CityId = Convert.ToInt32(cnb[i].CityId);
+                    //        ucnb.City = cnb[i].City;
+                    //        ucnb.NetworkId = Convert.ToInt32(cnb[i].NetworkId);
+                    //        ucnb.Network = cnb[i].Network;
+                    //        ucnb.BranchId = Convert.ToInt32(cnb[i].BranchId);
+                    //        ucnb.Branch = cnb[i].Branch;
+                    //        ucnbList.Add(ucnb);
+                    //    }
+                    //    viewModel.City_Network_Branch = ucnbList;
+                    //}
 
 
                     return Json(viewModel);
