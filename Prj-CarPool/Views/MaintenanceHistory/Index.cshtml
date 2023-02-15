@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Utility.Models.MaintainaceHistory>
 @using System.Text.Json;
 @{
-    ViewData["Title"] = "Maintain History";
+    ViewData["Title"] = "Maintainance History";
     var UserData = JsonSerializer.Deserialize<Domain.ViewModels.UserViewModel>(@ViewBag.JsonUserData);
 }
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@tabler/icons@latest/iconfont/tabler-icons.min.css">
@@ -64,13 +64,15 @@
     <!-- Offcanvas to add new user -->
     <div class="modal fade" tabindex="-1" id="modalAddMaintain" aria-labelledby="offcanvasAddUserLabel">
         <!--offcanvasAddUser-->
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-        <div class="modal-header">
-            <h5 id="offcanvasAddUserLabel" class="modal-title">Add Maintainance History</h5>
-                    <button type="button" class="btn-close text-reset" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
+        <div class="modal-dialog modal-lg modal-simple modal-edit-user">
+            <div class="modal-content p-3 p-md-5">
+     
                 <div class="modal-body">
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="text-center mb-4">
+                        <h3 class="mb-2">Add Maintainance History</h3>
+                        <p class="text-muted">Add new Maintainance History</p>
+                    </div>
             <form class="add-new-user pt-0" id="addNewUserForm2" onsubmit="return false">
 
                
@@ -119,19 +121,7 @@
                     </div>
 
 
-                     <div class="col">
-                        <span class="stred">*</span><label class="form-label">Maintenance Date to</label>
-                        <div class="input-group input-group-merge">
-                                <input type="text" class="form-control Addmaindatetest flatpickr-datetimetest" placeholder="DD-MMM-YYYY" aria-describedby="multicol-password1" />
-                                <span class="input-group-text cursor-pointer" data-toggle id="multicol-password1">
-                                    <i class="ti ti-calendar"></i>
-                                </span>
-                                </div>
-                        <p class="error-message">* Maintenance Date To Required</p>
-
-                     
-                       
-                    </div>
+                  
                
                 </div>
 
@@ -180,17 +170,19 @@
     <!-- Offcanvas to Edit new Navigation -->
     <div class="modal fade" tabindex="-1" id="modalEditMaintain" aria-labelledby="offcanvasEditNavLabel">
         <!--offcanvasAddUser-->
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-        <div class="modal-header">
-           <h5 id="offcanvasAddUserLabel" class="modal-title">Edit Maintainace History</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
+        <div class="modal-dialog modal-lg modal-simple modal-edit-user">
+            <div class="modal-content p-3 p-md-5">
+      
         <div class="modal-body">
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="text-center mb-4">
+                        <h3 class="mb-2">Edit Maintainance History</h3>
+                        <p class="text-muted">Update Maintainance History.</p>
+                    </div>
             <form class="add-new-user pt-0" id="EditNewUserForm" onsubmit="return false">
 
                 <div class="col-lg-4 col-md-4 col-xs-12 col-sm-6">
-                    <div class="form-group">
+                    <div class="form-group" hidden="hidden">
 
                         <label>ID</label>
                         <input type="text" disabled="disabled" class="form-control EditMaintainHisId" value="0" />

@@ -22,11 +22,11 @@
 
         stutbl += '<td>' + newdatas.data[st].CardNum + '</td>';
         stutbl += '<td>' + newdatas.data[st].CardLimit + '</td>';
-        if (newdatas.data[st].IsActive !== true) {
-            stutbl += '<td id="editVCActive"><span class="badge bg-label-danger" text-capitalized>InActive</span></td>';
+        if (newdatas.data[st].IsActive === true) {
+            stutbl += '<td id="editVCActive"><span class="badge bg-label-success" text-capitalized>Active</span></td>';
         }
         else {
-            stutbl += '<td id="editVCActive"><span class="badge bg-label-success" text-capitalized>Active</span></td>';
+            stutbl += '<td id="editVCActive"><span class="badge bg-label-danger" text-capitalized>InActive</span></td>';
 
         }
         stutbl += '<td><div class="d-flex align-items-center">';
@@ -249,6 +249,24 @@ $(document).ready(function () {
             })
         ]
     });
+    $(".Cardissuanceedit").flatpickr({
+        plugins: [
+            new monthSelectPlugin({
+                shorthand: true, //defaults to false
+                dateFormat: "m/y", //defaults to "F Y"
+                altFormat: "F Y", //defaults to "F Y"
+            })
+        ]
+    });
+    $(".Cardexpiryedit").flatpickr({
+        plugins: [
+            new monthSelectPlugin({
+                shorthand: true, //defaults to false
+                dateFormat: "m/y", //defaults to "F Y"
+                altFormat: "F Y", //defaults to "F Y"
+            })
+        ]
+    });
 
 });
 
@@ -309,9 +327,13 @@ function Edit(item) {
             $('.Cardidedit').val(result.cardID);
             $('.Cardnameedit').val(result.cardName);
             $('.Cardnumedit').val(result.cardNum);
-            $('.Cardlimitedit').val(result.cardLimit);;
-            $('.Cardissuanceedit').val(result.issueDate);
-            $('.Cardexpiryedit').val(result.exipryDate);
+            $('.Cardlimitedit').val(result.cardLimit);
+            $('#chkactive').attr("checked", result.isActive);
+
+            dateSetflatMonth(result.issueDate, $('.Cardissuanceedit'));
+            dateSetflatMonth(result.exipryDate, $('.Cardexpiryedit'));
+          // $('.Cardissuanceedit').val(result.issueDate);
+        //  $('.Cardexpiryedit').val(result.exipryDate);
         }
 
     });
@@ -320,7 +342,7 @@ function Edit(item) {
 
 function Edit_Card() {
 
-
+    let isChecked = $('#chkactive').is(':checked');
     var eidtobj = {
         CardID: $('.Cardidedit').val(),
         CardName: $('.Cardnameedit').val(),
@@ -328,7 +350,7 @@ function Edit_Card() {
         CardLimit: $('.Cardlimitedit').val(),
         IssueDate: $('.Cardissuanceedit').val(),
         ExipryDate: $('.Cardexpiryedit').val(),
-
+        IsActive: isChecked
     }
     $.ajax({
 

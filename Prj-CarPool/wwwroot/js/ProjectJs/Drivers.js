@@ -453,7 +453,7 @@ async function SaveVC() {
 
                 LoadTable(newdata);
 
-                $('#btnCancelSave').click();
+                $('#btnEXCancelSave').click();
             }
             else {
                 if (result.jsonerror) {
@@ -788,7 +788,7 @@ function Delete(item) {
                 type: 'POST',
                 async: false,
                 data: { Obj: objDelete },
-                url: '/Drivers/Delete',
+                url: '/FuelCard/Delete',
                 success: function (result) {
                     var mydata = result.json;// $('#UserDataJson').val();
                     var newdata = JSON.parse(mydata);

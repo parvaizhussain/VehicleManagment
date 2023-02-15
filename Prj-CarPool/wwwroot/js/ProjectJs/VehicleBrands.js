@@ -390,23 +390,6 @@ function SaveVC() {
     console.log("Starttime : " + date.getMilliseconds())
 
 
-    //  fetch('https://localhost:7010/vehicleInsert', {
-    //    method: 'POST',
-    //    headers: {
-    //        'Accept': 'application/json',
-    //        'Content-Type': 'application/json'
-    //    },
-    //    body: JSON.stringify(VCObj)
-    //})
-    //    .then(response => response.json())
-    //    .then(() => {
-    //             const Enddate = new Date();
-    //            console.log("Endtime : " + Enddate.getMilliseconds());
-    //        //getItems();
-    //        //addNameTextbox.value = '';
-    //    })
-    //    .catch(error => console.error('Unable to add item.', error));
-
 
 
 
@@ -422,7 +405,7 @@ function SaveVC() {
                 const Enddate = new Date();
                 console.log("Endtime : " + Enddate.getMilliseconds());
 
-                Command: toastr["success"]("This Vehicle Company Succefully Saved.");
+                Command: toastr["success"]("Vehicle Brand Successfully Saved.");
                 var mydata = result.json;// $('#UserDataJson').val();
                 var newdata = JSON.parse(mydata);
 
@@ -476,7 +459,7 @@ function EditVC() {
 
             if (result.datasuccess == true) {
 
-                Command: toastr["success"]("Vehicle Brand SuccessFully Edited !");
+                Command: toastr["success"]("Vehicle Brand Successfully Edited !");
                 var mydata = result.json;// $('#UserDataJson').val();
                 var newdata = JSON.parse(mydata);
 

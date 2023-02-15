@@ -10,8 +10,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - CarPool</title>
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="~/assets/img/favicon/favicon.ico" />
-
+    @*<link rel="icon" type="image/x-icon" href="~/assets/img/favicon/favicon.ico" />*@
+    <link rel="icon" type="image/x-icon" href="~/img/citylogo/logo2.gif" />
+   
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -748,13 +749,32 @@
 
     <script>
        function dateSetflat(val,item){
-           console.log("hit")
+          
             var date = new Date(val);
             var datepicker = item.flatpickr({
                 dateFormat: "d-M-Y"
             });
             datepicker.setDate(date);
        }
+        function dateSetflatMonth(val, item) {
+            var month = val.split('/')[0];
+            var year = val.split('/')[1];
+            var datez  = month + "-01-" + year;
+            console.log(datez);
+           
+            
+            var date = new Date(datez);
+            var datepicker1 = item.flatpickr({
+                plugins: [
+                    new monthSelectPlugin({
+                        shorthand: true, //defaults to false
+                        dateFormat: "m/y", //defaults to "F Y"
+                        altFormat: "F Y", //defaults to "F Y"
+                    })
+                ]
+            });
+            datepicker1.setDate(date,true);
+        }
 
         function formatdatewithMonth(itemdate) {
             console.log(itemdate)

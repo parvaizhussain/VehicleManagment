@@ -63,7 +63,6 @@ namespace Prj_CarPool.Controllers
 
             if (Obj.CardID != 0)
             {
-
                 var deptobj = await _FuelCardRepository.UpdateAsync(Extensions.SharedBag.FuelCardDelete, Obj, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
                 var datajson = await _FuelCardRepository.GetAllAsync(Extensions.SharedBag.FuelCardlist, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
                 string jsondata = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = datajson.OrderByDescending(x => x.CardID) });

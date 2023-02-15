@@ -442,7 +442,8 @@ function ShowEditBranch(item) {
             $('#editvehicleNO').val(result.vehicleNum);
             $('#editvehicleName').val(result.vehicleName);
             $('#editvehicleColor').val(result.vehicleColor);
-            $('#editPurchaseDate').val(result.purchaseDate);
+            dateSetflat(result.purchaseDate, $('#editPurchaseDate'));
+           // $('#editPurchaseDate').val(result.purchaseDate);
             $('#editVehicleType').val(result.vehicleType);
             $('#editvehicleMilage').val(result.vehicleMilage);
             $('#editvehicleModel').val(result.vehicleModel);

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Utility.Models.VehicleBrands>
 @using System.Text.Json;
 @{
-    ViewData["Title"] = "Vehicle Company";
+    ViewData["Title"] = "Vehicle Brands";
     var UserData = JsonSerializer.Deserialize<Domain.ViewModels.UserViewModel>(@ViewBag.JsonUserData);
 }
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@tabler/icons@latest/iconfont/tabler-icons.min.css">
@@ -65,17 +65,15 @@
     <!-- Offcanvas to add new user -->
     <div class="modal fade" tabindex="-1" id="offcanvasAddUser" aria-labelledby="offcanvasAddUserLabel">
         <!--offcanvasAddUser-->
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 id="offcanvasAddUserLabel" class="modal-title">Add Brands</h5>
-
-                    <button type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                </div>
+        <div class="modal-dialog modal-lg modal-simple modal-edit-user">
+            <div class="modal-content p-3 p-md-5">
+             
                 <div class="modal-body">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="text-center mb-4">
+                        <h3 class="mb-2">Add Vehicle Brand</h3>
+                        <p class="text-muted">Add New Vehicle Brand.</p>
+                    </div>
                     <form class="add-new-user pt-0" id="addNewUserForm" onsubmit="return false">
 
                         @* <div class="col-lg-4 col-md-4 col-xs-12 col-sm-6 visiblityhidden">
@@ -128,14 +126,17 @@
     <!-- Offcanvas to Edit new Navigation -->
     <div class="modal fade" tabindex="-1" id="offcanvasEditNav" aria-labelledby="offcanvasEditNavLabel">
         <!--offcanvasAddUser-->
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 id="offcanvasAddUserLabel" class="modal-title">Edit Vehicile Brands</h5>
-                    <button type="button" class="btn-close text-reset" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
+            <div class="modal-dialog modal-lg modal-simple modal-edit-user">
+            <div class="modal-content p-3 p-md-5">
+              
                 <div class="modal-body">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="text-center mb-4">
+                        <h3 class="mb-2">Edit Vehicle Brand</h3>
+                        <p class="text-muted">Update Vehicle Brand.</p>
+                    </div>
             <form class="add-new-user pt-0" id="EditNewUserForm" onsubmit="return false">
+
 
                 <div class="col-lg-4 col-md-4 col-xs-12 col-sm-6 visiblityhidden">
                     <div class="form-group">

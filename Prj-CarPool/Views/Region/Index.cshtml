@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Utility.Models.Region>
 @using System.Text.Json;
 @{
-    ViewData["Title"] = "Branch";
+    ViewData["Title"] = "Region";
     var UserData = JsonSerializer.Deserialize<Domain.ViewModels.UserViewModel>(@ViewBag.JsonUserData);
 }
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@tabler/icons@latest/iconfont/tabler-icons.min.css">

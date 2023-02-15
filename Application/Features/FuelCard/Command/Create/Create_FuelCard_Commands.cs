@@ -14,5 +14,7 @@ namespace Application.Features.FuelCard.Command.Create
         public int CardLimit { get; set; }
         public string IssueDate { get; set; }
         public string ExipryDate { get; set; }
+        public bool IsDeleted { get; set; }
+        public bool IsActive { get; set; }
     }
 }

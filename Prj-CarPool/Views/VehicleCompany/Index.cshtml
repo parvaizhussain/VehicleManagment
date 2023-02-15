@@ -62,48 +62,55 @@
     <!-- Offcanvas to add new user -->
     <div class="modal fade" tabindex="-1" id="offcanvasAddUser" aria-labelledby="offcanvasAddUserLabel">
         <!--offcanvasAddUser-->
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 id="offcanvasAddUserLabel" class="modal-title">Add Company</h5>
-                    <button type="button" class="btn-close text-reset" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-                <div class="modal-body">
-            <form class="add-new-user pt-0" id="addNewUserForm" onsubmit="return false">
+        <div class="modal-dialog modal-lg modal-simple modal-edit-user">
+            <div class="modal-content p-3 p-md-5">
 
-               @* <div class="col-lg-4 col-md-4 col-xs-12 col-sm-6 visiblityhidden">
-                    <div class="form-group">
+                <div class="modal-body">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="text-center mb-4">
+                        <h3 class="mb-2">Add Vehicle Company</h3>
+                        <p class="text-muted">Add new Vehicle Company.</p>
+                    </div>
+                    <form class="add-new-user pt-0" id="addNewUserForm" onsubmit="return false">
+
+                        @* <div class="col-lg-4 col-md-4 col-xs-12 col-sm-6 visiblityhidden">
+                        <div class="form-group">
 
                         <label class="visiblityhidden">ID</label>
                         <input type="text" class="form-control branchId visiblityhidden" value="0" />
-                    </div>
-                </div>*@
+                        </div>
+                        </div>*@
 
-                <div class="mb-3">
+                        <div class="mb-3">
 
-                    <span class="stred">*</span><label class="form-label">Vehicle Comapny Name</label>
-                    <input type="text" class="form-control VCnameadd onlyalphabetallowwithspace" />
-                    <p class="error-message">* Name Required</p>
-                </div>
+                            <span class="stred">*</span><label class="form-label">Vehicle Comapny Name</label>
+                            <input type="text" class="form-control VCnameadd onlyalphabetallowwithspace" />
+                            <p class="error-message">* Name Required</p>
+                        </div>
 
-                <button type="button" class="btn btn-primary me-sm-3 me-1" onclick="SaveVC()">Submit</button>
+                        <button type="button" class="btn btn-primary me-sm-3 me-1" onclick="SaveVC()">Submit</button>
                         <button type="reset" class="btn btn-label-secondary" id="btnCancelSave" data-bs-dismiss="modal">Cancel</button>
-            </form>
-        </div>
-        </div>
+                    </form>
+                </div>
+            </div>
+            <div>
+            </div>
         </div>
     </div>
 
     <!-- Offcanvas to Edit new Navigation -->
     <div class="modal fade" tabindex="-1" id="offcanvasEditNav" aria-labelledby="offcanvasEditNavLabel">
         <!--offcanvasAddUser-->
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-        <div class="modal-header">
-            <h5 id="offcanvasAddUserLabel" class="modal-title">Edit Vehicile Company</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
+        <div class="modal-dialog modal-lg modal-simple modal-edit-user">
+            <div class="modal-content p-3 p-md-5">
+
+      
         <div class="modal-body">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="text-center mb-4">
+                        <h3 class="mb-2">Edit Vehicle Company</h3>
+                        <p class="text-muted">Update Vehicle Company.</p>
+                    </div>
             <form class="add-new-user pt-0" id="EditNewUserForm" onsubmit="return false">
 
                 <div class="col-lg-4 col-md-4 col-xs-12 col-sm-6 visiblityhidden">
@@ -137,10 +144,7 @@
 
     </div>
 </div>
-@*<button type="button" class="btn btn-primary me-sm-3 me-1" onclick="btnShow()">Show</button>*@
-@*<div class="block-ui-btn demo-inline-spacing">
-<button type="button" class="btn btn-primary btn-page-block-custom me-sm-3 me-1">Icon</button>
-</div>*@
+
 
 
 <style>
