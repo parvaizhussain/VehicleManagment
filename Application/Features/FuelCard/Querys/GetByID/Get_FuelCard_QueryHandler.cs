@@ -1,5 +1,4 @@
 ﻿using Application.Contracts.IUOW;
-using Application.Features.ServiceCenter.Querys.GetByID;
 using AutoMapper;
 using MediatR;
 

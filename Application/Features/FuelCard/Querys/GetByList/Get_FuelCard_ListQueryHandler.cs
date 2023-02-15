@@ -23,7 +23,7 @@ namespace Application.Features.FuelCard.Querys.GetByList
         public async Task<List<Get_FuelCard_ListVM>> Handle(Get_FuelCard_ListQuery request, CancellationToken cancellationToken)
         {
             var allfuelcard = (await _unitOfWork.FuelCard.GetAll(null, null, null));
-            return _mapper.Map<List<Get_FuelCard_ListVM>>(allfuelcard);
+            return _mapper.Map<List<Get_FuelCard_ListVM>>(allfuelcard.Where(x=> x.IsDeleted == false));
         }
     }
 }

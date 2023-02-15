@@ -23,6 +23,7 @@ using Application.Features.Driver.Command.Update;
 using Application.Features.Driver.Querys.GetByID;
 using Application.Features.Driver.Querys.GetByList;
 using Application.Features.FuelCard.Command.Create;
+using Application.Features.FuelCard.Command.Delete;
 using Application.Features.FuelCard.Command.Update;
 using Application.Features.FuelCard.Querys.GetByID;
 using Application.Features.FuelCard.Querys.GetByList;
@@ -193,6 +194,7 @@ namespace Application.Profiles
             CreateMap<FuelCard, Get_FuelCard_VM>().ReverseMap();
             CreateMap<FuelCard, Get_FuelCard_ListVM>().ReverseMap();
             CreateMap<FuelCard, Update_FuelCard_Commands>().ReverseMap();
+            CreateMap<FuelCard, Delete_FuelCard_Commands>().ReverseMap();
         }
 
 

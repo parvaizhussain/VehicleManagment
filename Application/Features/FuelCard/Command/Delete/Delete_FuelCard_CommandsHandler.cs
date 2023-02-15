@@ -1,8 +1,11 @@
 ﻿using Application.Contracts.IUOW;
 using Application.Features.Airport.Command.Delete;
 using Application.Features.Airport.Querys.GetByID;
+using Application.Features.City.Commands.DeleteCity;
+using Application.Features.City.Queries.GetCityByID;
 using Application.Features.FuelCard.Querys.GetByID;
 using AutoMapper;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.FuelCard.Command.Delete
 {
-    public class Delete_FuelCard_CommandsHandler
+    public class Delete_FuelCard_CommandsHandler : IRequestHandler<Delete_FuelCard_Commands, Get_FuelCard_VM>
     {
 
         private readonly IAsyncUnitOfWork _unitOfWork;
