@@ -37,6 +37,7 @@ namespace Application.Features.Region.Commands.CreateRegion
             if (createRegionCommandResponse.Success)
             {
                 var Region = _mapper.Map<Domain.Entities.Region>(request);
+                Region.IsActive=true;
                 Region = await _unitOfWork.Region.AddAsync(Region);
                 Region = (Domain.Entities.Region)await _unitOfWork.Commit(Region);
                 createRegionCommandResponse.Region = _mapper.Map<CreateRegionDto>(Region);

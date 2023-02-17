@@ -37,6 +37,7 @@ namespace Application.Features.VehicleBrands.Command.Create
             if (createVehicleBrandCommandResponse.Success)
             {
                 var VehicleBrand = _mapper.Map<Domain.Entities.VehicleBrands>(request);
+                VehicleBrand.IsActive = true;
                 VehicleBrand = await _unitOfWork.VehicleBrands.AddAsync(VehicleBrand);
                 VehicleBrand = (Domain.Entities.VehicleBrands)await _unitOfWork.Commit(VehicleBrand, "Insert", "VehicleBrands");
                 createVehicleBrandCommandResponse._VehicleBrands_Dto = _mapper.Map<Create_VehicleBrands_Dto>(VehicleBrand);

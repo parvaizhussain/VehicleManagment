@@ -34,6 +34,7 @@ namespace Application.Features.FuelCard.Command.Create
             if (createFuelCardCommandResponse.Success)
             {
                 var Fuelcard = _mapper.Map<Domain.Entities.FuelCard>(request);
+                Fuelcard.IsActive= true;
                 Fuelcard = await _unitOfWork.FuelCard.AddAsync(Fuelcard);
                 Fuelcard = (Domain.Entities.FuelCard)await _unitOfWork.Commit(Fuelcard, "Insert", "FuelCard");
                 createFuelCardCommandResponse._FuelCard_Dto = _mapper.Map<Create_FuelCard_Dto>(Fuelcard);

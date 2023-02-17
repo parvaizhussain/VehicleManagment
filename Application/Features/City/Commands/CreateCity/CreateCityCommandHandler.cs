@@ -37,6 +37,7 @@ namespace Application.Features.City.Commands.CreateCity
             if (createCityCommandResponse.Success)
             {
                 var City = _mapper.Map<Domain.Entities.City>(request);
+                City.IsActive= true;
                 City = await _unitOfWork.City.AddAsync(City);
                 City = (Domain.Entities.City)await _unitOfWork.Commit(City,"Insert","City");
                 createCityCommandResponse.City = _mapper.Map<CreateCityDto>(City);

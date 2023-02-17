@@ -39,6 +39,7 @@ namespace Application.Features.ServiceCenter.Command.Create
             {
                 var ServiceCenter = _mapper.Map<Domain.Entities.ServiceCenter>(request);
                 ServiceCenter.VehicleCompanyID = request.DealerID;
+                ServiceCenter.IsActive = true;
                 ServiceCenter = await _unitOfWork.ServiceCenter.AddAsync(ServiceCenter);
                 ServiceCenter = (Domain.Entities.ServiceCenter)await _unitOfWork.Commit(ServiceCenter, "Insert", "ServiceCenter");
                 createServiceCenterCommandResponse._ServiceCenter_Dto = _mapper.Map<Create_ServiceCenter_Dto>(ServiceCenter);

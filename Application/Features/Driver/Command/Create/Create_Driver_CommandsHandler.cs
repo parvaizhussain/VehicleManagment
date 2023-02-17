@@ -37,6 +37,7 @@ namespace Application.Features.Driver.Command.Create
             if (createDriverCommandResponse.Success)
             {
                 var Driver = _mapper.Map<Domain.Entities.Driver>(request);
+                Driver.IsActive = true;
                 Driver = await _unitOfWork.Driver.AddAsync(Driver);
                 Driver = (Domain.Entities.Driver)await _unitOfWork.Commit(Driver, "Insert", "Drivers");
                 createDriverCommandResponse._Create_Driver_Dto = _mapper.Map<Create_Driver_Dto>(Driver);

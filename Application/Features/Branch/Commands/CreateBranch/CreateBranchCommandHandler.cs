@@ -37,6 +37,7 @@ namespace Application.Features.Branch.Commands.CreateBranch
             if (createBranchCommandResponse.Success)
             {
                 var Branch = _mapper.Map<Domain.Entities.Branch>(request);
+                Branch.IsActive= true;
                 Branch = await _unitOfWork.Branch.AddAsync(Branch);
                 Branch = (Domain.Entities.Branch)await _unitOfWork.Commit(Branch);
                 createBranchCommandResponse.Branch = _mapper.Map<CreateBranchDto>(Branch);

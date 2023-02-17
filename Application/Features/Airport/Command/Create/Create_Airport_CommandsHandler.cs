@@ -38,6 +38,7 @@ namespace Application.Features.Airport.Command.Create
             if (createAirportCommandResponse.Success)
             {
                 var Airport = _mapper.Map<Domain.Entities.Airport>(request);
+                Airport.IsActive = true;
                 Airport = await _unitOfWork.Airport.AddAsync(Airport);
                 Airport = (Domain.Entities.Airport)await _unitOfWork.Commit(Airport, "Insert", "Airports");
                 createAirportCommandResponse._Airport_Dto = _mapper.Map<Create_Airport_Dto>(Airport);

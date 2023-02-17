@@ -37,6 +37,7 @@ namespace Application.Features.Department.Commands.CreateDepartment
             if (createDepartmentCommandResponse.Success)
             {
                 var Department = _mapper.Map<Domain.Entities.Department>(request);
+                Department.IsActive= true;  
                 Department = await _unitOfWork.Department.AddAsync(Department);
                 Department = (Domain.Entities.Department)await _unitOfWork.Commit(Department);
                 createDepartmentCommandResponse.Department = _mapper.Map<CreateDepartmentDto>(Department);

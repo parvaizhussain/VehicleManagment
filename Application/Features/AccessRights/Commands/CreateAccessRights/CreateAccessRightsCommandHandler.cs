@@ -37,6 +37,7 @@ namespace Application.Features.AccessRights.Commands.CreateAccessRights
             if (createAccessRightsCommandResponse.Success)
             {
                 var AccessRights = _mapper.Map<Domain.Entities.AccessRights>(request);
+                AccessRights.IsActive = true;
                 AccessRights = await _unitOfWork.AccessRights.AddAsync(AccessRights);
                 AccessRights = (Domain.Entities.AccessRights)await _unitOfWork.Commit(AccessRights);
                 createAccessRightsCommandResponse.AccessRights = _mapper.Map<CreateAccessRightsDto>(AccessRights);

@@ -37,6 +37,7 @@ namespace Application.Features.MaintainaceHistory.Command.Create
             if (createMaintainaceHistoryCommandResponse.Success)
             {
                 var MaintainaceHistory = _mapper.Map<Domain.Entities.MaintainaceHistory>(request);
+                MaintainaceHistory.IsActive = true;
                 MaintainaceHistory = await _unitOfWork.MaintainaceHistory.AddAsync(MaintainaceHistory);
                 MaintainaceHistory = (Domain.Entities.MaintainaceHistory)await _unitOfWork.Commit(MaintainaceHistory, "Insert", "MaintainaceHistory");
                 createMaintainaceHistoryCommandResponse._MaintainaceHistory_Dto = _mapper.Map<Create_MaintainaceHistory_Dto>(MaintainaceHistory);

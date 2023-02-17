@@ -38,6 +38,7 @@ namespace Application.Features.VehicleCompany.Command.Create
             if (createVehicleCompanyCommandResponse.Success)
             {
                 var VehicleCompany = _mapper.Map<Domain.Entities.VehicleCompany>(request);
+                VehicleCompany.IsActive= true;
                 VehicleCompany = await _unitOfWork.VehicleCompany.AddAsync(VehicleCompany);
                 VehicleCompany = (Domain.Entities.VehicleCompany)await _unitOfWork.Commit(VehicleCompany, "Insert", "VehicleCompany");
                 createVehicleCompanyCommandResponse._VehicleCompany_Dto = _mapper.Map<Create_VehicleCompany_Dto>(VehicleCompany);
