@@ -14,6 +14,7 @@ namespace Application.Features.City.Queries.GetCityList
         public Domain.Entities.Region Region { get; set; }
 
         public bool IsDeleted { get; set; }
+        public bool IsActive { get; set; }
     }
 }
 

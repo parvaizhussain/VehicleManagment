@@ -385,7 +385,9 @@ $.ajax({
     success: function (result) {
         Regiondropdown += '<option value="0" style="font-weight: bold;background: #d9d5d5;">No Select</option>';
         for (var i = 0; i < result.length; i++) {
-            Regiondropdown += '<option value="' + result[i].regionId + '">' + result[i].regionName + '</option>';
+            if (result[i].isActive == true && result[i].isDeleted == false) {
+                Regiondropdown += '<option value="' + result[i].regionId + '">' + result[i].regionName + '</option>';
+            }
         }
         $(".regionlist").html(Regiondropdown);
         $(".editregionlist").html(Regiondropdown);

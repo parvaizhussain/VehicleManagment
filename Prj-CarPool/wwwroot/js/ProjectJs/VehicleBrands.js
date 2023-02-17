@@ -359,7 +359,10 @@ $.ajax({
     success: function (result) {
         Comapnydropdown += '<option value="0" style="font-weight: bold;background: #d9d5d5;">No Select</option>';
         for (var i = 0; i < result.length; i++) {
-            Comapnydropdown += '<option value="' + result[i].vehicleCompanyId + '">' + result[i].vehicleCompanyName + '</option>';
+
+            if (result[i].isActive == true && result[i].isDeleted == false) {
+                Comapnydropdown += '<option value="' + result[i].vehicleCompanyId + '">' + result[i].vehicleCompanyName + '</option>';
+            }
         }
         $(".companylist").html(Comapnydropdown);
         $(".companylistedit").html(Comapnydropdown);

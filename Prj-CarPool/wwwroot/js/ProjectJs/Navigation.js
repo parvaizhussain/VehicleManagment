@@ -388,7 +388,9 @@ $.ajax({
     success: function (result) {
         parnetmenudropdown += '<option value="0" style="font-weight: bold;background: #d9d5d5;">No Parent</option>';
         for (var i = 0; i < result.length; i++) {
-            parnetmenudropdown += '<option value="' + result[i].id + '">' + result[i].name + '</option>';
+            if (result[i].visible == true && result[i].isDeleted == false) {
+                parnetmenudropdown += '<option value="' + result[i].id + '">' + result[i].name + '</option>';
+            }
         }
         $(".navigationparentmenu").html(parnetmenudropdown);
         $(".editSnavigationparentmenu").html(parnetmenudropdown);

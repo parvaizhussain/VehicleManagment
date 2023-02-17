@@ -269,7 +269,9 @@ $.ajax({
     success: function (result) {
         //accessrightslist += '<option value="0" style="font-weight: bold;background: #d9d5d5;">No Select</option>';
         for (var i = 0; i < result.length; i++) {
-            accessrightslist += '<option value="' + result[i].accessId + '">' + result[i].accessName + '</option>';
+            if (result[i].isActive == true && result[i].isDeleted == false) {
+                accessrightslist += '<option value="' + result[i].accessId + '">' + result[i].accessName + '</option>';
+            }
         }
         $(".accessrights_list").html(accessrightslist);
         $(".accessrights_list").val('');
@@ -291,7 +293,9 @@ $.ajax({
     success: function (result) {
         //roleList += '<option value="0" style="font-weight: bold;background: #d9d5d5;">No Select</option>';
         for (var i = 0; i < result.length; i++) {
-            roleList += '<option value="' + result[i].id + '">' + result[i].name + '</option>';
+            
+                roleList += '<option value="' + result[i].id + '">' + result[i].name + '</option>';
+           
         }
         $(".role_list").html(roleList);
         $(".role_list").val('');
@@ -315,7 +319,9 @@ $.ajax({
     success: function (result) {
         //regionList += '<option value="0" style="font-weight: bold;background: #d9d5d5;">No Select</option>';
         for (var i = 0; i < result.length; i++) {
-            regionList += '<option value="' + result[i].regionId + '">' + result[i].regionName + '</option>';
+            if (result[i].isActive == true && result[i].isDeleted == false) {
+                regionList += '<option value="' + result[i].regionId + '">' + result[i].regionName + '</option>';
+            }
         }
         $(".regionlist").html(regionList);
         $(".regionlist").val('');

@@ -253,7 +253,9 @@ $.ajax({
     success: function (result) {
         DealerLists += '<option value="0" style="font-weight: bold;background: #d9d5d5;">No Select</option>';
         for (var i = 0; i < result.length; i++) {
-            DealerLists += '<option value="' + result[i].vehicleCompanyId + '">' + result[i].vehicleCompanyName + '</option>';
+            if (result[i].isActive == true && result[i].isDeleted == false) {
+                DealerLists += '<option value="' + result[i].vehicleCompanyId + '">' + result[i].vehicleCompanyName + '</option>';
+            }
         }
         $("#DealerList").html(DealerLists);
         $("#EditDealerList").html(DealerLists);
