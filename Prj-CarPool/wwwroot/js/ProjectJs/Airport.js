@@ -18,7 +18,7 @@
         stutbl += '<td class="visiblityhidden"></td>';
         stutbl += '<td id="editAID">' + newdatas.data[st].AirportID + '</td>';
         stutbl += '<td  id="editAName">' + newdatas.data[st].AirportName + '</td>';
-      
+
 
         stutbl += '<td id="editACity" hidden="hidden">' + newdatas.data[st].City.CityId + '</td>';
         stutbl += '<td>' + newdatas.data[st].City.CityName + '</td>';
@@ -219,7 +219,7 @@
                 }
             }
         ]
-       
+
 
     });
 
@@ -235,26 +235,6 @@ $(document).ready(function () {
 
 });
 
-var Citydropdown = "";
-$.ajax({
-    type: 'GET',
-    async: false,
-    url: 'https://localhost:7112/api/City/all',
-    success: function (result) {
-        Citydropdown += '<option value="0" style="font-weight: bold;background: #d9d5d5;">No Select</option>';
-        for (var i = 0; i < result.length; i++) {
-            Citydropdown += '<option value="' + result[i].cityId + '">' + result[i].cityName + '</option>';
-        }
-        $(".Citylist").html(Citydropdown);
-        $(".EditCitylist").html(Citydropdown);
-
-    },
-    complete: function (result) {
-
-    },
-    error: function (err) { console.log(JSON.stringify(err)); }
-
-});
 
 var Regiondropdown = "";
 $.ajax({
@@ -264,7 +244,10 @@ $.ajax({
     success: function (result) {
         Regiondropdown += '<option value="0" style="font-weight: bold;background: #d9d5d5;">No Select</option>';
         for (var i = 0; i < result.length; i++) {
-            Regiondropdown += '<option value="' + result[i].regionId + '">' + result[i].regionName + '</option>';
+            if (result[i].isActive == true && result[i].isDeleted == false) {
+                Regiondropdown += '<option value="' + result[i].regionId + '">' + result[i].regionName + '</option>';
+
+            }
         }
         $(".Regionlist").html(Regiondropdown);
         $(".EditRegionlist").html(Regiondropdown);
@@ -277,7 +260,36 @@ $.ajax({
 
 });
 
+function changeCity(item) {
+    debugger
+    var RegionID = $(item).val();
+    var Citydropdown = "";
+    $.ajax({
+        type: 'GET',
+        async: false,
+        url: 'https://localhost:7112/api/City/RegionId?id=' + RegionID,
+        success: function (result) {
+            Citydropdown += '<option value="0" style="font-weight: bold;background: #d9d5d5;">No Select</option>';
+            for (var i = 0; i < result.length; i++) {
+                if (result[i].isActive == true && result[i].isDeleted == false) {
+                    Citydropdown += '<option value="' + result[i].cityId + '">' + result[i].cityName + '</option>';
 
+                }
+            }
+            $(".Citylist").html(Citydropdown);
+            $(".EditCitylist").html(Citydropdown);
+
+        },
+        complete: function (result) {
+
+        },
+        error: function (err) { console.log(JSON.stringify(err)); }
+
+    });
+}
+$(".EditRegionlist").change(function () {
+
+});
 
 function Save_Airport() {
 
@@ -331,8 +343,8 @@ function Edit(item) {
 
     $('.EditAirportID').val(AirportId.trim());
     $('.EditAirportName').val(AirportName.trim());
-    $('.EditCitylist').val(CityName).trigger('change');
     $('.EditRegionlist').val(RegionName).trigger('change');
+    $('.EditCitylist').val(CityName).trigger('change');
     $('#chkactive').attr("checked", IsVisibleChkedit);
 
 
@@ -392,7 +404,7 @@ function Edit_Airport() {
 //    debugger
 
 //    var AirportId = $(item).closest("tr").find('#editAID').text();
-   
+
 //    $('.EditAirportID').val(AirportId.trim());
 
 //}
@@ -469,11 +481,11 @@ function Delete(item) {
                 data: { Obj: objDelete },
                 url: '/Airport/Delete',
                 success: function (result) {
-                var mydata = result.json;// $('#UserDataJson').val();
-                var newdata = JSON.parse(mydata);
+                    var mydata = result.json;// $('#UserDataJson').val();
+                    var newdata = JSON.parse(mydata);
 
-                LoadTable(newdata);
-               
+                    LoadTable(newdata);
+
                     Swal.fire({
                         icon: 'success',
                         title: 'Deleted!',
@@ -485,7 +497,7 @@ function Delete(item) {
                 }
             });
 
-           
+
 
 
 
@@ -493,4 +505,4 @@ function Delete(item) {
     });
 }
 
-   
+
