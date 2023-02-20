@@ -9,6 +9,9 @@ namespace Application.Features.MaintainaceHistory.Querys.GetByList
     public class Get_MaintainaceHistory_ListVM
     {
         public int MaintainaceHistoryId { get; set; }
+        public int ServiceCenterId { get; set; }
+
+        public Domain.Entities.ServiceCenter ServiceCenter { get; set; }
         public string? MaintainaceLocation { get; set; }
         public DateTime MaintainaceDateForm { get; set; }
         public DateTime MaintainaceDateTo { get; set; }
