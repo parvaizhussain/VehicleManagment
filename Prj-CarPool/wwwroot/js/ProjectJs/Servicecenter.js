@@ -11,14 +11,16 @@
     for (var st = 0; st < newdatas.data.length; st++) {
 
         var $name = newdatas.data[st].ServiceCenterName;
-       
+
+        var dealerName = newdatas.data[st].VehicleCompany ? newdatas.data[st].VehicleCompany.VehicleCompanyName : "Null";
 
         stutbl += '<tr>';
 
         stutbl += '<td class="visiblityhidden" hidden></td>';
         stutbl += '<td id="editSCID">' + newdatas.data[st].ServiceCenterId + '</td>';
         stutbl += '<td id="editSCName">' + newdatas.data[st].ServiceCenterName + '</td>';
-        stutbl += '<td id="editSCDealer">' + newdatas.data[st].VehicleCompany.VehicleCompanyName + '</td>';
+        //stutbl += '<td id="editSCDealer">' + newdatas.data[st].VehicleCompany.VehicleCompanyName + '</td>';
+        stutbl += '<td id="editSCDealer">' + dealerName  + '</td>';
       
 
         if (newdatas.data[st].DealerType === true) {
@@ -320,15 +322,15 @@ function SaveVC() {
 
     /**Validation**/
 
-   
-
+    
+    let isChecked = $('#authorizeddealer').is(':checked');
 
     var SCObj = {
         ServiceCenterId: 0,
         ServiceCenterName: $('.Addservicenameadd').val(),
         ContactNo: $('.Addservicecontactadd').val(),
         ContactPersonName: $('.Addservicepersonadd').val(),
-        DealerType: true,//$('.VCnameadd').val(),
+        DealerType: isChecked,//$('.VCnameadd').val(),
         DealerID: $('#DealerList option:selected').val()
        }
     $.ajax({
@@ -357,8 +359,6 @@ function SaveVC() {
         }
     });
 }
-
-
 function ShowEditBranch(item) {
 
     var SCId = $(item).closest("tr").find('#editSCID').text();
@@ -387,7 +387,6 @@ function ShowEditBranch(item) {
 
 
 }
-
 function Editservice() {
     let isChecked = $('#chkactive').is(':checked');
 
@@ -438,8 +437,6 @@ function Editservice() {
         }
     });
 }
-
-
 function Delete(item) {
     var serviceCenterId = $(item).closest("tr").find('#editSCID').text();
     var objDelete = {
@@ -490,3 +487,176 @@ function Delete(item) {
     });
 }
 
+
+//------------- Add validations-----------------------------
+const formValidationExamples = document.getElementById('addNewUserForm1');
+const fv = FormValidation.formValidation(formValidationExamples, {
+    fields: {
+        ServiceCenter: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter Service Center'
+                },
+                regexp: {
+                    regexp: /^[a-zA-Z ]+$/,
+                    message: 'The name can only consist of alphabeticals and space'
+                }
+            }
+        },
+        ContantNumber: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter Contant Number'
+                },
+                regexp: {
+                    regexp: /^[0-9]+$/,
+                    message: 'The Contant Number can only consist of number'
+                }
+            }
+        },
+        ContantPersonName: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter Contant Person Name'
+                },
+               
+                regexp: {
+                    regexp: /^[a-zA-Z ]+$/,
+                    message: 'The name can only consist of alphabeticals and space'
+                }
+            }
+        },
+        ServiceCenterAddress: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter Service Center Address'
+                },
+            }
+        },
+        Dealer: {
+            validators: {
+                notEmpty: {
+                    message: 'Please confirm password'
+                },
+            }
+        },
+       
+    },
+    plugins: {
+        trigger: new FormValidation.plugins.Trigger(),
+        bootstrap5: new FormValidation.plugins.Bootstrap5({
+            // Use this for enabling/changing valid/invalid class
+            // eleInvalidClass: '',
+        
+        }),
+        submitButton: new FormValidation.plugins.SubmitButton(),
+        // Submit the form when all fields are valid
+        // defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+        autoFocus: new FormValidation.plugins.AutoFocus()
+    },
+    init: instance => {
+        instance.on('plugins.message.placed', function (e) {
+            //* Move the error message out of the `input-group` element
+            if (e.element.parentElement.classList.contains('input-group')) {
+                // `e.field`: The field name
+                // `e.messageElement`: The message element
+                // `e.element`: The field element
+                e.element.parentElement.insertAdjacentElement('afterend', e.messageElement);
+            }
+            //* Move the error message out of the `row` element for custom-options
+            if (e.element.parentElement.parentElement.classList.contains('custom-option')) {
+                e.element.closest('.row').insertAdjacentElement('afterend', e.messageElement);
+            }
+        });
+    }
+}).on('core.form.valid', function (event) {
+    SaveVC();
+});
+//-------------Add validations End-----------------------------
+
+
+
+
+//------------- edit validations-----------------------------
+const editformValidationExamples = document.getElementById('EditNewUserForm');
+const editfv = FormValidation.formValidation(editformValidationExamples, {
+    fields: {
+        editServiceCenter: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter Service Center'
+                },
+                regexp: {
+                    regexp: /^[a-zA-Z ]+$/,
+                    message: 'The name can only consist of alphabeticals and space'
+                }
+            }
+        },
+        editContantNumber: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter Contant Number'
+                },
+                regexp: {
+                    regexp: /^[0-9]+$/,
+                    message: 'The Contant Number can only consist of number'
+                }
+            }
+        },
+        editContantPersonName: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter Contant Person Name'
+                },
+
+                regexp: {
+                    regexp: /^[a-zA-Z ]+$/,
+                    message: 'The name can only consist of alphabeticals and space'
+                }
+            }
+        },
+        editServiceCenterAddress: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter Service Center Address'
+                },
+            }
+        },
+        editDealer: {
+            validators: {
+                notEmpty: {
+                    message: 'Please confirm password'
+                },
+            }
+        },
+
+    },
+    plugins: {
+        trigger: new FormValidation.plugins.Trigger(),
+        bootstrap5: new FormValidation.plugins.Bootstrap5({
+
+        }),
+        submitButton: new FormValidation.plugins.SubmitButton(),
+        // Submit the form when all fields are valid
+        // defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+        autoFocus: new FormValidation.plugins.AutoFocus()
+    },
+    init: instance => {
+        instance.on('plugins.message.placed', function (e) {
+            //* Move the error message out of the `input-group` element
+            if (e.element.parentElement.classList.contains('input-group')) {
+                // `e.field`: The field name
+                // `e.messageElement`: The message element
+                // `e.element`: The field element
+                e.element.parentElement.insertAdjacentElement('afterend', e.messageElement);
+            }
+            //* Move the error message out of the `row` element for custom-options
+            if (e.element.parentElement.parentElement.classList.contains('custom-option')) {
+                e.element.closest('.row').insertAdjacentElement('afterend', e.messageElement);
+            }
+        });
+    }
+}).on('core.form.valid', function (event) {
+    Editservice();
+});
+//-------------Add validations End-----------------------------

@@ -31,6 +31,7 @@ namespace Prj_CarPool.Extensions
             services.AddSingleton<ICityRepository, CityRepository>();
             services.AddSingleton<IDriverRepository, DriverRepository>();
             services.AddSingleton<IFuelCardRepository, FuelCardRepository>();
+            services.AddSingleton<IVehicleRequestRepository, VehicleRequestRepository>();
             return services;
         }
     }

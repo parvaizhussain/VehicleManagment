@@ -17,7 +17,7 @@ namespace Utility.Models
         public string? ContactPersonName { get; set; }
         public bool DealerType { get; set; }
      
-        public int DealerID { get; set; }
+        public int? DealerID { get; set; }
         public VehicleCompany? VehicleCompany { get; set; }
         public int VehicleCompanyID { get; set; }
         public bool IsActive { get; set; }

@@ -1,5 +1,18 @@
-﻿function LoadTable(newdatas) {
-    console.log(newdatas);
+﻿var imagebase64 = "";
+
+function encodeImageFileAsURL(element) {
+    var file = element.files[0];
+    var reader = new FileReader();
+    reader.onloadend = function () {
+        imagebase64 = reader.result;
+    }
+    reader.readAsDataURL(file);
+}
+
+
+function LoadTable(newdatas) {
+    console.log("NEW DAYA" + JSON.stringify(newdatas));
+
     var stutbl = '';
     $(".datatables-users-mytable tbody").html('');
     var statusObj = {
@@ -10,39 +23,36 @@
 
     for (var st = 0; st < newdatas.data.length; st++) {
 
-        var $name = newdatas.data[st].VehicleCompanyName;
-        var $output = '<i class="ti ti-car" data-icon="ti ti-car"></i>'; 
-        
+
+
+
         stutbl += '<tr>';
 
-        stutbl += '<td class="visiblityhidden"></td>';
-        stutbl += '<td id="editVCID">' + newdatas.data[st].VehicleCompanyID + '</td>';
-        stutbl += '<td>';
-        stutbl += '<div id="editVCName" class="d-flex justify-content-start align-items-center user-name">';
-        stutbl += '<div class="avatar-wrapper">';
-        stutbl += '<div class="avatar avatar-sm me-3">';
 
-        stutbl += $output;
-        stutbl += '</div>';
-        stutbl += '</div>';
-        stutbl += '<div class="d-flex flex-column">';
-        stutbl += '<a href="#" class="text-body text-truncate"><span class="fw-semibold">';
-        stutbl += $name;
-        stutbl += '</span></a>';
-        stutbl += '</div>';
-        stutbl += '</div>';
-        stutbl += '</td>';
-        stutbl += '<td id="IsVisibleChk" class="visiblityhidden">' + newdatas.data[st].IsActive + '</td>';
-        if (newdatas.data[st].IsActive === false) {
-            stutbl += '<td id="editVCActive"><span class="badge bg-label-danger" text-capitalized>InActive</span></td>';
-        }
-        else {
-           stutbl += '<td id="editVCActive"><span class="badge bg-label-success" text-capitalized>Active</span></td>';
 
-        }
+
+
+
+
+        stutbl += '<td class="visiblityhidden editRequestID">' + newdatas.data[st].RequestID + '</td>';
+        stutbl += '<td id="editEmployeeID">' + newdatas.data[st].EmployeeID + '</td>';
+        stutbl += '<td id="editPurpose">' + newdatas.data[st].Purpose + '</td>';
+        stutbl += '<td id="editRegionName">' + newdatas.data[st].Region.RegionName + '</td>';
+        stutbl += '<td id="editStatus">' + newdatas.data[st].Status + '</td>';
+        stutbl += '<td id="editEmployeeContact" >' + newdatas.data[st].EmployeeContact + '</td>';
+        stutbl += '<td id="editRequest">' + newdatas.data[st].Request + '</td>';
+
+
+        //if (newdatas.data[st].IsActive !== true) {
+        //    stutbl += '<td id="editVCActive"><span class="badge bg-label-danger" text-capitalized>InActive</span></td>';
+        //}
+        //else {
+        //    stutbl += '<td id="editVCActive"><span class="badge bg-label-success" text-capitalized>Active</span></td>';
+
+        //}
         stutbl += '<td><div class="d-flex align-items-center">';
-        stutbl += '<a  onclick ="ShowEditBranch(this)" class="text-body" data-bs-toggle="modal" data-bs-target="#offcanvasEditNav" ><i class="ti ti-edit ti-sm me-2"></i></a>';
-        stutbl += '<a onclick ="Delete(this)" class="text-body delete-record"><i class="ti ti-trash ti-sm mx-2"></i></a>';
+        stutbl += '<a  onclick ="ShowEditRequest(this)" class="text-body" data-bs-toggle="modal" data-bs-target="#offcanvasEditNav" ><i class="ti ti-edit ti-sm me-2"></i></a>';
+        stutbl += '<a href="/" class="text-body delete-record"><i class="ti ti-trash ti-sm mx-2"></i></a>';
         stutbl += '<a href="/" class="text-body dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm mx-1"></i></a>';
         stutbl += '<div class="dropdown-menu dropdown-menu-end m-0">';
         stutbl += '<a href="/" class="dropdown-item">View</a>';
@@ -218,7 +228,7 @@
                 ]
             },
             {
-                text: '<i class="ti ti-plus me-0 me-sm-1 ti-xs"></i><span class="d-none d-sm-inline-block">Add New Company</span>',
+                text: '<i class="ti ti-plus me-0 me-sm-1 ti-xs"></i><span class="d-none d-sm-inline-block">Add New Details</span>',
                 className: 'add-new btn btn-primary',
                 attr: {
                     'data-bs-toggle': 'modal',
@@ -346,31 +356,308 @@ $(document).ready(function () {
 
     LoadTable(newdata);
 
+    $(".ispicktype").click(function () {
+        if ($("#Airportpickup").is(":checked") == true) {
+            $(".ispicktypeticket").show("slow");
+        }
+        else {
+            $(".ispicktypeticket").hide("slow");
+        }
+    });
+
+
+});
+var Comapnydropdown = "";
+$.ajax({
+    type: 'GET',
+    async: false,
+    url: 'https://localhost:7112/api/vehiclebrands/all',
+    success: function (result) {
+        Comapnydropdown += '<option value="0" style="font-weight: bold;background: #d9d5d5;">No Select</option>';
+        for (var i = 0; i < result.length; i++) {
+            Comapnydropdown += '<option value="' + result[i].vehicleBrandId + '">' + result[i].vehicleBrandName + '</option>';
+        }
+        $(".companylist").html(Comapnydropdown);
+        $(".companylistedit").html(Comapnydropdown);
+
+    },
+    complete: function (result) {
+
+    },
+    error: function (err) { console.log(JSON.stringify(err)); }
+
+});
+
+var Regiondropdown = "";
+$.ajax({
+    type: 'GET',
+    async: false,
+    url: 'https://localhost:7112/api/region/all',
+    success: function (result) {
+        Regiondropdown += '<option value="0" style="font-weight: bold;background: #d9d5d5;">No Select</option>';
+        for (var i = 0; i < result.length; i++) {
+            Regiondropdown += '<option value="' + result[i].regionId + '">' + result[i].regionName + '</option>';
+        }
+        $(".regionlist").html(Regiondropdown);
+
+
+    },
+    complete: function (result) {
+
+    },
+    error: function (err) { console.log(JSON.stringify(err)); }
+
 });
 
 function SaveVC() {
+    var vehiclepurposevali = $("#vehiclepurpose").val();
+    var VehicleRequestvali = $("#VehicleRequest").val();
+    var VehicleTravelfromvali = $("#VehicleTravelfrom").val();
+    var VehicleTravelTovali = $("#VehicleTravelTo").val();
+    var Employeenovali = $("#Employeeno").val();
+    var vehicleRegionvali = $("#vehicleRegion").val();
+    var Airportpickupvali = $("#Airportpickup").val();
+    var Professionalvisitvali = $("#Professionalvisit").val();
+    var Flightnovali = $("#Flightno").val();
+    var Ticketnovali = $("#Ticketno").val();
+    var ticketpicuploadfilevali = $("#ticketpic-upload-file").val();
+    var Pickfromvali = $("#Pickfrom").val();
+    var PickTovali = $("#PickTo").val();
+    var vehicleremarksvali = $("#vehicleremarks").val();
 
 
-    var VCObj = {
-        VehicleCompanyID: 0,
-        VehicleCompanyName: $('.VCnameadd').val(),
-       
+    $('#vehiclepurpose').on("input", function () {
+        $('#vehiclepurpose').next(".error-message").hide();
+        $('#vehiclepurpose').css('border', 'none');
+        $('#vehiclepurpose').css('background', '#d8f9d8');
+    });
+    if (vehiclepurposevali == null || vehiclepurposevali == undefined || vehiclepurposevali == "" || vehiclepurposevali == " ") {
+        $('#vehiclepurpose').next(".error-message").text("* Purpose Required");
+        $('#vehiclepurpose').next(".error-message").show();
+        $('#vehiclepurpose').css('border', '1px solid red');
+        $('#vehiclepurpose').css('background', '#fff');
+        $('#vehiclepurpose').focus();
+        return false;
+    }
+
+    $('#VehicleRequest').on("input", function () {
+        $('#VehicleRequest').next(".error-message").hide();
+        $('#VehicleRequest').css('border', 'none');
+        $('#VehicleRequest').css('background', '#d8f9d8');
+    });
+    if (VehicleRequestvali == null || VehicleRequestvali == undefined || VehicleRequestvali == "" || VehicleRequestvali == " ") {
+        $('#VehicleRequest').next(".error-message").text("* Request Required");
+        $('#VehicleRequest').next(".error-message").show();
+        $('#VehicleRequest').css('border', '1px solid red');
+        $('#VehicleRequest').css('background', '#fff');
+        $('#VehicleRequest').focus();
+        return false;
+    }
+    $('#VehicleTravelfrom').on("input", function () {
+        $('#VehicleTravelfrom').next(".error-message").hide();
+        $('#VehicleTravelfrom').css('border', 'none');
+        $('#VehicleTravelfrom').css('background', '#d8f9d8');
+    });
+    if (VehicleTravelfromvali == null || VehicleTravelfromvali == undefined || VehicleTravelfromvali == "" || VehicleTravelfromvali == " ") {
+        $('#VehicleTravelfrom').next(".error-message").text("* from Required");
+        $('#VehicleTravelfrom').next(".error-message").show();
+        $('#VehicleTravelfrom').css('border', '1px solid red');
+        $('#VehicleTravelfrom').css('background', '#fff');
+        $('#VehicleTravelfrom').focus();
+        return false;
+    }
+    $('#VehicleTravelTo').on("input", function () {
+        $('#VehicleTravelTo').next(".error-message").hide();
+        $('#VehicleTravelTo').css('border', 'none');
+        $('#VehicleTravelTo').css('background', '#d8f9d8');
+    });
+    if (VehicleTravelTovali == null || VehicleTravelTovali == undefined || VehicleTravelTovali == "" || VehicleTravelTovali == " ") {
+        $('#VehicleTravelTo').next(".error-message").text("* To Required");
+        $('#VehicleTravelTo').next(".error-message").show();
+        $('#VehicleTravelTo').css('border', '1px solid red');
+        $('#VehicleTravelTo').css('background', '#fff');
+        $('#VehicleTravelTo').focus();
+        return false;
+    }
+
+    $('#Employeeno').on("input", function () {
+        $('#Employeeno').next(".error-message").hide();
+        $('#Employeeno').css('border', 'none');
+        $('#Employeeno').css('background', '#d8f9d8');
+    });
+    if (Employeenovali == null || Employeenovali == undefined || Employeenovali == "" || Employeenovali == " ") {
+        $('#Employeeno').next(".error-message").text("* Employee Number Required");
+        $('#Employeeno').next(".error-message").show();
+        $('#Employeeno').css('border', '1px solid red');
+        $('#Employeeno').css('background', '#fff');
+        $('#Employeeno').focus();
+        return false;
+    }
+
+    $('#vehicleRegion').change("select", function () {
+        $('#vehicleRegion').next(".error-message").hide();
+        $('#vehicleRegion').css('border', 'none');
+        $('#vehicleRegion').css('background', '#d8f9d8');
+    });
+    if (vehicleRegionvali == null || vehicleRegionvali == undefined || vehicleRegionvali == "" || vehicleRegionvali == " ") {
+        $('#vehicleRegion').next(".error-message").text("* Region Required");
+        $('#vehicleRegion').next(".error-message").show();
+        $('#vehicleRegion').css('border', '1px solid red');
+        $('#vehicleRegion').css('background', '#fff');
+        $('#vehicleRegion').focus();
+        return false;
+    }
+
+    $('#Flightno').on("input", function () {
+        $('#Flightno').next(".error-message").hide();
+        $('#Flightno').css('border', 'none');
+        $('#Flightno').css('background', '#d8f9d8');
+    });
+    if (Flightnovali == null || Flightnovali == undefined || Flightnovali == "" || Flightnovali == " ") {
+        $('#Flightno').next(".error-message").text("* Flight Number Required");
+        $('#Flightno').next(".error-message").show();
+        $('#Flightno').css('border', '1px solid red');
+        $('#Flightno').css('background', '#fff');
+        $('#Flightno').focus();
+        return false;
+    }
+    $('#Ticketno').on("input", function () {
+        $('#Ticketno').next(".error-message").hide();
+        $('#Ticketno').css('border', 'none');
+        $('#Ticketno').css('background', '#d8f9d8');
+    });
+    if (Ticketnovali == null || Ticketnovali == undefined || Ticketnovali == "" || Ticketnovali == " ") {
+        $('#Ticketno').next(".error-message").text("* Ticket Number Required");
+        $('#Ticketno').next(".error-message").show();
+        $('#Ticketno').css('border', '1px solid red');
+        $('#Ticketno').css('background', '#fff');
+        $('#Ticketno').focus();
+        return false;
+    }
+
+    $('#ticketpic-upload-file').on("input", function () {
+        $('#ticketpic-upload-file').next(".error-message").hide();
+        $('#ticketpic-upload-file').css('border', 'none');
+        $('#ticketpic-upload-file').css('background', '#d8f9d8');
+    });
+    if (ticketpicuploadfilevali == null || ticketpicuploadfilevali == undefined || ticketpicuploadfilevali == "" || ticketpicuploadfilevali == " ") {
+        $('#ticketpic-upload-file').next(".error-message").text("* Ticket Required");
+        $('#ticketpic-upload-file').next(".error-message").show();
+        $('#ticketpic-upload-file').css('border', '1px solid red');
+        $('#ticketpic-upload-file').css('background', '#fff');
+        $('#ticketpic-upload-file').focus();
+        return false;
+    }
+
+
+    $('#Pickfrom').on("input", function () {
+        $('#Pickfrom').next(".error-message").hide();
+        $('#Pickfrom').css('border', 'none');
+        $('#Pickfrom').css('background', '#d8f9d8');
+    });
+    if (Pickfromvali == null || Pickfromvali == undefined || Pickfromvali == "" || Pickfromvali == " ") {
+        $('#Pickfrom').next(".error-message").text("* Pick From Required");
+        $('#Pickfrom').next(".error-message").show();
+        $('#Pickfrom').css('border', '1px solid red');
+        $('#Pickfrom').css('background', '#fff');
+        $('#Pickfrom').focus();
+        return false;
+    }
+    $('#PickTo').on("input", function () {
+        $('#PickTo').next(".error-message").hide();
+        $('#PickTo').css('border', 'none');
+        $('#PickTo').css('background', '#d8f9d8');
+    });
+    if (PickTovali == null || PickTovali == undefined || PickTovali == "" || PickTovali == " ") {
+        $('#PickTo').next(".error-message").text("* Pick To Required");
+        $('#PickTo').next(".error-message").show();
+        $('#PickTo').css('border', '1px solid red');
+        $('#PickTo').css('background', '#fff');
+        $('#PickTo').focus();
+        return false;
+    }
+
+    $('#vehicleremarks').on("input", function () {
+        $('#vehicleremarks').next(".error-message").hide();
+        $('#vehicleremarks').css('border', 'none');
+        $('#vehicleremarks').css('background', '#d8f9d8');
+    });
+    if (vehicleremarksvali == null || vehicleremarksvali == undefined || vehicleremarksvali == "" || vehicleremarksvali == " ") {
+        $('#vehicleremarks').next(".error-message").text("* Remarks Required");
+        $('#vehicleremarks').next(".error-message").show();
+        $('#vehicleremarks').css('border', '1px solid red');
+        $('#vehicleremarks').css('background', '#fff');
+        $('#vehicleremarks').focus();
+        return false;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    var pdfpath = ticketpicuploadfilevali;
+
+    var VRequestObj = {
+        requestID: 0,
+        employeeID: 0,
+        status: 0,
+        hODApproval: false,
+        requestType: "oks",
+        dropFrom: "oks",
+
+        dropTo: "oks",
+
+
+        purpose: vehiclepurposevali,
+        request: VehicleRequestvali,
+        travelfrom: VehicleTravelfromvali,
+        travelTo: VehicleTravelTovali,
+        employeeContact: Employeenovali,
+        regionID: vehicleRegionvali,
+        IsAirport: "isateport",//Airportpickupvali,
+        //: Professionalvisitvali,
+        flightNo: Flightnovali,
+        ticketNo: Ticketnovali,
+        ticketPDF: null,
+        pickFrom: Pickfromvali,
+        pickTo: PickTovali,
+        remarks: vehicleremarksvali,
+
+
+
+
+
+
     }
     $.ajax({
 
         type: 'POST',
         async: false,
-        data: { Obj: VCObj },
-        url: '/VehicleCompany/Upsert',
+        data: { Obj: VRequestObj, pathfile: pdfpath },
+        url: '/VehicleRequest/Upsert',
         success: function (result) {
             if (result.datasuccess == true) {
-                Command: toastr["success"]("This Vehicle Company Succefully Saved.");
+
                 var mydata = result.json;// $('#UserDataJson').val();
                 var newdata = JSON.parse(mydata);
-
                 LoadTable(newdata);
-
-                $('#btnCancelSave').click();
+                $('#btnEXCancelSave').click();
+                Command: toastr["success"]("This Vehicle Details Successfully Saved.");
             }
         },
         complete: function (result) {
@@ -382,23 +669,57 @@ function SaveVC() {
         }
     });
 }
-function ShowEditBranch(item) {
 
-    var VCId = $(item).closest("tr").find('#editVCID').text();
-    var VCName = $(item).closest("tr").find('#editVCName').text();
-    var IsVisibleChkedit = JSON.parse($(item).closest("tr").find('#IsVisibleChk').text());
-   
-    $('.EditVCId').val(VCId.trim());
-    $('.EditVCnameadd').val(VCName.trim());
-    $('#chkactive').attr("checked", IsVisibleChkedit);
+function ShowEditRequest(item) {
+    var VCId = $(item).closest("tr").find('#editRequestID').text();
+    $.ajax({
+        type: 'GET',
+        async: false,
+        url: 'https://localhost:7112/api/VehicleRequest/' + VCId,
+        success: function (result) {
+
+            $('#editvehicleepurpose').val(result.purpose);
+            $('#editVehicleRequest').val(result.request);//.trigger('change')
+            $('#editVehicleTravelfrom').val(result.vehicleNum);
+            $('#editVehicleTravelTo').val(result.vehicleName);
+            $('#editEmployeeno').val(result.vehicleColor);
+            $('#editvehicleRegion').val(result.purchaseDate);
+            $('#editVehicleType').val(result.vehicleType);
+            $('#editAirportpickup').val(result.vehicleMilage);
+            $('#editProfessionalvisit').val(result.vehicleModel);
+            $('#editFlightno').val(result.fuelType);
+            $('#editTicketno').val(result.regionID).trigger('change');
+            $('#editticketpic-upload-file').val(result.vehicleID);
+            $('#editPickfrom').val(result.vehicleID);
+            $('#editPickTo').val(result.vehicleID);
+            $('#editvehicleremarks').val(result.vehicleID);
+        },
+        complete: function (result) {
+
+        },
+        error: function (err) { console.log(JSON.stringify(err)); }
+
+    });
 
 }
+
 function EditVC() {
-    let isChecked = $('#chkactive').is(':checked');
-   var VCEditObj = {
-       VehicleCompanyID: parseInt($('.EditVCId').val()),
-       VehicleCompanyName: $(".EditVCnameadd").val(),
-       IsActive: isChecked
+
+    var VCEditObj = {
+        VehicleID: $('#editvehicleID').val(),
+        VehicleERP: $('#editVehicleERP').val(),
+        VehicleBrandsVehicleBrandId: $('#editvehicleBrands option:selected').val(),
+        VehicleBrandID: $('#editvehicleBrands option:selected').val(),
+        VehicleNum: $('#editvehicleNO').val(),
+        VehicleName: $('#editvehicleName').val(),
+        VehicleColor: $('#editvehicleColor').val(),
+        PurchaseDate: $('#editPurchaseDate').val(),
+        VehicleType: $('#editVehicleType').val(),
+        VehicleMilage: $('#editvehicleMilage').val(),
+        VehicleModel: $('#editvehicleModel').val(),
+        FuelType: $('#editFuelType').val(),
+        RegionID: $('#editvehicleRegion option:selected').val(),
+
 
     }
     $.ajax({
@@ -406,26 +727,26 @@ function EditVC() {
         type: 'POST',
         async: false,
         data: { Obj: VCEditObj },
-        url: '/VehicleCompany/Upsert',
+        url: '/VehicleDetails/Upsert',
         success: function (result) {
 
             if (result.datasuccess == true) {
 
-                Command: toastr["success"]("Vehicle Company SuccessFully Edited !");
+                Command: toastr["success"]("Vehicle Brand SuccessFully Edited !");
                 var mydata = result.json;// $('#UserDataJson').val();
                 var newdata = JSON.parse(mydata);
 
                 LoadTable(newdata);
-                $('#btnCancelEdit').click();
+                $('#btnEditCancelSave').click();
             }
             else {
 
-                Command: toastr["error"]("This Vehicle Company not Succefully Edit. \n Somthing Went Wrongs.");
+                Command: toastr["error"]("This Vehicle Brand not Succefully Edit. \n Somthing Went Wrongs.");
                 var mydata = result.json;// $('#UserDataJson').val();
                 var newdata = JSON.parse(mydata);
 
                 LoadTable(newdata);
-                $('#btnCancelEdit').click();
+                $('#btnEditCancelSave').click();
             }
         },
         complete: function (result) {
@@ -437,154 +758,3 @@ function EditVC() {
         }
     });
 }
-function Delete(item) {
-    var vehicleCompanyID = $(item).closest("tr").find('#editVCID').text();
-    var objDelete = {
-        VehicleCompanyID: vehicleCompanyID,
-    }
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Yes, delete it!',
-        customClass: {
-            confirmButton: 'btn btn-primary me-3',
-            cancelButton: 'btn btn-label-secondary'
-        },
-        buttonsStyling: false
-    }).then(function (result) {
-        if (result.value) {
-
-            $.ajax({
-
-                type: 'POST',
-                async: false,
-                data: { Obj: objDelete },
-                url: '/VehicleCompany/Delete',
-                success: function (result) {
-                    var mydata = result.json;// $('#UserDataJson').val();
-                    var newdata = JSON.parse(mydata);
-
-                    LoadTable(newdata);
-
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Deleted!',
-                        text: 'Your file has been deleted.',
-                        customClass: {
-                            confirmButton: 'btn btn-success'
-                        }
-                    });
-                }
-            });
-
-
-
-
-
-        }
-    });
-}
-
-
-//------------- Add validations-----------------------------
-const formValidationExamples = document.getElementById('addNewUserForm');
-const fv = FormValidation.formValidation(formValidationExamples, {
-    fields: {
-        VehicleNameCmp: {
-            validators: {
-                notEmpty: {
-                    message: 'Please enter Vehicle Company name'
-                },
-                //stringLength: {
-                //    min: 6,
-                //    max: 30,
-                //    message: 'The name must be more than 6 and less than 30 characters long'
-                //},
-                regexp: {
-                    regexp: /^[a-zA-Z ]+$/,
-                    message: 'The name can only consist of alphabeticals and space'
-                }
-            }
-        },
-    },
-    plugins: {
-        trigger: new FormValidation.plugins.Trigger(),
-        bootstrap5: new FormValidation.plugins.Bootstrap5({
-            // Use this for enabling/changing valid/invalid class
-            // eleInvalidClass: '',
-           eleValidClass: '',
-            rowSelector: function (field, ele) {
-                // field is the field name & ele is the field element
-                switch (field) {
-                    //case 'formValidationName':
-                    case 'VehicleNameCmp':
-                   
-                    default:
-                        return '.row';
-                }
-            }
-        }),
-        submitButton: new FormValidation.plugins.SubmitButton(),
-        // Submit the form when all fields are valid
-        // defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
-        autoFocus: new FormValidation.plugins.AutoFocus()
-    },
-    
-}).on('core.form.valid', function (event) {
-    SaveVC();
-
-});
-//-------------Add validations End-----------------------------
-
-
-//------------- Edit validations-----------------------------
-const editformValidationExamples = document.getElementById('EditNewUserForm');
-const Editfv = FormValidation.formValidation(editformValidationExamples, {
-    fields: {
-        EditVCompName: {
-            validators: {
-                notEmpty: {
-                    message: 'Please enter Vehicle Company name'
-                },
-                //stringLength: {
-                //    min: 6,
-                //    max: 30,
-                //    message: 'The name must be more than 6 and less than 30 characters long'
-                //},
-                regexp: {
-                    regexp: /^[a-zA-Z ]+$/,
-                    message: 'The name can only consist of alphabeticals and space'
-                }
-            }
-        },
-    },
-    plugins: {
-        trigger: new FormValidation.plugins.Trigger(),
-        bootstrap5: new FormValidation.plugins.Bootstrap5({
-            // Use this for enabling/changing valid/invalid class
-            // eleInvalidClass: '',
-            eleValidClass: '',
-            rowSelector: function (field, ele) {
-                // field is the field name & ele is the field element
-                switch (field) {
-                    //case 'formValidationName':
-                    case 'EditVCompName':
-
-                    default:
-                        return '.row';
-                }
-            }
-        }),
-        submitButton: new FormValidation.plugins.SubmitButton(),
-        // Submit the form when all fields are valid
-        // defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
-        autoFocus: new FormValidation.plugins.AutoFocus()
-    },
-
-}).on('core.form.valid', function (event) {
-    EditVC();
-
-});
-//-------------Edit validations End-----------------------------

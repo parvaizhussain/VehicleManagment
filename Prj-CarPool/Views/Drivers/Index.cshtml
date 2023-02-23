@@ -44,7 +44,7 @@
 
     <div class="card-datatable table-responsive mytable">
         <table class="datatables-users-mytable table border-top">
-            <thead>
+            <thead class="table-dark">
                 <tr>
                     <th class="visiblityhidden"></th>
                     <th>Driver ID</th>
@@ -88,7 +88,7 @@
                         <div class="col-12">
 
                             <span class="stred">*</span><label class="form-label">Driver Full Name</label>
-                            <input type="text" class="form-control addDriverName onlyalphabetallowwithspace" />
+                            <input type="text" class="form-control addDriverName onlyalphabetallowwithspace" name="DriverName" />
                             <p class="error-message">* Name Required</p>
                         </div>
 
@@ -96,13 +96,13 @@
                         <div class="col-12 col-md-6">
 
                             <span class="stred">*</span><label class="form-label">Driver Contact</label>
-                            <input type="text" class="form-control addDriverContact prefix-mask" placeholder="0000-0000000" />
+                            <input type="text" class="form-control addDriverContact prefix-mask" name="DriverContact" placeholder="0000-0000000" />
                             <p class="error-message">* Name Required</p>
                         </div>
 
                         <div class="col-12 col-md-6">
                             <span class="stred">*</span><label class="form-label">Driver CNIC</label>
-                            <input type="text" class="form-control addDriverCNIC  NIC-mask" placeholder="00000-0000000-0" />
+                            <input type="text" class="form-control addDriverCNIC  NIC-mask" name="DriverCNIC" placeholder="00000-0000000-0" />
                             <p class="error-message">* Name Required</p>
                         </div>
 
@@ -110,7 +110,7 @@
                         <div class="col-12 col-md-6">
 
                             <span class="stred">*</span><label class="form-label">Driver ERP</label>
-                            <input type="text" class="form-control addDriverERP Number-mask" />
+                            <input type="text" class="form-control addDriverERP Number-mask" name="DriverERP" />
                             <p class="error-message">* Name Required</p>
                         </div>
 
@@ -118,7 +118,7 @@
                         <div class="col-12 col-md-6">
 
                             <span class="stred">*</span><label class="form-label">Driver Licence #</label>
-                            <input type="text" class="form-control addDriverLicence Number-mask-Lice" />
+                            <input type="text" class="form-control addDriverLicence Number-mask-Lice" name="DriverLicence" />
                             <p class="error-message">* Name Required</p>
                         </div>
 
@@ -127,7 +127,7 @@
                         <div class="col-12 col-md-6">
 
                             <span class="stred">*</span><label class="form-label">Select Region</label>
-                            <select class="form-control select2 regionlist"></select>
+                            <select class="form-control select2 regionlist" name="RegionName"></select>
                             <p class="error-message">* Name Required</p>
                         </div>
 
@@ -165,7 +165,7 @@
 
                         <div class="col-12 text-center">
 
-                            <button type="button" class="btn btn-primary me-sm-3 me-1" onclick="SaveVC()">Submit</button>
+                            <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>
                             <button type="reset" class="btn btn-label-secondary" id="btnEXCancelSave" aria-label="Close" data-bs-dismiss="modal">Cancel</button>
                         </div>
                     </form>
@@ -180,14 +180,12 @@
     </div>
 
 
-
     <!-- Offcanvas to Edit new Navigation -->
     <div class="modal fade" tabindex="-1" id="offcanvasEditNav" aria-labelledby="offcanvasEditNavLabel">
         <!--offcanvasAddUser-->
         <div class="modal-dialog modal-lg modal-simple modal-edit-user">
             <div class="modal-content p-3 p-md-5">
-             
-                
+
                 <div class="modal-body">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     <div class="text-center mb-4">
@@ -205,7 +203,7 @@
                         <div class="col-12">
 
                             <span class="stred">*</span><label class="form-label">Driver Full Name</label>
-                            <input type="text" class="form-control editDriverName onlyalphabetallowwithspace" />
+                            <input type="text" class="form-control editDriverName onlyalphabetallowwithspace" name="editDriverName" />
                             <p class="error-message">* Name Required</p>
                         </div>
 
@@ -213,13 +211,13 @@
                         <div class="col-12 col-md-6">
 
                             <span class="stred">*</span><label class="form-label">Driver Contact</label>
-                            <input type="text" class="form-control editDriverContact onlyalphabetallowwithspace" />
+                            <input type="text" class="form-control editDriverContact onlyalphabetallowwithspace" name="editDriverContact" />
                             <p class="error-message">* Name Required</p>
                         </div>
 
                         <div class="col-12 col-md-6">
                             <span class="stred">*</span><label class="form-label">Driver CNIC</label>
-                            <input type="text" class="form-control editDriverCNIC onlyalphabetallowwithspace" />
+                            <input type="text" class="form-control editDriverCNIC onlyalphabetallowwithspace" name="editDriverCNIC" />
                             <p class="error-message">* Name Required</p>
                         </div>
 
@@ -227,7 +225,7 @@
                         <div class="col-12 col-md-6">
 
                             <span class="stred">*</span><label class="form-label">Driver ERP</label>
-                            <input type="text" class="form-control editDriverERP onlyalphabetallowwithspace" />
+                            <input type="text" class="form-control editDriverERP onlyalphabetallowwithspace" name="editDriverERP" />
                             <p class="error-message">* Name Required</p>
                         </div>
 
@@ -235,7 +233,7 @@
                         <div class="col-12 col-md-6">
 
                             <span class="stred">*</span><label class="form-label">Driver Licence #</label>
-                            <input type="text" class="form-control editDriverLicence onlyalphabetallowwithspace" />
+                            <input type="text" class="form-control editDriverLicence onlyalphabetallowwithspace" name="editDriverLicence" />
                             <p class="error-message">* Name Required</p>
                         </div>
 
@@ -244,7 +242,7 @@
                         <div class="col-12 col-md-6">
 
                             <span class="stred">*</span><label class="form-label">Select Region</label>
-                            <select class="form-control select2 editregionlist"></select>
+                            <select class="form-control select2 editregionlist" name="editregionlist"></select>
                             <p class="error-message">* Name Required</p>
                         </div>
                         <div class="col-12 col-md-6">
@@ -290,7 +288,7 @@
                         
                         <div class="col-12 text-center">
 
-                            <button type="button" class="btn btn-primary me-sm-3 me-1" onclick="EditVC()">Edit</button>
+                            <button type="submit" class="btn btn-primary me-sm-3 me-1">Edit</button>
                             <button type="reset" class="btn btn-label-secondary" id="btnCancelEdit" aria-label="Close" data-bs-dismiss="modal">Cancel</button>
                         </div>
                     </form>
@@ -299,7 +297,7 @@
         </div>
     </div>
 
-    <!-- Offcanvas to Edit new Navigation -->
+    <!-- Offcanvas to View  Navigation -->
     <div class="modal fade" tabindex="-1" id="offcanvasViewNav" aria-labelledby="offcanvasViewNavLabel">
         <!--offcanvasAddUser-->
         <div class="modal-dialog modal-lg modal-simple modal-edit-user">

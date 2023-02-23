@@ -349,7 +349,7 @@ $(document).ready(function () {
     var newdata = JSON.parse(mydata);
 
     LoadTable(newdata);
-
+    
 });
 var Comapnydropdown = "";
 $.ajax({
@@ -386,16 +386,6 @@ function SaveVC() {
         VehicleCompanyId: $('.companylist option:selected').val(),
 
     }
-
-  
-    const date = new Date();
-    
-    console.log("Starttime : " + date.getMilliseconds())
-
-
-
-
-
     $.ajax({
 
         type: 'POST',
@@ -405,20 +395,19 @@ function SaveVC() {
 
         success: function (result) {
             if (result.datasuccess == true) {
-                const Enddate = new Date();
-                console.log("Endtime : " + Enddate.getMilliseconds());
+               
 
                 Command: toastr["success"]("Vehicle Brand Successfully Saved.");
                 var mydata = result.json;// $('#UserDataJson').val();
                 var newdata = JSON.parse(mydata);
 
                 LoadTable(newdata);
-
+                $('.companylist').val(0).trigger('change');;
                 $('#btnCancelSave').click();
             }
         },
         complete: function (result) {
-
+           
         },
         error: function (err) {
 
@@ -426,7 +415,6 @@ function SaveVC() {
         }
     });
 }
-
 
 function ShowEditBranch(item) {
 
@@ -538,3 +526,164 @@ function Delete(item) {
         }
     });
 }
+
+
+//------------- Add validations-----------------------------
+const formValidationExamples = document.getElementById('addNewUserForm');
+const fv = FormValidation.formValidation(formValidationExamples, {
+    fields: {
+        VBnameadd: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter Vehicle Brand Name'
+                },
+                //stringLength: {
+                //    min: 6,
+                //    max: 30,
+                //    message: 'The name must be more than 6 and less than 30 characters long'
+                //},
+                regexp: {
+                    regexp: /^[a-zA-Z ]+$/,
+                    message: 'The name can only consist of alphabeticals and space'
+                }
+            }
+        },
+        VBcompanylist: {
+            validators: {
+              
+
+                callback: {
+                    message: 'Please select Company Name',
+                    callback: function (value, validator, $field) {
+
+                        return value.value > 0;
+                    }
+                }
+                
+            }
+        },
+       
+
+    },
+    plugins: {
+        trigger: new FormValidation.plugins.Trigger(),
+        bootstrap5: new FormValidation.plugins.Bootstrap5({
+            // Use this for enabling/changing valid/invalid class
+            // eleInvalidClass: '',
+            eleValidClass: '',
+            rowSelector: function (field, ele) {
+                // field is the field name & ele is the field element
+                switch (field) {
+                    //case 'formValidationName':
+                    case 'VBnameadd':
+                    case 'VBcompanylist':
+                   default:
+                        return '.row';
+                }
+            }
+        }),
+        submitButton: new FormValidation.plugins.SubmitButton(),
+        // Submit the form when all fields are valid
+        // defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+        autoFocus: new FormValidation.plugins.AutoFocus()
+    },
+    init: instance => {
+        instance.on('plugins.message.placed', function (e) {
+            //* Move the error message out of the `input-group` element
+            if (e.element.parentElement.classList.contains('input-group')) {
+                // `e.field`: The field name
+                // `e.messageElement`: The message element
+                // `e.element`: The field element
+                e.element.parentElement.insertAdjacentElement('afterend', e.messageElement);
+            }
+            //* Move the error message out of the `row` element for custom-options
+            if (e.element.parentElement.parentElement.classList.contains('custom-option')) {
+                e.element.closest('.row').insertAdjacentElement('afterend', e.messageElement);
+            }
+        });
+    }
+}).on('core.form.valid', function (event) {
+
+    SaveVC();
+});
+//-------------Add validations End-----------------------------
+
+//------------- Edit validations-----------------------------
+const editformValidationExamples = document.getElementById('EditNewUserForm');
+const editfv = FormValidation.formValidation(editformValidationExamples, {
+    fields: {
+        editVBName: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter Vehicle Brand Name'
+                },
+                //stringLength: {
+                //    min: 6,
+                //    max: 30,
+                //    message: 'The name must be more than 6 and less than 30 characters long'
+                //},
+                regexp: {
+                    regexp: /^[a-zA-Z ]+$/,
+                    message: 'The name can only consist of alphabeticals and space'
+                }
+            }
+        },
+        editVCNameList: {
+            validators: {
+
+
+                callback: {
+                    message: 'Please select Company Name',
+                    callback: function (value, validator, $field) {
+
+                        return value.value > 0;
+                    }
+                }
+
+            }
+        },
+
+
+    },
+    plugins: {
+        trigger: new FormValidation.plugins.Trigger(),
+        bootstrap5: new FormValidation.plugins.Bootstrap5({
+            // Use this for enabling/changing valid/invalid class
+            // eleInvalidClass: '',
+            eleValidClass: '',
+            rowSelector: function (field, ele) {
+                // field is the field name & ele is the field element
+                switch (field) {
+                    //case 'formValidationName':
+                    case 'editVBName':
+                    case 'editVCNameList':
+                    default:
+                        return '.row';
+                }
+            }
+        }),
+        submitButton: new FormValidation.plugins.SubmitButton(),
+        // Submit the form when all fields are valid
+        // defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+        autoFocus: new FormValidation.plugins.AutoFocus()
+    },
+    init: instance => {
+        instance.on('plugins.message.placed', function (e) {
+            //* Move the error message out of the `input-group` element
+            if (e.element.parentElement.classList.contains('input-group')) {
+                // `e.field`: The field name
+                // `e.messageElement`: The message element
+                // `e.element`: The field element
+                e.element.parentElement.insertAdjacentElement('afterend', e.messageElement);
+            }
+            //* Move the error message out of the `row` element for custom-options
+            if (e.element.parentElement.parentElement.classList.contains('custom-option')) {
+                e.element.closest('.row').insertAdjacentElement('afterend', e.messageElement);
+            }
+        });
+    }
+}).on('core.form.valid', function (event) {
+
+    EditVC();
+});
+//-------------Edit validations End-----------------------------

@@ -66,5 +66,10 @@ namespace Prj_CarPool.Extensions
         public const string FuelCardUpsert = APIBaseUrl + "api/FuelCard/";
         public const string FuelCardDelete = APIBaseUrl + "api/FuelCard/DeleteFuelCard";
         public const string FuelCardlist = APIBaseUrl + "api/FuelCard/all";
+
+        public const string VehicleRequestUpsert = APIBaseUrl + "api/VehicleRequest/";
+        public const string VehicleRequestDelete = APIBaseUrl + "api/VehicleRequest/DeleteFuelCard";
+        public const string VehicleRequestlist = APIBaseUrl + "api/VehicleRequest/all";
+      
     }
 }

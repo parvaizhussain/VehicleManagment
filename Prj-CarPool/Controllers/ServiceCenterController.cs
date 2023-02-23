@@ -38,6 +38,10 @@ namespace Prj_CarPool.Controllers
             {
                 if (Obj.ServiceCenterId == 0)
                 {
+                    if (Obj.DealerType == false)
+                    {
+                        Obj.DealerID = null;
+                    }
                     var deptobj = await _serviceCenterRepository.CreateAsyncJson(Extensions.SharedBag.ServiceCenterUpsert, Obj, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
                     var datajson = await _serviceCenterRepository.GetAllAsync(Extensions.SharedBag.ServiceCenterlist, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
 
@@ -47,6 +51,10 @@ namespace Prj_CarPool.Controllers
                 }
                 else
                 {
+                    if (Obj.DealerType == false)
+                    {
+                        Obj.DealerID = null;
+                    }
                     var deptobj = await _serviceCenterRepository.UpdateAsync(Extensions.SharedBag.ServiceCenterUpsert, Obj, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
                     var datajson = await _serviceCenterRepository.GetAllAsync(Extensions.SharedBag.ServiceCenterlist, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
                     string jsondata = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = datajson.Where(x => x.IsDeleted == false).OrderByDescending(x => x.ServiceCenterId) });

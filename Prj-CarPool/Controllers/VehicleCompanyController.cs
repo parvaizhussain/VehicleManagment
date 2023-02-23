@@ -24,7 +24,7 @@ namespace Prj_CarPool.Controllers
         public async Task<IActionResult> Index()
         {
             ViewBag.JsonUserData = _memoryCache.Get(SharedBag.UserAccountDetail);
-           List<Utility.Models.VehicleCompany> vehicleComapanylist = (List<Utility.Models.VehicleCompany>)await _vehicleCompanyRepository.GetAllAsync(Extensions.SharedBag.VehicleCompanylist, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
+            List<Utility.Models.VehicleCompany> vehicleComapanylist = (List<Utility.Models.VehicleCompany>)await _vehicleCompanyRepository.GetAllAsync(Extensions.SharedBag.VehicleCompanylist, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
             string json = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = vehicleComapanylist.Where(x => x.IsDeleted == false).OrderByDescending(x => x.VehicleCompanyID) });
 
             ViewBag.JsonData = json;

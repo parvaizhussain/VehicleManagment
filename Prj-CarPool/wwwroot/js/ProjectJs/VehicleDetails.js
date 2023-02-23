@@ -337,17 +337,36 @@ $(document).ready(function () {
 
     LoadTable(newdata);
 
+    $('#vehicleRegion').on('change', function () {
+            // Revalidate the color field when an option is chosen
+        fv.revalidateField('vehicleRegion');
+        });
 
+    $('#vehicleBrands').on('change', function () {
+        // Revalidate the color field when an option is chosen
+        fv.revalidateField('vehicleBrands');
+    });
+    $('#editvehicleRegion').on('change', function () {
+        // Revalidate the color field when an option is chosen
+        editfv.revalidateField('editvehicleRegion');
+    });
+
+    $('#editvehicleBrands').on('change', function () {
+        // Revalidate the color field when an option is chosen
+        editfv.revalidateField('editvehicleBrands');
+    });
 
 
 });
+
+
 var Comapnydropdown = "";
 $.ajax({
     type: 'GET',
     async: false,
     url: 'https://localhost:7112/api/vehiclebrands/all',
     success: function (result) {
-        Comapnydropdown += '<option value="0" style="font-weight: bold;background: #d9d5d5;">No Select</option>';
+        Comapnydropdown += '<option value="" style="font-weight: bold;background: #d9d5d5;">No Select</option>';
         for (var i = 0; i < result.length; i++) {
             if (result[i].isActive == true && result[i].isDeleted == false) {
                 Comapnydropdown += '<option value="' + result[i].vehicleBrandId + '">' + result[i].vehicleBrandName + '</option>';
@@ -387,6 +406,12 @@ $.ajax({
     error: function (err) { console.log(JSON.stringify(err)); }
 
 });
+
+
+
+
+
+
 
 function SaveVC() {
 
@@ -433,7 +458,6 @@ function SaveVC() {
         }
     });
 }
-
 function ShowEditBranch(item) {
  var VCId = $(item).closest("tr").find('#editVehicleDetailID').text();
     $.ajax({
@@ -466,7 +490,6 @@ function ShowEditBranch(item) {
     });
 
 }
-
 function EditVC() {
     let isChecked = $('#chkactive').is(':checked');
 
@@ -524,7 +547,6 @@ function EditVC() {
         }
     });
 }
-
 function Delete(item) {
     var vehicleID = $(item).closest("tr").find('#editVehicleDetailID').text();
     var objDelete = {
@@ -574,3 +596,389 @@ function Delete(item) {
         }
     });
 }
+
+
+//------------- Add validations-----------------------------
+const formValidationExamples = document.getElementById('AddUserForm');
+const fv = FormValidation.formValidation(formValidationExamples, {
+    fields: {
+        vehicleName: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter vehicle name'
+                },
+                //stringLength: {
+                //    min: 6,
+                //    max: 30,
+                //    message: 'The name must be more than 6 and less than 30 characters long'
+                //},
+                regexp: {
+                    regexp: /^[a-zA-Z ]+$/,
+                    message: 'The name can only consist of alphabeticals and space'
+                }
+            }
+        },
+        VehicleERP: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter Vehicle ERP'
+                },
+                stringLength: {
+                    min: 1,
+                    max: 6,
+                    message: 'The Vehicle ERP must be more than 1 and less than 6 characters long'
+                },
+                regexp: {
+                    regexp: /^[0-9 ]+$/,
+                    message: 'The Vehicle ERP can only consist of numbers'
+                }
+            }
+        },
+        vehicleBrands: {
+            validators: {
+                //notEmpty: {
+                //    message: 'Please select vehicle Brands Name',
+                //},
+                callback: {
+                    message: 'Please select vehicle Brands Name',
+                    callback: function (input)
+                    {
+                        return input.value > 0;                        
+                    }
+                    
+                }
+            }
+        },
+        vehicleNO: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter vehicle NO'
+                },
+               
+            }
+        },
+        vehicleColor: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter vehicle Color'
+                },
+                regexp: {
+                    regexp: /^[a-zA-Z ]+$/,
+                    message: 'The name can only consist of alphabeticals and space'
+                }
+                
+            }
+        },
+        PurchaseDate: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter Purchase Date'
+                }
+            }
+        },
+        VehicleType: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter Vehicle Type'
+                },
+                regexp: {
+                    regexp: /^[a-zA-Z ]+$/,
+                    message: 'The name can only consist of alphabeticals and space'
+                }
+            }
+        },
+        vehicleModel: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter vehicle Model'
+                }
+            },
+            regexp: {
+                regexp: /^[0-9 ]+$/,
+                message: 'The name can only consist of alphabeticals and space'
+            }
+        },
+        FuelType: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter Fuel Type'
+                },
+                regexp: {
+                    regexp: /^[a-zA-Z ]+$/,
+                    message: 'The name can only consist of alphabeticals and space'
+                }
+            }
+        },
+        vehicleRegion: {
+            validators: {
+                callback: {
+                    message: 'Please select vehicle Region Name',
+                    callback: function (input) {
+                        return input.value > 0;
+                    }
+
+                }
+            }
+        },
+        vehicleMilage: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter vehicle Milage'
+                },
+                regexp: {
+                    regexp: /^[0-9 ]+$/,
+                    message: 'The name can only consist of alphabeticals and space'
+                }
+            }
+        },
+    
+        
+        
+      
+    },
+    plugins: {
+        trigger: new FormValidation.plugins.Trigger(),
+        bootstrap5: new FormValidation.plugins.Bootstrap5({
+            // Use this for enabling/changing valid/invalid class
+            // eleInvalidClass: '',
+            eleValidClass: '',
+            rowSelector: function (field, ele) {
+                // field is the field name & ele is the field element
+                switch (field) {
+                    //case 'formValidationName':
+                    case 'vehicleName':
+                    case 'VehicleERP':
+                    case 'vehicleBrands':
+                    case 'vehicleNO':
+                    case 'vehicleColor':
+                    case 'PurchaseDate':
+                    case 'VehicleType':
+                    case 'vehicleModel':
+                    case 'FuelType':
+                    case 'vehicleRegion':
+                    case 'vehicleMilage':
+                   
+                 
+                    default:
+                        return '.row';
+                }
+            }
+        }),
+        submitButton: new FormValidation.plugins.SubmitButton(),
+       
+        // Submit the form when all fields are valid
+        // defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+        autoFocus: new FormValidation.plugins.AutoFocus()
+    },
+    init: instance => {
+        instance.on('plugins.message.placed', function (e) {
+            //* Move the error message out of the `input-group` element
+            if (e.element.parentElement.classList.contains('input-group')) {
+                // `e.field`: The field name
+                // `e.messageElement`: The message element
+                // `e.element`: The field element
+                e.element.parentElement.insertAdjacentElement('afterend', e.messageElement);
+            }
+            //* Move the error message out of the `row` element for custom-options
+            if (e.element.parentElement.parentElement.classList.contains('custom-option')) {
+                e.element.closest('.row').insertAdjacentElement('afterend', e.messageElement);
+            }
+        });
+    }
+}).on('core.form.valid', function (event) {
+    SaveVC();
+
+});
+
+//-------------Add validations End-----------------------------
+
+
+//------------- Edit validations-----------------------------
+const editformValidationExamples = document.getElementById('editUserForm');
+const editfv = FormValidation.formValidation(editformValidationExamples, {
+    fields: {
+        editvehicleName: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter vehicle name'
+                },
+                //stringLength: {
+                //    min: 6,
+                //    max: 30,
+                //    message: 'The name must be more than 6 and less than 30 characters long'
+                //},
+                regexp: {
+                    regexp: /^[a-zA-Z ]+$/,
+                    message: 'The name can only consist of alphabeticals and space'
+                }
+            }
+        },
+        editVehicleERP: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter Vehicle ERP'
+                },
+                stringLength: {
+                    min: 1,
+                    max: 6,
+                    message: 'The Vehicle ERP must be more than 1 and less than 6 characters long'
+                },
+                regexp: {
+                    regexp: /^[0-9 ]+$/,
+                    message: 'The Vehicle ERP can only consist of numbers'
+                }
+            }
+        },
+        editvehicleBrands: {
+            validators: {
+                //notEmpty: {
+                //    message: 'Please select vehicle Brands Name',
+                //},
+                callback: {
+                    message: 'Please select vehicle Brands Name',
+                    callback: function (input) {
+                        return input.value > 0;
+                    }
+
+                }
+            }
+        },
+        editvehicleNO: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter vehicle NO'
+                },
+
+            }
+        },
+        editvehicleColor: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter vehicle Color'
+                },
+                regexp: {
+                    regexp: /^[a-zA-Z ]+$/,
+                    message: 'The name can only consist of alphabeticals and space'
+                }
+
+            }
+        },
+        editPurchaseDate: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter Purchase Date'
+                }
+            }
+        },
+        editVehicleType: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter Vehicle Type'
+                },
+                regexp: {
+                    regexp: /^[a-zA-Z ]+$/,
+                    message: 'The name can only consist of alphabeticals and space'
+                }
+            }
+        },
+        editvehicleModel: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter vehicle Model'
+                }
+            },
+            regexp: {
+                regexp: /^[0-9 ]+$/,
+                message: 'The name can only consist of alphabeticals and space'
+            }
+        },
+        editFuelType: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter Fuel Type'
+                },
+                regexp: {
+                    regexp: /^[a-zA-Z ]+$/,
+                    message: 'The name can only consist of alphabeticals and space'
+                }
+            }
+        },
+        editvehicleRegion: {
+            validators: {
+                callback: {
+                    message: 'Please select vehicle Region Name',
+                    callback: function (input) {
+                        return input.value > 0;
+                    }
+
+                }
+            }
+        },
+        editvehicleMilage: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter vehicle Milage'
+                },
+                regexp: {
+                    regexp: /^[0-9 ]+$/,
+                    message: 'The name can only consist of alphabeticals and space'
+                }
+            }
+        },
+
+    },
+    plugins: {
+        trigger: new FormValidation.plugins.Trigger(),
+        bootstrap5: new FormValidation.plugins.Bootstrap5({
+            // Use this for enabling/changing valid/invalid class
+            // eleInvalidClass: '',
+            eleValidClass: '',
+            rowSelector: function (field, ele) {
+                // field is the field name & ele is the field element
+                switch (field) {
+                    //case 'formValidationName':
+                    case 'editvehicleName':
+                    case 'editVehicleERP':
+                    case 'editvehicleBrands':
+                    case 'editvehicleNO':
+                    case 'editvehicleColor':
+                    case 'editPurchaseDate':
+                    case 'editVehicleType':
+                    case 'editvehicleModel':
+                    case 'editFuelType':
+                    case 'editvehicleRegion':
+                    case 'editvehicleMilage':
+
+
+                    default:
+                        return '.row';
+                }
+            }
+        }),
+        submitButton: new FormValidation.plugins.SubmitButton(),
+
+        // Submit the form when all fields are valid
+        // defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+        autoFocus: new FormValidation.plugins.AutoFocus()
+    },
+    init: instance => {
+        instance.on('plugins.message.placed', function (e) {
+            //* Move the error message out of the `input-group` element
+            if (e.element.parentElement.classList.contains('input-group')) {
+                // `e.field`: The field name
+                // `e.messageElement`: The message element
+                // `e.element`: The field element
+                e.element.parentElement.insertAdjacentElement('afterend', e.messageElement);
+            }
+            //* Move the error message out of the `row` element for custom-options
+            if (e.element.parentElement.parentElement.classList.contains('custom-option')) {
+                e.element.closest('.row').insertAdjacentElement('afterend', e.messageElement);
+            }
+        });
+    }
+}).on('core.form.valid', function (event) {
+    EditVC();
+
+});
+
+//-------------Add validations End-----------------------------

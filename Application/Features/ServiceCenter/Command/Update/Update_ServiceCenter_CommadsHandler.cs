@@ -40,6 +40,7 @@ namespace Application.Features.ServiceCenter.Command.Update
 
             _mapper.Map(request, VehicleBrandToUpdate, typeof(Update_ServiceCenter_Commads), typeof(Domain.Entities.ServiceCenter));
 
+            VehicleBrandToUpdate.VehicleCompanyID = request.DealerID;
             await _unitOfWork.ServiceCenter.UpdateAsync(VehicleBrandToUpdate);
             await _unitOfWork.Commit();
 

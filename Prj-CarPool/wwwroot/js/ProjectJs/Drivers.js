@@ -368,13 +368,16 @@
 }
 $(document).ready(function () {
     var mydata = $('#UserDataJson').val();
-
     var newdata = JSON.parse(mydata);
-
     LoadTable(newdata);
-
-   
-
+    $('.regionlist').on('change', function () {
+        // Revalidate the color field when an option is chosen
+        fv.revalidateField('RegionName');
+    });
+    $('.editregionlist').on('change', function () {
+        // Revalidate the color field when an option is chosen
+        editfv.revalidateField('editregionlist');
+    });
 });
 
 var Regiondropdown = "";
@@ -400,7 +403,6 @@ $.ajax({
     error: function (err) { console.log(JSON.stringify(err)); }
 
 });
-
 function encodeImageFileAsURL(element) {
     var file = element.files[0];
     var reader = new FileReader();
@@ -472,8 +474,6 @@ async function SaveVC() {
         }
     });
 }
-
-
 function ShowEditBranch(item) {
 
     var VCId = $(item).closest("tr").find('#editVBID').text();
@@ -505,7 +505,6 @@ function ShowEditBranch(item) {
     });
 
 }
-
 async function EditVC() {
     let isChecked = $('#chkactive').is(':checked');
 
@@ -576,8 +575,6 @@ async function EditVC() {
         }
     });
 }
-
-
 function fileToByteArray(file) {
     return new Promise((resolve, reject) => {
         try {
@@ -600,7 +597,6 @@ function fileToByteArray(file) {
         }
     })
 }
-
 function ViewDetails(data) {
    
     console.log('test')
@@ -815,3 +811,252 @@ function Delete(item) {
         }
     });
 }
+
+
+//------------- Add validations-----------------------------
+const formValidationExamples = document.getElementById('addNewUserForm');
+const fv = FormValidation.formValidation(formValidationExamples, {
+    fields: {
+        DriverName: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter Driver name'
+                },
+                //stringLength: {
+                //    min: 6,
+                //    max: 30,
+                //    message: 'The name must be more than 6 and less than 30 characters long'
+                //},
+                regexp: {
+                    regexp: /^[a-zA-Z ]+$/,
+                    message: 'The name can only consist of alphabeticals and space'
+                }
+            }
+        },
+        DriverContact: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter Driver Contact'
+                },
+                stringLength: {
+                    min: 12,
+                    max: 12,
+                    message: 'Please Input Correct Number'
+                },
+                
+            }
+        },
+        DriverCNIC: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter your Driver CNIC'
+                },
+                stringLength: {
+                    min: 15,
+                    max: 15,
+                    message: 'Please Input Correct NIC #'
+                },
+                
+                
+            }
+        },
+        DriverERP: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter your Driver ERP'
+                },
+               
+            }
+        },
+        DriverLicence: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter Driver Licence'
+                }
+            }
+        },
+        RegionName: {
+            validators: {
+                callback: {
+                    message: 'Please select Region',
+                    callback: function (input) {
+                        return input.value > 0;
+                    }
+
+                }
+            }
+        },
+    },
+    plugins: {
+        trigger: new FormValidation.plugins.Trigger(),
+        bootstrap5: new FormValidation.plugins.Bootstrap5({
+            // Use this for enabling/changing valid/invalid class
+            // eleInvalidClass: '',
+            eleValidClass: '',
+            rowSelector: function (field, ele) {
+                // field is the field name & ele is the field element
+                switch (field) {
+                    //case 'formValidationName':
+                    case 'DriverName':
+                    case 'DriverContact':
+                    case 'DriverCNIC':
+                    case 'DriverERP':
+                    case 'DriverLicence':
+                    case 'RegionName':
+                  
+                    default:
+                        return '.row';
+                }
+            }
+        }),
+        submitButton: new FormValidation.plugins.SubmitButton(),
+        // Submit the form when all fields are valid
+        // defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+        autoFocus: new FormValidation.plugins.AutoFocus()
+    },
+    init: instance => {
+        instance.on('plugins.message.placed', function (e) {
+            //* Move the error message out of the `input-group` element
+            if (e.element.parentElement.classList.contains('input-group')) {
+                // `e.field`: The field name
+                // `e.messageElement`: The message element
+                // `e.element`: The field element
+                e.element.parentElement.insertAdjacentElement('afterend', e.messageElement);
+            }
+            //* Move the error message out of the `row` element for custom-options
+            if (e.element.parentElement.parentElement.classList.contains('custom-option')) {
+                e.element.closest('.row').insertAdjacentElement('afterend', e.messageElement);
+            }
+        });
+    }
+}).on('core.form.valid', function (event) {
+
+    SaveVC();
+});
+//-------------Add validations End-----------------------------
+
+//------------- Edit validations-----------------------------
+const editformValidationExamples = document.getElementById('editNewUserForm');
+const editfv = FormValidation.formValidation(editformValidationExamples, {
+    fields: {
+        editDriverName: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter Driver name'
+                },
+                //stringLength: {
+                //    min: 6,
+                //    max: 30,
+                //    message: 'The name must be more than 6 and less than 30 characters long'
+                //},
+                regexp: {
+                    regexp: /^[a-zA-Z ]+$/,
+                    message: 'The name can only consist of alphabeticals and space'
+                }
+            }
+        },
+        editDriverContact: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter Driver Contact'
+                },
+                stringLength: {
+                    min: 12,
+                    max: 12,
+                    message: 'Please Input Correct Number'
+                },
+
+            }
+        },
+        editDriverCNIC: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter your Driver CNIC'
+                },
+                stringLength: {
+                    min: 15,
+                    max: 15,
+                    message: 'Please Input Correct NIC #'
+                },
+
+
+            }
+        },
+        editDriverERP: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter your Driver ERP'
+                },
+                regexp: {
+                    regexp: /^[0-9]+$/,
+                    message: 'The name can only consist of number'
+                }
+
+            }
+        },
+        editDriverLicence: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter Driver Licence'
+                }
+            }
+        },
+        editregionlist: {
+            validators: {
+                callback: {
+                    message: 'Please select Region',
+                    callback: function (input) {
+                        return input.value > 0;
+                    }
+
+                }
+            }
+        },
+    },
+    plugins: {
+        trigger: new FormValidation.plugins.Trigger(),
+        bootstrap5: new FormValidation.plugins.Bootstrap5({
+            // Use this for enabling/changing valid/invalid class
+            // eleInvalidClass: '',
+            eleValidClass: '',
+            rowSelector: function (field, ele) {
+                // field is the field name & ele is the field element
+                switch (field) {
+                    //case 'formValidationName':
+                    case 'editDriverName':
+                    case 'editDriverContact':
+                    case 'editDriverCNIC':
+                    case 'editDriverERP':
+                    case 'editDriverLicence':
+                    case 'editregionlist':
+
+                    default:
+                        return '.row';
+                }
+            }
+        }),
+        submitButton: new FormValidation.plugins.SubmitButton(),
+        // Submit the form when all fields are valid
+        // defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+        autoFocus: new FormValidation.plugins.AutoFocus()
+    },
+    init: instance => {
+        instance.on('plugins.message.placed', function (e) {
+            //* Move the error message out of the `input-group` element
+            if (e.element.parentElement.classList.contains('input-group')) {
+                // `e.field`: The field name
+                // `e.messageElement`: The message element
+                // `e.element`: The field element
+                e.element.parentElement.insertAdjacentElement('afterend', e.messageElement);
+            }
+            //* Move the error message out of the `row` element for custom-options
+            if (e.element.parentElement.parentElement.classList.contains('custom-option')) {
+                e.element.closest('.row').insertAdjacentElement('afterend', e.messageElement);
+            }
+        });
+    }
+}).on('core.form.valid', function (event) {
+
+    EditVC();
+});
+//-------------Edit validations End-----------------------------

@@ -1,6 +1,4 @@
-﻿
-
-function LoadTable(newdatas) {
+﻿function LoadTable(newdatas) {
     console.log(newdatas);
     var stutbl = '';
     $(".datatables-users-mytable tbody").html('');
@@ -228,6 +226,14 @@ $(document).ready(function () {
     var newdata = JSON.parse(mydata);
 
     LoadTable(newdata);
+    $('.AddMaintenanceLocation').on('change', function () {
+        // Revalidate the color field when an option is chosen
+        fv.revalidateField('ServiceCenter');
+    });
+    $('.EditMaintenanceLocation').on('change', function () {
+        // Revalidate the color field when an option is chosen
+        editfv.revalidateField('editServiceCenter');
+    });
 
 });
 var ServiceCenterDrop = "";
@@ -253,7 +259,6 @@ $.ajax({
     error: function (err) { console.log(JSON.stringify(err)); }
 
 });
-
 function SaveVC() {
 
 
@@ -342,8 +347,6 @@ function SaveVC() {
         }
     });
 }
-
-
 function ShowEditBranch(item) {
 
     var MHId = $(item).closest("tr").find('#editMHID').text();
@@ -373,7 +376,6 @@ function ShowEditBranch(item) {
     });
 
 }
-
 function EditMH() {
     let isChecked = $('#chkactive').is(':checked');
 
@@ -426,9 +428,6 @@ function EditMH() {
         }
     });
 }
-
-
-
 function Delete(item) {
     var maintainaceHistoryId = $(item).closest("tr").find('#editMHID').text();
     var objDelete = {
@@ -478,3 +477,185 @@ function Delete(item) {
         }
     });
 }
+
+
+
+//------------- Add validations-----------------------------
+const formValidationExamples = document.getElementById('addNewUserForm2');
+const fv = FormValidation.formValidation(formValidationExamples, {
+    fields: {
+        ServiceCenter: {
+            validators: {
+                callback: {
+                    message: 'Please select Service Center',
+                    callback: function (input) {
+                        return input.value > 0;
+                    }
+
+                }
+            }
+        },
+        MaintenanceDateFrom: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter Maintenance Date From'
+                },
+               
+            }
+        },
+        MaintenanceDateto: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter Maintenance Date to'
+                },
+            }
+        },
+        CarNumber: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter Car Number'
+                },
+            }
+        },
+        Issue: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter Issue in Detail'
+                },
+            }
+        },
+        InvoiceNumber: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter Invoice Number'
+                }
+            }
+        },
+        Amount: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter Amount'
+                }
+            }
+        },
+       
+    },
+    plugins: {
+        trigger: new FormValidation.plugins.Trigger(),
+        bootstrap5: new FormValidation.plugins.Bootstrap5({
+
+        }),
+        submitButton: new FormValidation.plugins.SubmitButton(),
+        // Submit the form when all fields are valid
+        // defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+        autoFocus: new FormValidation.plugins.AutoFocus()
+    },
+    init: instance => {
+        instance.on('plugins.message.placed', function (e) {
+            //* Move the error message out of the `input-group` element
+            if (e.element.parentElement.classList.contains('input-group')) {
+                // `e.field`: The field name
+                // `e.messageElement`: The message element
+                // `e.element`: The field element
+                e.element.parentElement.insertAdjacentElement('afterend', e.messageElement);
+            }
+            //* Move the error message out of the `row` element for custom-options
+            if (e.element.parentElement.parentElement.classList.contains('custom-option')) {
+                e.element.closest('.row').insertAdjacentElement('afterend', e.messageElement);
+            }
+        });
+    }
+}).on('core.form.valid', function (event) {
+    SaveVC();
+});
+//-------------Add validations End-----------------------------
+
+//------------- Edit validations-----------------------------
+const editformValidationExamples = document.getElementById('EditNewUserForm');
+const editfv = FormValidation.formValidation(editformValidationExamples, {
+    fields: {
+        editServiceCenter: {
+            validators: {
+                callback: {
+                    message: 'Please select Service Center',
+                    callback: function (input) {
+                        return input.value > 0;
+                    }
+
+                }
+            }
+        },
+        editMaintenanceDateFrom: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter Maintenance Date From'
+                },
+
+            }
+        },
+        editMaintenanceDateto: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter Maintenance Date to'
+                },
+            }
+        },
+        editCarNumber: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter Car Number'
+                },
+            }
+        },
+        editIssue: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter Issue in Detail'
+                },
+            }
+        },
+        editInvoiceNumber: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter Invoice Number'
+                }
+            }
+        },
+        editAmount: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter Amount'
+                }
+            }
+        },
+
+    },
+    plugins: {
+        trigger: new FormValidation.plugins.Trigger(),
+        bootstrap5: new FormValidation.plugins.Bootstrap5({
+
+        }),
+        submitButton: new FormValidation.plugins.SubmitButton(),
+        // Submit the form when all fields are valid
+        // defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+        autoFocus: new FormValidation.plugins.AutoFocus()
+    },
+    init: instance => {
+        instance.on('plugins.message.placed', function (e) {
+            //* Move the error message out of the `input-group` element
+            if (e.element.parentElement.classList.contains('input-group')) {
+                // `e.field`: The field name
+                // `e.messageElement`: The message element
+                // `e.element`: The field element
+                e.element.parentElement.insertAdjacentElement('afterend', e.messageElement);
+            }
+            //* Move the error message out of the `row` element for custom-options
+            if (e.element.parentElement.parentElement.classList.contains('custom-option')) {
+                e.element.closest('.row').insertAdjacentElement('afterend', e.messageElement);
+            }
+        });
+    }
+}).on('core.form.valid', function (event) {
+    EditMH();
+});
+//-------------Edit validations End-----------------------------

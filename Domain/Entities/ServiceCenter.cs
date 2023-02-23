@@ -18,8 +18,8 @@ namespace Domain.Entities
         public string? ContactPersonName { get; set;}
         public bool DealerType { get; set;}
         [ForeignKey("DealerID")]
-        public int DealerID { get; set; }
+        public int? DealerID { get; set; }
         public VehicleCompany? VehicleCompany { get; set;}
-        public int VehicleCompanyID { get; set; }
+        public int? VehicleCompanyID { get; set; }
     }
 }

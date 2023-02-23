@@ -15,7 +15,7 @@ namespace Application.Features.ServiceCenter.Command.Create
         public string? ContactNo { get; set; }
         public string? ContactPersonName { get; set; }
         public bool DealerType { get; set; }
-        public int DealerID { get; set; }
+        public int? DealerID { get; set; }
         
     }
 }
