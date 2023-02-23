@@ -20,7 +20,7 @@ function LoadTable(newdatas) {
         stutbl += '<td id="editMHID">' + newdatas.data[st].MaintainaceHistoryId + '</td>';
         stutbl += '<td>' + newdatas.data[st].CarNumber + '</td>';
         stutbl += '<td>' + newdatas.data[st].InvoiceNo + '</td>';
-        stutbl += '<td>' + newdatas.data[st].MaintainaceLocation + '</td>';
+        stutbl += '<td>' + newdatas.data[st].ServiceCenter.ServiceCenterName + '</td>';
         stutbl += '<td>' + newdatas.data[st].Amount + '</td>';
        
         if (newdatas.data[st].IsActive === false) {
@@ -230,7 +230,29 @@ $(document).ready(function () {
     LoadTable(newdata);
 
 });
+var ServiceCenterDrop = "";
+debugger
+$.ajax({
+    type: 'GET',
+    async: false,
+    url: 'https://localhost:7112/api/ServiceCenter/all',
+    success: function (result) {
+        ServiceCenterDrop += '<option value="0" style="font-weight: bold;background: #d9d5d5;">No Select</option>';
+        for (var i = 0; i < result.length; i++) {
+            if (result[i].isActive == true && result[i].isDeleted == false) {
+                ServiceCenterDrop += '<option value="' + result[i].serviceCenterId + '">' + result[i].serviceCenterName + '</option>';
+            }
+        }
+        $(".EditMaintenanceLocation").html(ServiceCenterDrop);
+        $(".AddMaintenanceLocation").html(ServiceCenterDrop);
 
+    },
+    complete: function (result) {
+
+    },
+    error: function (err) { console.log(JSON.stringify(err)); }
+
+});
 
 function SaveVC() {
 
@@ -285,7 +307,8 @@ function SaveVC() {
 
     var MHObj = {
         MaintainaceHistoryId: 0,
-        MaintainaceLocation: $('.AddMaintenanceLocation').val(),
+        MaintainaceLocation: '0',
+        ServiceCenterId: $('.AddMaintenanceLocation option:selected').val(),
         MaintainaceDateForm: $('.Addmaindatefrom').val(),
         MaintainaceDateTo: $('.Addmaindateto').val(),
         CarNumber: $('.Addmaincarno').val(),
@@ -331,7 +354,8 @@ function ShowEditBranch(item) {
         success: function (result) {
 
             $('.EditMaintainHisId').val(MHId);
-            $('.EditMaintenanceLocation').val(result.maintainaceLocation);
+           // $('.EditMaintenanceLocation').val(result.maintainaceLocation);
+            $('.EditMaintenanceLocation').val(result.serviceCenterId).trigger('change');
             dateSetflat(result.maintainaceDateForm, $('.Editmaindatefrom'));
             dateSetflat(result.maintainaceDateTo, $('.Editmaindateto'));
             $('.Editmaincarno').val(result.carNumber);
@@ -355,7 +379,8 @@ function EditMH() {
 
     var VCEditObj = {
         MaintainaceHistoryId: $('.EditMaintainHisId').val(),
-        MaintainaceLocation: $('.EditMaintenanceLocation').val(),
+        ServiceCenterId: $('.EditMaintenanceLocation option:selected').val(),
+        MaintainaceLocation: '0',
         MaintainaceDateForm: $('.Editmaindatefrom').val(),
         MaintainaceDateTo: $('.Editmaindateto').val(),
         CarNumber: $('.Editmaincarno').val(),

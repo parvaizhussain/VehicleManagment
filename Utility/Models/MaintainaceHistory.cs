@@ -14,7 +14,8 @@ namespace Utility.Models
         public string? MaintainaceLocation { get; set; }
 
         public DateTime MaintainaceDateForm { get; set; }
-
+        public int? ServiceCenterId { get; set; }
+        public ServiceCenter? ServiceCenter { get; set; }
         public DateTime MaintainaceDateTo { get; set; }
         public string? CarNumber { get; set; }
         public string? Issue { get; set; }

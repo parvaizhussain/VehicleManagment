@@ -21,7 +21,7 @@ function LoadTable(newdatas) {
         stutbl += '<td id="editregionNorm" hidden="hidden">' + newdatas.data[st].NormalizedName + '</td>';
         stutbl += '<td id="IsVisibleChk"  hidden="hidden">' + newdatas.data[st].IsActive + '</td>';
        
-        if (newdatas.data[st].IsActive == true) {
+        if (newdatas.data[st].IsActive == false) {
             stutbl += '<td id="editBranchVisible"><span class="badge bg-label-danger" text-capitalized>InActive</span></td>';
         }
         else {

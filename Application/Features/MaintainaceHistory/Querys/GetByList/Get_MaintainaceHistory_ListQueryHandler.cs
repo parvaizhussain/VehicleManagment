@@ -23,7 +23,7 @@ namespace Application.Features.MaintainaceHistory.Querys.GetByList
 
         public async Task<List<Get_MaintainaceHistory_ListVM>> Handle(Get_MaintainaceHistory_ListQuery request, CancellationToken cancellationToken)
         {
-            var allCity = (await _unitOfWork.MaintainaceHistory.GetAll(null, null, null));
+            var allCity = (await _unitOfWork.MaintainaceHistory.GetAll(null, null, "ServiceCenter"));
             return _mapper.Map<List<Get_MaintainaceHistory_ListVM>>(allCity);
         }
     }

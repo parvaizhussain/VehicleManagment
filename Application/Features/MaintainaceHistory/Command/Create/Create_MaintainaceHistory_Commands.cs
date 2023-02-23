@@ -11,6 +11,7 @@ namespace Application.Features.MaintainaceHistory.Command.Create
     public class Create_MaintainaceHistory_Commands : IRequest<Create_MaintainaceHistory_CommandsResponse>
     {      
         public string? MaintainaceLocation { get; set; }
+        public int ServiceCenterId { get; set; }
         public DateTime MaintainaceDateForm { get; set; }
         public DateTime MaintainaceDateTo { get; set; }
         public string? CarNumber { get; set; }

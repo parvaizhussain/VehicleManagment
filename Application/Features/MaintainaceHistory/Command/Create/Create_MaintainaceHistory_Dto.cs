@@ -10,6 +10,7 @@ namespace Application.Features.MaintainaceHistory.Command.Create
     public class Create_MaintainaceHistory_Dto
     {
         public int MaintainaceHistoryId { get; set; }
+        public int ServiceCenterId { get; set; }
         public string? MaintainaceLocation { get; set; }
         public DateTime MaintainaceDateForm { get; set; }
         public DateTime MaintainaceDateTo { get; set; }

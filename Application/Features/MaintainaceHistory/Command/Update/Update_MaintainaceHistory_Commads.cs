@@ -10,6 +10,7 @@ namespace Application.Features.MaintainaceHistory.Command.Update
     public class Update_MaintainaceHistory_Commads : IRequest
     {
         public int MaintainaceHistoryId { get; set; }
+        public int ServiceCenterId { get; set; }
         public string? MaintainaceLocation { get; set; }
         public DateTime MaintainaceDateForm { get; set; }
         public DateTime MaintainaceDateTo { get; set; }
