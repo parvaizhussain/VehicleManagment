@@ -355,12 +355,6 @@ function Edit_City() {
 
     
 }
-//function Delete(item) {
-//        debugger
-//        var CityId = $(item).closest("tr").find('#editCID').text();
-//           $('.EditCityID').val(CityId.trim());
-        
-//}
 
 
 function Delete_City() {
@@ -456,3 +450,128 @@ function Delete(item) {
         }
     });
 }
+
+//------------- Add validations-----------------------------
+const formValidationExamples = document.getElementById('addNewForm');
+const fv = FormValidation.formValidation(formValidationExamples, {
+
+    fields: {
+
+        Citynameadd: {
+            validators: {
+                notEmpty: {
+                    message: 'Please enter Airport name'
+                },
+
+
+            },
+
+        },
+      
+        Regionlist: {
+            validators: {
+                callback: {
+                    message: 'Please Select Region',
+                    callback: function (input, validator, $field) {
+                        return input.value > 0;
+
+                    }
+                }
+            }
+        }
+
+
+    },
+    plugins: {
+
+        trigger: new FormValidation.plugins.Trigger(),
+        bootstrap5: new FormValidation.plugins.Bootstrap5({
+            // Use this for enabling/changing valid/invalid class
+            // eleInvalidClass: '',
+            eleValidClass: '',
+            
+        }),
+        submitButton: new FormValidation.plugins.SubmitButton(),
+        // Submit the form when all fields are valid
+        // defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+        autoFocus: new FormValidation.plugins.AutoFocus()
+    },
+    init: instance => {
+        instance.on('plugins.message.placed', function (e) {
+            //* Move the error message out of the `input-group` element
+            if (e.element.parentElement.classList.contains('input-group')) {
+                // `e.field`: The field name
+                // `e.messageElement`: The message element
+                // `e.element`: The field element
+                e.element.parentElement.insertAdjacentElement('afterend', e.messageElement);
+            }
+            //* Move the error message out of the `row` element for custom-options
+            if (e.element.parentElement.parentElement.classList.contains('custom-option')) {
+                e.element.closest('.row').insertAdjacentElement('afterend', e.messageElement);
+            }
+        });
+    }
+}).on('core.form.valid', function (event) {
+
+    Save_City();
+});
+
+////------------- Edit validations-----------------------------
+const editformValidationExamples = document.getElementById('EditNewForm');
+const efv = FormValidation.formValidation(editformValidationExamples, {
+
+    fields: {
+        EditCityName: {
+            validators: {
+                notEmpty: {
+                    message: 'Please Enter City'
+                },
+
+
+            },
+
+        },
+
+        EditRegionlist: {
+            validators: {
+                callback: {
+                    message: 'Please Select Region',
+                    callback: function (input, validator, $field) {
+                        return input.value > 0;
+
+                    }
+                }
+            }
+        }
+    },
+    plugins: {
+
+        trigger: new FormValidation.plugins.Trigger(),
+        bootstrap5: new FormValidation.plugins.Bootstrap5({
+            eleValidClass: '',
+            
+        }),
+        submitButton: new FormValidation.plugins.SubmitButton(),
+        // Submit the form when all fields are valid
+        // defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+        autoFocus: new FormValidation.plugins.AutoFocus()
+    },
+    init: instance => {
+        instance.on('plugins.message.placed', function (e) {
+            //* Move the error message out of the `input-group` element
+            if (e.element.parentElement.classList.contains('input-group')) {
+                // `e.field`: The field name
+                // `e.messageElement`: The message element
+                // `e.element`: The field element
+                e.element.parentElement.insertAdjacentElement('afterend', e.messageElement);
+            }
+            //* Move the error message out of the `row` element for custom-options
+            if (e.element.parentElement.parentElement.classList.contains('custom-option')) {
+                e.element.closest('.row').insertAdjacentElement('afterend', e.messageElement);
+            }
+        });
+    }
+}).on('core.form.valid', function (event) {
+
+    Edit_City();
+});

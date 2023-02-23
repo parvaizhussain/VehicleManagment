@@ -18,7 +18,7 @@ function LoadTable(newdatas) {
      
         stutbl += '<td id="editregionname"> <span class="fw-semibold">' + newdatas.data[st].RegionName + '</span></td>';
         stutbl += '<td id="editregionCode">' + newdatas.data[st].RegionCode + '</td>';
-        stutbl += '<td id="editregionNorm">' + newdatas.data[st].NormalizedName + '</td>';
+        stutbl += '<td id="editregionNorm" hidden="hidden">' + newdatas.data[st].NormalizedName + '</td>';
         stutbl += '<td id="IsVisibleChk"  hidden="hidden">' + newdatas.data[st].IsActive + '</td>';
        
         if (newdatas.data[st].IsActive == true) {
@@ -30,7 +30,7 @@ function LoadTable(newdatas) {
         }
 
         stutbl += '<td><div class="d-flex align-items-center">';
-        stutbl += '<a  onclick ="ShowEditBranch(this)" class="text-body" data-bs-toggle="modal" data-bs-target="#offcanvasEditNav" ><i class="ti ti-edit ti-sm me-2"></i></a>';
+        stutbl += '<a  onclick ="ShowEditRegion(this)" class="text-body" data-bs-toggle="modal" data-bs-target="#offcanvasEditNav" ><i class="ti ti-edit ti-sm me-2"></i></a>';
         stutbl += '<a onclick ="Delete(this)" class="text-body delete-record"><i class="ti ti-trash ti-sm mx-2"></i></a>';
         stutbl += '<a href="/" class="text-body dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm mx-1"></i></a>';
         stutbl += '<div class="dropdown-menu dropdown-menu-end m-0">';
@@ -235,31 +235,31 @@ $(document).ready(function () {
 
 
 
-function ShowEditBranch(item) {
+function ShowEditRegion(item) {
 
     var RegionId = $(item).closest("tr").find('#editregionID').text();
     var RegionName = $(item).closest("tr").find('#editregionname').text();
     var RegionCOde = $(item).closest("tr").find('#editregionCode').text();
-    var Regionnorm = $(item).closest("tr").find('#editregionNorm').text();
+    
     var IsVisibleChkedit = JSON.parse($(item).closest("tr").find('#IsVisibleChk').text());
 
 
     $('.EditregionId').val(RegionId.trim());
-    $('.Editregionnameadd').val(RegionName.trim());
-    $('.Editregionshortnameadd').val(Regionnorm.trim());
-    $('.Editregioncodeadd').val(RegionCOde.trim());
+    $('.Editregionname').val(RegionName.trim());
+  
+    $('.Editregioncode').val(RegionCOde.trim());
     $('#chkactive').attr("checked", IsVisibleChkedit);
 
 
 }
-function EditBranch() {
+function EditRegion() {
     let isChecked = $('#chkactive').is(':checked');
 
     var RegionObj = {
         RegionId: $('.EditregionId').val(),
-        RegionName: $('.Editregionnameadd').val(),
-        NormalizedName: $('.Editregionshortnameadd').val().toUpperCase(),
-        RegionCode: $('.Editregioncodeadd').val(),
+        RegionName: $('.Editregionname').val(),
+       
+        RegionCode: $('.Editregioncode').val(),
         IsActive: isChecked
     }
     $.ajax({
@@ -308,7 +308,7 @@ function SaveRegion() {
     var RegionObj = {
         RegionId: 0,
         RegionName: $('.regionnameadd').val(),
-        NormalizedName: $('.regionshortnameadd').val().toUpperCase(),
+        //NormalizedName: $('.regionshortnameadd').val().toUpperCase(),
         RegionCode: $('.regioncodeadd').val(),
     }
     $.ajax({
@@ -414,3 +414,127 @@ function Delete(item) {
         }
     });
 }
+
+
+//------------- Add validations-----------------------------
+const formValidationExamples = document.getElementById('addNewForm');
+const fv = FormValidation.formValidation(formValidationExamples, {
+
+    fields: {
+
+        regionnameadd: {
+            validators: {
+                notEmpty: {
+                    message: 'Please Enter Region'
+                },
+
+
+            },
+
+        },
+        regioncodeadd: {
+            validators: {
+                notEmpty: {
+                    message: 'Please Enter Region Code'
+                },
+
+
+            },
+
+        }
+
+
+    },
+    plugins: {
+
+        trigger: new FormValidation.plugins.Trigger(),
+        bootstrap5: new FormValidation.plugins.Bootstrap5({
+            // Use this for enabling/changing valid/invalid class
+            // eleInvalidClass: '',
+            eleValidClass: '',
+
+        }),
+        submitButton: new FormValidation.plugins.SubmitButton(),
+        // Submit the form when all fields are valid
+        // defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+        autoFocus: new FormValidation.plugins.AutoFocus()
+    },
+    init: instance => {
+        instance.on('plugins.message.placed', function (e) {
+            //* Move the error message out of the `input-group` element
+            if (e.element.parentElement.classList.contains('input-group')) {
+                // `e.field`: The field name
+                // `e.messageElement`: The message element
+                // `e.element`: The field element
+                e.element.parentElement.insertAdjacentElement('afterend', e.messageElement);
+            }
+            //* Move the error message out of the `row` element for custom-options
+            if (e.element.parentElement.parentElement.classList.contains('custom-option')) {
+                e.element.closest('.row').insertAdjacentElement('afterend', e.messageElement);
+            }
+        });
+    }
+}).on('core.form.valid', function (event) {
+
+    SaveRegion();
+});
+
+////------------- Edit validations-----------------------------
+const editformValidationExamples = document.getElementById('EditNewForm');
+const efv = FormValidation.formValidation(editformValidationExamples, {
+
+    fields: {
+        Editregionname: {
+            validators: {
+                notEmpty: {
+                    message: 'Please Enter Region'
+                },
+
+
+            },
+
+        },
+        Editregioncode: {
+            validators: {
+                notEmpty: {
+                    message: 'Please Enter Region Code'
+                },
+
+
+            },
+
+        }
+
+       
+    },
+    plugins: {
+
+        trigger: new FormValidation.plugins.Trigger(),
+        bootstrap5: new FormValidation.plugins.Bootstrap5({
+            eleValidClass: '',
+
+        }),
+        submitButton: new FormValidation.plugins.SubmitButton(),
+        // Submit the form when all fields are valid
+        // defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+        autoFocus: new FormValidation.plugins.AutoFocus()
+    },
+    init: instance => {
+        instance.on('plugins.message.placed', function (e) {
+            //* Move the error message out of the `input-group` element
+            if (e.element.parentElement.classList.contains('input-group')) {
+                // `e.field`: The field name
+                // `e.messageElement`: The message element
+                // `e.element`: The field element
+                e.element.parentElement.insertAdjacentElement('afterend', e.messageElement);
+            }
+            //* Move the error message out of the `row` element for custom-options
+            if (e.element.parentElement.parentElement.classList.contains('custom-option')) {
+                e.element.closest('.row').insertAdjacentElement('afterend', e.messageElement);
+            }
+        });
+    }
+}).on('core.form.valid', function (event) {
+
+    EditRegion();
+});

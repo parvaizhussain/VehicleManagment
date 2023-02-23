@@ -12,7 +12,7 @@ namespace Utility.Models
 
         public string RegionName { get; set; }
 
-        public string NormalizedName { get; set; }
+        public string? NormalizedName { get; set; }
 
         public string RegionCode { get; set; }
         public bool IsActive { get; set; }

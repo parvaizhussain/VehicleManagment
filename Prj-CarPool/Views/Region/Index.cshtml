@@ -50,7 +50,7 @@
                     <th>Id</th>
                     <th>Region Name</th>
                     <th>Region Code</th>
-                    <th>Normalization</th>
+                    <th hidden="hidden">Normalization</th>
                     <th hidden="hidden"></th>
                     <th>Status</th>
                     <th>Actions</th>
@@ -66,14 +66,14 @@
         <!--offcanvasAddUser-->
         <div class="modal-dialog modal-lg modal-simple modal-edit-user">
             <div class="modal-content p-3 p-md-5">
-             
+
                 <div class="modal-body">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     <div class="text-center mb-4">
                         <h3 class="mb-2">Add New Region</h3>
                         @*<p class="text-muted">Updating user details will receive a privacy audit.</p>*@
                     </div>
-                    <form class="add-new-user pt-0" id="addNewUserForm">
+                    <form class="row g-3" id="addNewForm">
 
                         <div class="col-lg-4 col-md-4 col-xs-12 col-sm-6 visiblityhidden">
                             <div class="form-group">
@@ -82,28 +82,26 @@
                             </div>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="col-12 col-md-12">
                             <span class="stred">*</span><label class="form-label"> Name</label>
-                            <input type="text" class="form-control regionnameadd onlyalphabetallowwithspace" />
+                            <input type="text" class="form-control regionnameadd onlyalphabetallowwithspace" id="regionnameadd" name="regionnameadd" tabindex="1" autofocus />
                             <p class="error-message">* Name Required</p>
 
                         </div>
 
-                        <div class="mb-3">
-                            <span class="stred">*</span><label class="form-label"> Short Name</label>
-                            <input type="text" class="form-control regionshortnameadd" />
-                            <p class="error-message">* Short Name Required</p>
-                        </div>
+                     
 
-                        <div class="mb-3">
+                        <div class="col-12 col-md-12">
                             <span class="stred">*</span><label class="form-label"> Region Code</label>
-                            <input type="text" class="form-control regioncodeadd" />
+                            <input type="text" class="form-control regioncodeadd" id="regioncodeadd" name="regioncodeadd" tabindex="2" autofocus/>
                             <p class="error-message">* Region Code Required</p>
                         </div>
 
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary me-sm-3 me-1" onclick="SaveRegion()">Submit</button>
+                            <button type="reset" class="btn btn-label-secondary" id="btnCancelSave" data-bs-dismiss="modal">Cancel</button>
 
-                        <button type="button" class="btn btn-primary me-sm-3 me-1" onclick="SaveRegion()">Submit</button>
-                        <button type="reset" class="btn btn-label-secondary" id="btnCancelSave" data-bs-dismiss="modal">Cancel</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -122,7 +120,7 @@
                         <h3 class="mb-2">Edit Region</h3>
                         @*<p class="text-muted">Updating user details will receive a privacy audit.</p>*@
                     </div>
-                    <form class="add-new-user pt-0" id="EditNewUserForm" onsubmit="return false">
+                    <form class="row g-3" id="EditNewForm" onsubmit="return false">
 
 
                         <div class="col-lg-4 col-md-4 col-xs-12 col-sm-6 visiblityhidden">
@@ -132,37 +130,34 @@
                             </div>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="col-12 col-md-12">
                             <span class="stred">*</span><label class="form-label"> Name</label>
-                            <input type="text" class="form-control Editregionnameadd onlyalphabetallowwithspace" />
+                            <input type="text" class="form-control Editregionname onlyalphabetallowwithspace" id="Editregionname" name="Editregionname" tabindex="1" autofocus />
                             <p class="error-message">* Name Required</p>
 
                         </div>
+                      
 
-                        <div class="mb-3">
-                            <span class="stred">*</span><label class="form-label"> Short Name</label>
-                            <input type="text" class="form-control Editregionshortnameadd" />
-                            <p class="error-message">* Short Name Required</p>
-                        </div>
 
-                        <div class="mb-3">
+                        <div class="col-12 col-md-12">
                             <span class="stred">*</span><label class="form-label"> Region Code</label>
-                            <input type="text" class="form-control Editregioncodeadd" />
+                            <input type="text" class="form-control Editregioncode" id="Editregioncode" name="Editregioncode" tabindex="2" autofocus />
                             <p class="error-message">* Region Code Required</p>
                         </div>
-                         <div class="col-12 col-md-6">
+                        <div class="col-12 col-md-12">
                             <label class="form-label" for="chkactive">Is Active?</label>
                             <div class="form-check form-switch mb-2 mt-0 ms-2">
-                               <input class="form-check-input" type="checkbox" id="chkactive" checked />
+                                <input class="form-check-input" type="checkbox" id="chkactive" checked />
                                 <label class="form-check-label" for="flexSwitchCheckChecked">Active</label>
                             </div>
                         </div>
 
 
                         <div class="text-center">
-                            <button type="button" class="btn btn-primary me-sm-3 me-1" onclick="EditBranch()">Edit</button>
+                            <button type="submit" class="btn btn-primary me-sm-3 me-1" onclick="EditBranch()">Edit</button>
                             <button type="reset" class="btn btn-label-secondary" id="btnCancelEdit" data-bs-dismiss="modal">Cancel</button>
                         </div>
+
                     </form>
                 </div>
             </div>
@@ -172,8 +167,8 @@
 </div>
 @*<button type="button" class="btn btn-primary me-sm-3 me-1" onclick="btnShow()">Show</button>*@
 @*<div class="block-ui-btn demo-inline-spacing">
-<button type="button" class="btn btn-primary btn-page-block-custom me-sm-3 me-1">Icon</button>
-</div>*@
+    <button type="button" class="btn btn-primary btn-page-block-custom me-sm-3 me-1">Icon</button>
+    </div>*@
 
 
 <style>

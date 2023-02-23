@@ -18,7 +18,7 @@ function LoadTable(newdatas) {
             // For Avatar image
             var $output =
                 // '<img src="' + assetsPath + 'img/avatars/' + $image + '" alt="Avatar" class="rounded-circle">';
-                '<i id="editNavIcon" class="' + $image +'" data-icon="'+$image+'" ></i>';
+                '<i id="editNavIcon" class="' + $image + '" data-icon="' + $image + '" ></i>';
         } else {
             // For Avatar badge
             //var stateNum = Math.floor(Math.random() * 6);
@@ -89,7 +89,7 @@ function LoadTable(newdatas) {
 
 
     $(".datatables-users-mytable").DataTable({
-        
+
         retrieve: true,
         order: [[1, 'desc']],
         dom:
@@ -374,9 +374,9 @@ $(document).ready(function () {
     var mydata = $('#UserDataJson').val();
 
     var newdata = JSON.parse(mydata);
-  
+
     LoadTable(newdata);
-  
+
 });
 
 
@@ -410,8 +410,8 @@ $.ajax({
     success: function (result) {
         iconmenudropdown += '<option value="0" style="font-weight: bold;background: #d9d5d5;">Select</option>';
         for (var i = 0; i < result.length; i++) {
-           
-                iconmenudropdown += '<option value="' + result[i].className + '" data-icon="' + result[i].className + '">' + result[i].iconName + '</option>';
+
+            iconmenudropdown += '<option value="' + result[i].className + '" data-icon="' + result[i].className + '">' + result[i].iconName + '</option>';
         }
         $(".myselectpickerIcons").html(iconmenudropdown);
         $(".editmyselectpickerIcons").html(iconmenudropdown);
@@ -436,15 +436,15 @@ function ShowEditNavigations(item) {
     var navigationdisplayorderedit = $(item).closest("tr").find('#editNavDisplayOrder').text();
     var navigationdIconedit = $(item).closest("tr").find('#editNavIcon').data('icon');
     var IsVisibleChkedit = JSON.parse($(item).closest("tr").find('#IsVisibleChk').text());
-   
 
-    
+
+
 
     $('.editmenuID').val(navigationidedit.trim());
     $('.editmenuName').val(navigationnameedit.trim());
     $('.editmenuController').val(navigationcontrolleredit.trim());
     $('.editSnavigationparentmenu').val(navigationparentmenuidedit).trigger('change');
-   // $('.editmenuName').val(navigationvisibleedit);
+    // $('.editmenuName').val(navigationvisibleedit);
     $('.editmenuDisplayorder').val(navigationdisplayorderedit.trim());
     $('.selectpicker').selectpicker('val', navigationdIconedit);
     $('#chkactive').attr("checked", IsVisibleChkedit);
@@ -457,7 +457,7 @@ function EditNav() {
     var val = $('.editmyselectpickerIcons option:selected').data('icon');
     var navigationparentmenuvalidation = $(".editSnavigationparentmenu option:Selected").val();
     let isChecked = $('#chkactive').is(':checked');
-   
+
 
     var navigationObj = {
         Id: parseInt(navid),
@@ -476,7 +476,7 @@ function EditNav() {
         data: { viewModel: navigationObj },
         url: '/navigation/EditNavigation',
         success: function (result) {
-            
+
             if (result.datasuccess == true) {
 
                 Command: toastr["success"]("Navigation SuccessFully Edited !");
@@ -538,33 +538,33 @@ function SaveNavigation() {
         Id: parseInt(navid),
         Name: $(".menuName").val(),
         ControllerName: $(".menuController").val(),
-        ParentMenuId: navigationparentmenuvalidation, 
+        ParentMenuId: navigationparentmenuvalidation,
         DisplayOrder: parseInt($(".menuDisplayorder").val()),
         Visible: true,//$('#visiblecheckbox').is(':checked'),
         CssClass: val
 
     }
     $.ajax({
-       
+
         type: 'POST',
         async: false,
         data: { viewModel: navigationObj },
         url: '/navigation/CreateNavigation',
         success: function (result) {
-          
+
             if (result.datasuccess == true) {
-                
+
                 Command: toastr["success"]("Navigation SuccessFully Added !");
                 var mydata = result.json;// $('#UserDataJson').val();
                 var newdata = JSON.parse(mydata);
 
-              
+
 
                 LoadTable(newdata);
             }
         },
         complete: function (result) {
-            
+
             var parnetmenudropdown = "";
             $.ajax({
                 type: 'POST',
@@ -590,14 +590,14 @@ function SaveNavigation() {
         },
         error: function (err) {
             Command: toastr["error"](err);
-           // console.log("Error" + err);
+            // console.log("Error" + err);
         }
     });
 }
 
 
 function btnShow() {
-   
+
     Command: toastr["success"]("Navigation SuccessFully Added !")
 
     //toastr.options = {
@@ -618,15 +618,15 @@ function btnShow() {
     //    "hideMethod": "fadeOut"
     //}
 
-   
+
 }
 
 
-  
+
 
 function Delete(item) {
     var NavID = $(item).closest("tr").find('#editNavID').text();
-   
+
     Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -671,3 +671,198 @@ function Delete(item) {
         }
     });
 }
+
+const formValidationExamples = document.getElementById('addNewForm');
+const fv = FormValidation.formValidation(formValidationExamples, {
+
+    fields: {
+
+        menuName: {
+            validators: {
+                notEmpty: {
+                    message: 'Please Enter Menu'
+                },
+
+
+            },
+
+        },
+
+
+        navigationparentmenu: {
+            validators: {
+                callback: {
+                    message: 'Please Select Parent Menu',
+                    callback: function (input, validator, $field) {
+                        return input.value > 0;
+
+                    }
+                }
+            }
+        },
+
+        myselectpickerIcons: {
+            validators: {
+                callback: {
+                    message: 'Please Select Icons',
+                    callback: function (value, validator, $field) {
+                        debugger
+                        return value.value !== "0";
+                    }
+                }
+            }
+
+        },
+
+
+        menuController: {
+            validators: {
+                notEmpty: {
+                    message: 'Please Enter Controller'
+                },
+
+
+            },
+
+        },
+
+        menuDisplayorder: {
+            validators: {
+                notEmpty: {
+                    message: 'Please Enter Display Order'
+                },
+
+
+            },
+
+        }
+
+
+    },
+    plugins: {
+
+        trigger: new FormValidation.plugins.Trigger(),
+        bootstrap5: new FormValidation.plugins.Bootstrap5({
+            eleValidClass: '',
+
+        }),
+        submitButton: new FormValidation.plugins.SubmitButton(),
+        autoFocus: new FormValidation.plugins.AutoFocus()
+    },
+    init: instance => {
+        instance.on('plugins.message.placed', function (e) {
+            //* Move the error message out of the `input-group` element
+            if (e.element.parentElement.classList.contains('input-group')) {
+                // `e.field`: The field name
+                // `e.messageElement`: The message element
+                // `e.element`: The field element
+                e.element.parentElement.insertAdjacentElement('afterend', e.messageElement);
+            }
+            //* Move the error message out of the `row` element for custom-options
+            if (e.element.parentElement.parentElement.classList.contains('custom-option')) {
+                e.element.closest('.row').insertAdjacentElement('afterend', e.messageElement);
+            }
+        });
+    }
+}).on('core.form.valid', function (event) {
+
+    SaveNavigation();
+});
+
+////------------- Edit validations-----------------------------
+const editformValidationExamples = document.getElementById('EditNewForm');
+const efv = FormValidation.formValidation(editformValidationExamples, {
+
+    fields: {
+        editmenuName: {
+            validators: {
+                notEmpty: {
+                    message: 'Please Enter Menu'
+                },
+
+
+            },
+
+        },
+
+
+        editSnavigationparentmenu: {
+            validators: {
+                callback: {
+                    message: 'Please Select Parent Menu',
+                    callback: function (input, validator, $field) {
+                        return input.value > 0;
+
+                    }
+                }
+            }
+        },
+
+        editmyselectpickerIcons: {
+            validators: {
+                callback: {
+                    message: 'Please Select Icon',
+                    callback: function (value, validator, $field) {
+                        debugger
+                        return value.value !== "0";
+                    }
+                }
+            }
+
+        },
+
+
+        editmenuController: {
+            validators: {
+                notEmpty: {
+                    message: 'Please Enter Controller'
+                },
+
+
+            },
+
+        },
+
+        editmenuDisplayorder: {
+            validators: {
+                notEmpty: {
+                    message: 'Please Enter Display Order'
+                },
+
+
+            },
+
+        }
+
+    },
+    plugins: {
+
+        trigger: new FormValidation.plugins.Trigger(),
+        bootstrap5: new FormValidation.plugins.Bootstrap5({
+            eleValidClass: '',
+
+        }),
+        submitButton: new FormValidation.plugins.SubmitButton(),
+        // Submit the form when all fields are valid
+        // defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+        autoFocus: new FormValidation.plugins.AutoFocus()
+    },
+    init: instance => {
+        instance.on('plugins.message.placed', function (e) {
+            //* Move the error message out of the `input-group` element
+            if (e.element.parentElement.classList.contains('input-group')) {
+                // `e.field`: The field name
+                // `e.messageElement`: The message element
+                // `e.element`: The field element
+                e.element.parentElement.insertAdjacentElement('afterend', e.messageElement);
+            }
+            //* Move the error message out of the `row` element for custom-options
+            if (e.element.parentElement.parentElement.classList.contains('custom-option')) {
+                e.element.closest('.row').insertAdjacentElement('afterend', e.messageElement);
+            }
+        });
+    }
+}).on('core.form.valid', function (event) {
+
+    EditNav();
+});

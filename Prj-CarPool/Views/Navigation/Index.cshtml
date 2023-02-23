@@ -44,28 +44,28 @@
 <div class="card">
     <div class="card-header border-bottom">
         <h5 class="card-title mb-3">Navigations</h5>
-    
 
-    <div class="card-datatable table-responsive mytable">
-        <table class="datatables-users-mytable table border-top">
-            <thead>
-                <tr>
-                    <th class="visiblityhidden"></th>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Controller</th>
-                    <th>Parent Menu</th>
-                    <th class="visiblityhidden"></th>
-                    <th class="visiblityhidden"></th>
-                    <th>Visible</th>
-                    <th>display Order</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+
+        <div class="card-datatable table-responsive mytable">
+            <table class="datatables-users-mytable table border-top">
+                <thead>
+                    <tr>
+                        <th class="visiblityhidden"></th>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Controller</th>
+                        <th>Parent Menu</th>
+                        <th class="visiblityhidden"></th>
+                        <th class="visiblityhidden"></th>
+                        <th>Visible</th>
+                        <th>display Order</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
     </div>
-</div>
 
     <!-- Offcanvas to add new user -->
     <div class="modal fade" tabindex="-1" id="offcanvasAddUser" aria-labelledby="offcanvasAddUserLabel">
@@ -75,58 +75,58 @@
 
 
                 @*<div class="offcanvas-header">
-                <h5 id="offcanvasAddUserLabel" class="offcanvas-title">Add Navigation</h5>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>*@
+                    <h5 id="offcanvasAddUserLabel" class="offcanvas-title">Add Navigation</h5>
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>*@
                 <div class="modal-body">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     <div class="text-center mb-4">
                         <h3 class="mb-2">Add Navigation</h3>
                         <p class="text-muted">Add New Navigation.</p>
                     </div>
-                    <form class="row g-3" id="addNewUserForm" onsubmit="return false">
+                    <form class="row g-3" id="addNewForm" onsubmit="return false">
 
                         <div class="col-12 col-md-12">
                             <span class="stred">*</span><label class="form-label" for="add-user-fullname">Name</label>
-                            <input type="text" class="form-control menuName onlyalphabetallow" tabindex="1" autofocus />
+                            <input type="text" class="form-control menuName onlyalphabetallow" id="menuName" name="menuName" tabindex="1" autofocus />
                             <p class="error-message">*Name Required</p>
                         </div>
 
                         <div class="col-12 col-md-6">
                             <label class="form-label" for="multicol-country">Parent Menu</label>
-                            <select id="multicol-countryAdd" class="select2 form-select navigationparentmenu" data-allow-clear="true">
+                            <select class="select2 form-select navigationparentmenu" 
+                                    data-allow-clear="true" id="navigationparentmenu"
+                                    name="navigationparentmenu" tabindex="2" autofocus>
                             </select>
                         </div>
                         <div class="col-12 col-md-6">
                             <label for="selectpickerIcons" class="form-label">Icons</label>
-                            <select class="selectpicker show-tick myselectpickerIcons"
-                                    id="selectpickerIcons"
+                            <select class="selectpicker  myselectpickerIcons"
                                     data-icon-base="ti"
                                     data-tick-icon="ti-check"
-                                    data-style="btn-default"
-                                    data-live-search="true">
-                                @*<option data-icon="ti ti-brand-instagram">Instagram</option>
-                                <option data-icon="ti ti-brand-pinterest">Pinterest</option>
-                                <option data-icon="ti ti-brand-twitch">Twitch</option>*@
+                                    data-style="btn-default"  data-live-search="true" 
+                                    data-allow-clear="true"
+                                    id="myselectpickerIcons" 
+                                    name="myselectpickerIcons" tabindex="3" autofocus>
                             </select>
                         </div>
 
                         <div class="col-12 col-md-6">
                             <span class="stred">*</span><label class="form-label"> Controller</label>
-                            <input type="text" class="form-control menuController" />
+                            <input type="text" class="form-control menuController" id="menuController" name="menuController" tabindex="4" autofocus />
                             <p class="error-message">* Controller Required</p>
                         </div>
 
                         <div class="col-12 col-md-6">
                             <span class="stred">*</span><label class="form-label" for="add-user-fullname">Dispaly Order</label>
-                            <input type="text" class="form-control menuDisplayorder" tabindex="1" autofocus />
+                            <input type="text" class="form-control menuDisplayorder" id="menuDisplayorder" name="menuDisplayorder" tabindex="5" autofocus />
                             <p class="error-message">*Display Order Required</p>
                         </div>
 
                         <div class="text-center">
-                        <button type="button" class="btn btn-primary me-sm-3 me-1" onclick="SaveNavigation()">Submit</button>
-                        <button type="reset" class="btn btn-label-secondary" id="btnCancel" data-bs-dismiss="modal">Cancel</button>
-                    </div>
+                            <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>
+                            <button type="reset" class="btn btn-label-secondary" id="btnCancel" data-bs-dismiss="modal">Cancel</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -137,60 +137,58 @@
     <!-- Offcanvas to Edit new Navigation -->
     <div class="modal fade" tabindex="-1" id="offcanvasEditNav" aria-labelledby="offcanvasEditNavLabel">
         <!--offcanvasAddUser-->
-         <div class="modal-dialog modal-lg modal-simple modal-edit-user">
+        <div class="modal-dialog modal-lg modal-simple modal-edit-user">
             <div class="modal-content p-3 p-md-5">
-       
-        <div class="modal-body">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                <div class="modal-body">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     <div class="text-center mb-4">
                         <h3 class="mb-2">Edit Navigation</h3>
                         <p class="text-muted">Update Navigation.</p>
                     </div>
-            <form class="row g-3" id="EditNavForm" onsubmit="return false">
+                    <form class="row g-3" id="EditNewForm" onsubmit="return false">
 
+                        <div class="col-12 col-md-12 visiblityhidden" >
+                            <span class="stred">*</span><label class="form-label" for="add-user-fullname">ID</label>
+                            <input type="text" class="form-control editmenuID" />
+                            <p class="error-message">*Name Required</p>
+                        </div>
                         <div class="col-12 col-md-12">
-                    <span class="stred">*</span><label class="form-label" for="add-user-fullname">ID</label>
-                    <input type="text" class="form-control editmenuID" tabindex="1" autofocus />
-                    <p class="error-message">*Name Required</p>
-                </div>
-                        <div class="col-12 col-md-12">
-                    <span class="stred">*</span><label class="form-label" for="add-user-fullname">Name</label>
-                    <input type="text" class="form-control editmenuName onlyalphabetallow" tabindex="1" autofocus />
-                    <p class="error-message">*Name Required</p>
-                </div>
+                            <span class="stred">*</span><label class="form-label" for="add-user-fullname">Name</label>
+                            <input type="text" class="form-control editmenuName onlyalphabetallow" id="editmenuName" name="editmenuName" tabindex="1" autofocus />
+                            <p class="error-message">*Name Required</p>
+                        </div>
                         <div class="col-12 col-md-6">
-                    <label for="selectpickerIcons" class="form-label">Icons</label>
-                    <select class="selectpicker show-tick editmyselectpickerIcons" name="selValue"
-                            id="selectpickerIcons"
-                            data-icon-base="ti"
-                            data-tick-icon="ti-check"
-                            data-style="btn-default"
-                            data-live-search="true">
-                        @*<option data-icon="ti ti-brand-instagram">Instagram</option>
-                        <option data-icon="ti ti-brand-pinterest">Pinterest</option>
-                        <option data-icon="ti ti-brand-twitch">Twitch</option>*@
-                    </select>
 
+                            <label class="form-label" for="multicol-country">Parent Menu</label>
+                            <select class="select2 form-select editSnavigationparentmenu" data-allow-clear="true"
+                                    id="editSnavigationparentmenu" name="editSnavigationparentmenu" tabindex="2" autofocus>
+                            </select>
 
-                </div>
+                        </div>
 
                         <div class="col-12 col-md-6">
-                    <label class="form-label" for="multicol-country">Parent Menu</label>
-                    <select id="multicol-country" class="select2 form-select editSnavigationparentmenu" data-allow-clear="true">
-                    </select>
-                </div>
+                           
+                            <label for="selectpickerIcons" class="form-label">Icons</label>
+                            <select class="selectpicker show-tick editmyselectpickerIcons" @*name="selValue"*@
+                                    data-icon-base="ti"
+                                    data-tick-icon="ti-check"
+                                    data-style="btn-default"
+                                    data-live-search="true" id="editmyselectpickerIcons" name="editmyselectpickerIcons" tabindex="3" autofocus>
+                            </select>
+                        </div>
 
                         <div class="col-12 col-md-6">
-                    <span class="stred">*</span><label class="form-label">Controller</label>
-                    <input type="text" class="form-control editmenuController" />
-                    <p class="error-message">* Controller Required</p>
-                </div>
+                            <span class="stred">*</span><label class="form-label">Controller</label>
+                            <input type="text" class="form-control editmenuController" id="editmenuController" name="editmenuController" tabindex="4" autofocus />
+                            <p class="error-message">* Controller Required</p>
+                        </div>
 
                         <div class="col-12 col-md-6">
-                    <span class="stred">*</span><label class="form-label" for="add-user-fullname">Dispaly Order</label>
-                    <input type="text" class="form-control editmenuDisplayorder" tabindex="1" autofocus />
-                    <p class="error-message">*Display Order Required</p>
-                </div>
+                            <span class="stred">*</span><label class="form-label" for="add-user-fullname">Dispaly Order</label>
+                            <input type="text" class="form-control editmenuDisplayorder" id="editmenuDisplayorder" name="editmenuDisplayorder" tabindex="5" autofocus />
+                            <p class="error-message">*Display Order Required</p>
+                        </div>
                         <div class="col-12 col-md-6">
                             <label class="form-label" for="chkactive">Visble Navigation</label>
                             <div class="form-check form-switch mb-2 mt-0 ms-2">
@@ -198,13 +196,13 @@
                                 <label class="form-check-label" for="flexSwitchCheckChecked">Visible</label>
                             </div>
                         </div>
-               <div class="text-center">
-                <button type="button" class="btn btn-primary me-sm-3 me-1" onclick="EditNav()">Edit</button>
-                <button type="reset" class="btn btn-label-secondary" id="btnCancelEdit" data-bs-dismiss="modal">Cancel</button>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary me-sm-3 me-1">Edit</button>
+                            <button type="reset" class="btn btn-label-secondary" id="btnCancelEdit" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
                 </div>
-            </form>
-        </div>
-        </div>
+            </div>
         </div>
 
     </div>
@@ -217,8 +215,6 @@
     .error-message {
         display: none !important;
     }
-
-   
 </style>
 
 <script src="~/assets/vendor/libs/block-ui/block-ui.js"></script>
@@ -227,6 +223,6 @@
 <script src="~/js/projectjs/navigation.js"></script>
 @*  <script src="~/assets/js/app-user-list.js" defer></script>*@
 <script defer>
-   
+
 </script>
 

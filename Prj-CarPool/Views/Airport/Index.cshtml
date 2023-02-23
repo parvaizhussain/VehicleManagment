@@ -74,7 +74,7 @@
                             aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="add-new-user pt-0" id="addNewUserForm" onsubmit="return false">
+                    <form class="row g-3" id="addNewUserForm" onsubmit="return false">
 
                         @* <div class="col-lg-4 col-md-4 col-xs-12 col-sm-6 visiblityhidden">
                             <div class="form-group">
@@ -84,27 +84,28 @@
                             </div>
                             </div>*@
 
-                        <div class="mb-3">
+                        <div class="col-12 col-md-12">
 
                             <span class="stred">*</span><label class="form-label">Aiport Name</label>
-                            <input type="text" class="form-control Aiportnameadd onlyalphabetallowwithspace" />
+                            <input type="text" class="form-control Aiportnameadd onlyalphabetallowwithspace" id="Aiportnameadd" name="Aiportnameadd" tabindex="1" autofocus />
                             <p class="error-message">* Name Required</p>
                         </div>
-                        <div class="mb-3">
+                        <div class="col-12 col-md-12">
 
                             <span class="stred">*</span><label class="form-label">Select Region</label>
-                            <select class="form-control select2 Regionlist region" onchange="changeCity(this)"></select>
+                            <select class="form-control select2 Regionlist" onchange="changeCity(this)" data-allow-clear="true" id="Regionlist" name="Regionlist" tabindex="2" autofocus></select>
                             <p class="error-message">* Region Required</p>
                         </div>
-                        <div class="mb-3">
+                        <div class="col-12 col-md-12">
                             <span class="stred">*</span><label class="form-label">Select City</label>
-                            <select class="form-control select2 Citylist"></select>
+                            <select class="form-control select2 Citylist" data-allow-clear="true" id="Citylist" name="Citylist" tabindex="3" autofocus></select>
                             <p class="error-message">* City Required</p>
                         </div>
 
-
-                        <button type="button" class="btn btn-primary me-sm-3 me-1" onclick="Save_Airport()">Submit</button>
-                        <button type="reset" class="btn btn-label-secondary" id="btnCancelSave" data-bs-dismiss="modal">Cancel</button>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>
+                            <button type="reset" class="btn btn-label-secondary" id="btnCancelSave" data-bs-dismiss="modal">Cancel</button>
+                        </div>
                     </form>
 
 
@@ -123,7 +124,7 @@
                     <button type="button" class="btn-close text-reset" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="add-new-user pt-0" id="EditNewUserForm" onsubmit="return false">
+                    <form class="row g-3" id="EditNewUserForm" onsubmit="return false">
 
                         <div class="col-lg-4 col-md-4 col-xs-12 col-sm-6 visiblityhidden">
                             <div class="form-group">
@@ -132,35 +133,36 @@
                                 <input type="text" class="form-control EditAirportID visiblityhidden" disabled value="0" />
                             </div>
                         </div>
-                        <div class="mb-3">
+                        <div class="col-12 col-md-12">
 
                             <span class="stred">*</span><label class="form-label">Airport Name</label>
-                            <input type="text" class="form-control EditAirportName onlyalphabetallowwithspace" />
+                            <input type="text" class="form-control EditAirportName onlyalphabetallowwithspace" id="EditAirportName" name="EditAirportName" tabindex="1" autofocus />
                             <p class="error-message">* Name Required</p>
                         </div>
-                        <div class="mb-3">
+                        <div class="col-12 col-md-12">
 
                             <span class="stred">*</span><label class="form-label">Select Region</label>
-                            <select class="form-control select2 EditRegionlist region" onchange="changeCity(this)"></select>
+                            <select class="form-control select2 EditRegionlist region" onchange="changeCity(this)" id="EditRegionlist" name="EditRegionlist" tabindex="2" autofocus></select>
                             <p class="error-message">* Region Required</p>
                         </div>
-                        <div class="mb-3">
+                        <div class="col-12 col-md-12">
 
                             <span class="stred">*</span><label class="form-label">Select City</label>
-                            <select class="form-control select2 EditCitylist"></select>
+                            <select class="form-control select2 EditCitylist" id="EditCitylist" name="EditCitylist" tabindex="3" autofocus></select>
                             <p class="error-message">* City Required</p>
                         </div>
 
-                        <div class="col-12 col-md-6">
+                        <div class="col-12 col-md-12">
                             <label class="form-label" for="chkactive">Is Active?</label>
                             <div class="form-check form-switch mb-2 mt-0 ms-2">
                                 <input class="form-check-input" type="checkbox" id="chkactive" checked />
                                 <label class="form-check-label" for="flexSwitchCheckChecked">Active</label>
                             </div>
                         </div>
-
-                        <button type="button" class="btn btn-primary me-sm-3 me-1" onclick="Edit_Airport()">Edit</button>
-                        <button type="reset" class="btn btn-label-secondary" id="btnCancelEdit" data-bs-dismiss="modal">Cancel</button>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary me-sm-3 me-1" onclick="Edit_Airport()">Edit</button>
+                            <button type="reset" class="btn btn-label-secondary" id="btnCancelEdit" data-bs-dismiss="modal">Cancel</button>
+                        </div>
                     </form>
                 </div>
             </div>

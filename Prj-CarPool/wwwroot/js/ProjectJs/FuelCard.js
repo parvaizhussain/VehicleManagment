@@ -437,3 +437,187 @@ function Delete(item) {
         }
     });
 }
+
+//------------- Add validations-----------------------------
+const formValidationExamples = document.getElementById('addNewForm');
+const fv = FormValidation.formValidation(formValidationExamples, {
+
+    fields: {
+
+        Cardnameadd: {
+            validators: {
+                notEmpty: {
+                    message: 'Please Enter Card name'
+                },
+
+
+            },
+
+        },
+        Cardnumadd: {
+            validators: {
+                notEmpty: {
+                    message: 'Please Enter Card Number'
+                },
+
+
+            },
+
+        },
+        Cardlimitadd: {
+            validators: {
+                notEmpty: {
+                    message: 'Please Enter Card Limit'
+                },
+
+
+            },
+
+        },
+        Cardissuanceadd: {
+            validators: {
+                notEmpty: {
+                    message: 'Please Select Issuace Date'
+                },
+
+
+            },
+
+        },
+        Cardexpiryadd: {
+            validators: {
+                notEmpty: {
+                    message: 'Please Select Expiry Date'
+                },
+
+
+            },
+
+        },
+        
+
+
+    },
+    plugins: {
+
+       trigger: new FormValidation.plugins.Trigger(),
+        bootstrap5: new FormValidation.plugins.Bootstrap5({
+            eleValidClass: '',
+           
+        }),
+        submitButton: new FormValidation.plugins.SubmitButton(),
+        // Submit the form when all fields are valid
+        // defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+        autoFocus: new FormValidation.plugins.AutoFocus()
+    },
+    init: instance => {
+        instance.on('plugins.message.placed', function (e) {
+            //* Move the error message out of the `input-group` element
+            if (e.element.parentElement.classList.contains('input-group')) {
+                // `e.field`: The field name
+                // `e.messageElement`: The message element
+                // `e.element`: The field element
+                e.element.parentElement.insertAdjacentElement('afterend', e.messageElement);
+            }
+            //* Move the error message out of the `row` element for custom-options
+            if (e.element.parentElement.parentElement.classList.contains('custom-option')) {
+                e.element.closest('.row').insertAdjacentElement('afterend', e.messageElement);
+            }
+        });
+    }
+}).on('core.form.valid', function (event) {
+
+    Save_Card();
+});
+
+////------------- Edit validations-----------------------------
+const editformValidationExamples = document.getElementById('EditNewForm');
+const efv = FormValidation.formValidation(editformValidationExamples, {
+
+    fields: {
+        Cardnameedit: {
+            validators: {
+                notEmpty: {
+                    message: 'Please Enter Card name'
+                },
+
+
+            },
+
+        },
+        Cardnumedit: {
+            validators: {
+                notEmpty: {
+                    message: 'Please Enter Card Number'
+                },
+
+
+            },
+
+        },
+        Cardlimitedit: {
+            validators: {
+                notEmpty: {
+                    message: 'Please Enter Card Limit'
+                },
+
+
+            },
+
+        },
+        Cardissuanceedit: {
+            validators: {
+                notEmpty: {
+                    message: 'Please Select Issuace Date'
+                },
+
+
+            },
+
+        },
+        Cardexpiryedit: {
+            validators: {
+                notEmpty: {
+                    message: 'Please Select Expiry Date'
+                },
+
+
+            },
+
+        },
+
+
+    },
+    plugins: {
+
+        trigger: new FormValidation.plugins.Trigger(),
+        bootstrap5: new FormValidation.plugins.Bootstrap5({
+            // Use this for enabling/changing valid/invalid class
+            // eleInvalidClass: '',
+            eleValidClass: '',
+           
+        }),
+        submitButton: new FormValidation.plugins.SubmitButton(),
+        // Submit the form when all fields are valid
+        // defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+        autoFocus: new FormValidation.plugins.AutoFocus()
+    },
+    init: instance => {
+        instance.on('plugins.message.placed', function (e) {
+            //* Move the error message out of the `input-group` element
+            if (e.element.parentElement.classList.contains('input-group')) {
+                // `e.field`: The field name
+                // `e.messageElement`: The message element
+                // `e.element`: The field element
+                e.element.parentElement.insertAdjacentElement('afterend', e.messageElement);
+            }
+            //* Move the error message out of the `row` element for custom-options
+            if (e.element.parentElement.parentElement.classList.contains('custom-option')) {
+                e.element.closest('.row').insertAdjacentElement('afterend', e.messageElement);
+            }
+        });
+    }
+}).on('core.form.valid', function (event) {
+
+    Edit_Card();
+});

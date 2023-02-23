@@ -40,6 +40,8 @@ namespace Prj_CarPool.Controllers
             {
                 if (Obj.RegionId == 0)
                 {
+                    //Obj.RegionCode = Obj.RegionName.Substring(0, 3).Trim().ToUpper();
+                    Obj.NormalizedName = Obj.RegionName.Trim().ToUpper();
                     var deptobj = await _regionRepository.CreateAsyncJson(Extensions.SharedBag.RegionUpsert, Obj, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
                     var datajson = await _regionRepository.GetAllAsync(Extensions.SharedBag.Regionlist, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
 
@@ -49,6 +51,7 @@ namespace Prj_CarPool.Controllers
                 }
                 else
                 {
+                    Obj.NormalizedName = Obj.RegionName.Trim().ToUpper();
                     var deptobj = await _regionRepository.UpdateAsync(Extensions.SharedBag.RegionUpsert, Obj, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
                     var datajson = await _regionRepository.GetAllAsync(Extensions.SharedBag.Regionlist, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
 

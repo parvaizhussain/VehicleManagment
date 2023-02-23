@@ -349,8 +349,6 @@ function Edit(item) {
 
 
 }
-
-
 function Edit_Airport() {
     let isChecked = $('#chkactive').is(':checked');
 
@@ -399,61 +397,6 @@ function Edit_Airport() {
         }
     });
 }
-
-//function Delete(item) {
-//    debugger
-
-//    var AirportId = $(item).closest("tr").find('#editAID').text();
-
-//    $('.EditAirportID').val(AirportId.trim());
-
-//}
-
-
-//function Delete_Airport() {
-
-//    var objDelete = {
-//        AirportID: parseInt($('.EditAirportID').val()),
-//    }
-//    $.ajax({
-
-//        type: 'POST',
-//        async: false,
-//        data: { Obj: objDelete },
-//        url: '/Airport/Delete',
-//        success: function (result) {
-
-//            if (result.datasuccess == true) {
-
-//                Command: toastr["success"]("Airport SuccessFully Deleted !");
-//                var mydata = result.json;// $('#UserDataJson').val();
-//                var newdata = JSON.parse(mydata);
-
-//                LoadTable(newdata);
-//                $('#btnDelete').click();
-//            }
-//            else {
-
-//                Command: toastr["error"]("This Airport not Succefully Deleted. \n Somthing Went Wrongs.");
-//                var mydata = result.json;// $('#UserDataJson').val();
-//                var newdata = JSON.parse(mydata);
-
-//                LoadTable(newdata);
-//                $('#btnDelete').click();
-//            }
-//        },
-//        complete: function (result) {
-
-//        },
-//        error: function (err) {
-//            Command: toastr["error"]("This City not Succefully Deleted. \n Somthing Went Wrongs.");
-//            // console.log("Error" + err);
-//        }
-//    });
-
-
-//}
-
 
 function Delete(item) {
     var AirportId = $(item).closest("tr").find('#editAID').text();
@@ -506,3 +449,145 @@ function Delete(item) {
 }
 
 
+//------------- Add validations-----------------------------
+const formValidationExamples = document.getElementById('addNewUserForm');
+const fv = FormValidation.formValidation(formValidationExamples, {
+
+    fields: {
+
+        Aiportnameadd: {
+            validators: {
+                notEmpty: {
+                    message: 'Please Enter Airport'
+                },
+
+
+            },
+
+        },
+        Citylist: {
+            validators: {
+                callback: {
+                    message: 'Please Select City',
+                    callback: function (value, validator, $field) {
+
+                        return value.value > 0;
+                    }
+                }
+            }
+
+        },
+        Regionlist: {
+            validators: {
+                callback: {
+                    message: 'Please Select Region',
+                    callback: function (input, validator, $field) {
+                        return input.value > 0;
+
+                    }
+                }
+            }
+        }
+
+
+    },
+    plugins: {
+
+        trigger: new FormValidation.plugins.Trigger(),
+        bootstrap5: new FormValidation.plugins.Bootstrap5({
+            eleValidClass: '',
+            
+        }),
+        submitButton: new FormValidation.plugins.SubmitButton(),
+        autoFocus: new FormValidation.plugins.AutoFocus()
+    },
+    init: instance => {
+        instance.on('plugins.message.placed', function (e) {
+            //* Move the error message out of the `input-group` element
+            if (e.element.parentElement.classList.contains('input-group')) {
+                // `e.field`: The field name
+                // `e.messageElement`: The message element
+                // `e.element`: The field element
+                e.element.parentElement.insertAdjacentElement('afterend', e.messageElement);
+            }
+            //* Move the error message out of the `row` element for custom-options
+            if (e.element.parentElement.parentElement.classList.contains('custom-option')) {
+                e.element.closest('.row').insertAdjacentElement('afterend', e.messageElement);
+            }
+        });
+    }
+}).on('core.form.valid', function (event) {
+
+    Save_Airport();
+});
+
+////------------- Edit validations-----------------------------
+const editformValidationExamples = document.getElementById('EditNewUserForm');
+const efv = FormValidation.formValidation(editformValidationExamples, {
+
+    fields: {
+        EditAirportName: {
+            validators: {
+                notEmpty: {
+                    message: 'Please Enter Airport'
+                },
+            },
+
+        },
+
+        EditRegionlist: {
+            validators: {
+                callback: {
+                    message: 'Please Select Region',
+                    callback: function (value, validator, $field) {
+                        return value.value > 0;
+                    }
+                }
+            }
+        },
+        EditCitylist: {
+
+            validators: {
+                callback: {
+                    message: 'Please Select City',
+                    callback: function (value, validator, $field) {
+
+                        return value.value > 0;
+                    }
+                }
+            }
+
+        }
+
+    },
+    plugins: {
+
+        trigger: new FormValidation.plugins.Trigger(),
+        bootstrap5: new FormValidation.plugins.Bootstrap5({
+            eleValidClass: '',
+            
+        }),
+        submitButton: new FormValidation.plugins.SubmitButton(),
+        // Submit the form when all fields are valid
+        // defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+        autoFocus: new FormValidation.plugins.AutoFocus()
+    },
+    init: instance => {
+        instance.on('plugins.message.placed', function (e) {
+            //* Move the error message out of the `input-group` element
+            if (e.element.parentElement.classList.contains('input-group')) {
+                // `e.field`: The field name
+                // `e.messageElement`: The message element
+                // `e.element`: The field element
+                e.element.parentElement.insertAdjacentElement('afterend', e.messageElement);
+            }
+            //* Move the error message out of the `row` element for custom-options
+            if (e.element.parentElement.parentElement.classList.contains('custom-option')) {
+                e.element.closest('.row').insertAdjacentElement('afterend', e.messageElement);
+            }
+        });
+    }
+}).on('core.form.valid', function (event) {
+
+    Edit_Airport();
+});
