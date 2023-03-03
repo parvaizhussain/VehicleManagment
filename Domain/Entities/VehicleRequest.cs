@@ -20,20 +20,22 @@ namespace Domain.Entities
         public int RegionID { get; set; }
         public virtual Region Region { get; set; }
         public string Purpose { get; set; }
-        public DateTime Request { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime RequestDate { get; set; }
+        [DataType(DataType.Time)]
+        public TimeSpan RequestTime { get; set; }
         public int Status { get; set; }
-        public string Remarks { get; set; }
+        public string? Remarks { get; set; }
         public bool HODApproval { get; set; }
+        public string? HODEmpID { get; set; }
         public string IsAirport { get; set; }
         public string RequestType { get; set; }
-
-        public string FlightNo { get; set; }
-        public string TicketNo { get; set; }
-
+        public string? FlightNo { get; set; }
+        public string? TicketNo { get; set; }
         public byte[]? TicketPDF { get; set; }
-        public string PickFrom { get; set;}
-        public string PickTo { get; set; }
-        public string DropFrom { get; set; }
-        public string DropTo { get; set; }
+        public string? PickFrom { get; set;}
+        public string? PickTo { get; set; }
+        public string? DropFrom { get; set; }
+        public string? DropTo { get; set; }
     }
 }

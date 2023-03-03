@@ -689,17 +689,17 @@ const fv = FormValidation.formValidation(formValidationExamples, {
         },
 
 
-        navigationparentmenu: {
-            validators: {
-                callback: {
-                    message: 'Please Select Parent Menu',
-                    callback: function (input, validator, $field) {
-                        return input.value > 0;
+        //navigationparentmenu: {
+        //    validators: {
+        //        callback: {
+        //            message: 'Please Select Parent Menu',
+        //            callback: function (input, validator, $field) {
+        //                return input.value > 0;
 
-                    }
-                }
-            }
-        },
+        //            }
+        //        }
+        //    }
+        //},
 
         myselectpickerIcons: {
             validators: {
@@ -715,16 +715,16 @@ const fv = FormValidation.formValidation(formValidationExamples, {
         },
 
 
-        menuController: {
-            validators: {
-                notEmpty: {
-                    message: 'Please Enter Controller'
-                },
+        //menuController: {
+        //    validators: {
+        //        notEmpty: {
+        //            message: 'Please Enter Controller'
+        //        },
 
 
-            },
+        //    },
 
-        },
+        //},
 
         menuDisplayorder: {
             validators: {
@@ -786,17 +786,17 @@ const efv = FormValidation.formValidation(editformValidationExamples, {
         },
 
 
-        editSnavigationparentmenu: {
-            validators: {
-                callback: {
-                    message: 'Please Select Parent Menu',
-                    callback: function (input, validator, $field) {
-                        return input.value > 0;
+        //editSnavigationparentmenu: {
+        //    validators: {
+        //        callback: {
+        //            message: 'Please Select Parent Menu',
+        //            callback: function (input, validator, $field) {
+        //                return input.value > 0;
 
-                    }
-                }
-            }
-        },
+        //            }
+        //        }
+        //    }
+        //},
 
         editmyselectpickerIcons: {
             validators: {
@@ -812,16 +812,16 @@ const efv = FormValidation.formValidation(editformValidationExamples, {
         },
 
 
-        editmenuController: {
-            validators: {
-                notEmpty: {
-                    message: 'Please Enter Controller'
-                },
+        //editmenuController: {
+        //    validators: {
+        //        notEmpty: {
+        //            message: 'Please Enter Controller'
+        //        },
 
 
-            },
+        //    },
 
-        },
+        //},
 
         editmenuDisplayorder: {
             validators: {

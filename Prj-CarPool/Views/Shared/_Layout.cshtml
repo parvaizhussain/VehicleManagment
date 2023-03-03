@@ -7,7 +7,7 @@
       data-template="vertical-menu-template">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 viewport-fit=cover" />
     <title>@ViewData["Title"] - CarPool</title>
     <!-- Favicon -->
     @*<link rel="icon" type="image/x-icon" href="~/assets/img/favicon/favicon.ico" />*@
@@ -44,16 +44,16 @@
     <link rel="stylesheet" href="~/assets/vendor/libs/formvalidation/dist/css/formValidation.min.css" />
     <link rel="stylesheet" href="~/assets/vendor/libs/tagify/tagify.css" />
     <link rel="stylesheet" href="~/assets/vendor/libs/typeahead-js/typeahead.css" />
-    <link href="~/assets/vendor/libs/flatpickr/flatpickr.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/assets/vendor/libs/flatpickr/flatpickr.css" />
     <link rel="stylesheet" href="~/assets/vendor/libs/bootstrap-select/bootstrap-select.css" />
     <link rel="stylesheet" href="~/assets/vendor/libs/formvalidation/dist/css/formValidation.min.css" />
     <link rel="stylesheet" href="~/assets/vendor/libs/sweetalert2/sweetalert2.css" />
-
+    <link rel="stylesheet" href="~/assets/vendor/libs/pickr/pickr-themes.css" />
 
     <!-- Page CSS -->
     <link rel="stylesheet" href="~/assets/vendor/css/pages/cards-advance.css" />
-    <link href="~/css/projectcss/custom_style.css" rel="stylesheet" />
-    <link href="~/assets/vendor/libs/flatpickr/plugins/monthselect/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/projectcss/custom_style.css" />
+    <link rel="stylesheet" href="~/assets/vendor/libs/flatpickr/plugins/monthselect/style.css" />
 
 
 
@@ -726,7 +726,8 @@
     <script src="~/assets/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js"></script>
     <script src="~/assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"></script>
     <script src="~/assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-    
+    <script src="~/assets/vendor/libs/pickr/pickr.js"></script>
+
 
 
     <script src="~/vendor/libs/toastr/toastr.js"></script>
@@ -756,6 +757,23 @@
             });
             datepicker.setDate(date);
        }
+        //function dateSetflatR(val) {
+
+        //    var date = new Date(val);
+        //    var datepicker = item.flatpickr({
+        //        dateFormat: "d-M-Y"
+        //    });
+        //    datepicker.setDate(date);
+        //}
+
+        function dateSetflatJson(val, item) {
+
+            var dateJ = new Date(val);
+            var datepicker = item.flatpickr({
+                dateFormat: "Y-m-d"
+            });
+            datepicker.setDate(dateJ);
+        }
         function dateSetflatMonth(val, item) {
             var month = val.split('/')[0];
             var year = val.split('/')[1];

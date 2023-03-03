@@ -27,13 +27,13 @@
                             <ul class="menu-sub">
                     @foreach (var itm in children)
                     {
-                        if (ViewContext.RouteData.Values["Controller"].ToString() == itm.ControllerName)
+                        if (ViewContext.RouteData.Values["Controller"].ToString() == itm.ControllerName && ViewContext.RouteData.Values["action"].ToString() == itm.ActionName)
                         {
                                          <script>
                                                     $('#@itm.ParentMenuName.Trim().Replace(" ","")').attr('class','menu-item active open');
                                                     </script>
                         }
-                                    <li class="menu-item @(ViewContext.RouteData.Values["Controller"].ToString() == itm.ControllerName ? "active":"")">
+                        <li class="menu-item @(ViewContext.RouteData.Values["Controller"].ToString() == itm.ControllerName && ViewContext.RouteData.Values["action"].ToString() == itm.ActionName ? "active":"")">
                                             <a class="menu-link @itm.ControllerName" asp-area="@itm.Area" asp-controller="@itm.ControllerName" asp-action="@itm.ActionName">
                                                 <div data-i18n="@itm.Name">@itm.Name</div>
                                             </a>

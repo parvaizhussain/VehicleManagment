@@ -2964,6 +2964,9 @@
 .ti-circle:before {
   content: "\ea6b";
 }
+.ti-circle-x-filled:before {
+    content: "\f739";
+}
 
 .ti-circle-0:before {
   content: "\ee34";

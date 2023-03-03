@@ -259,6 +259,31 @@ $(document).ready(function () {
     var newdata = JSON.parse(mydata);
     LoadTable(newdata);
 
+    $('#AccessRightsSelect2').on('change', function () {
+        // Revalidate the color field when an option is chosen
+        fv.revalidateField('AccessRightsSelect2');
+    });
+    $('#RoleSelect2').on('change', function () {
+        // Revalidate the color field when an option is chosen
+        fv.revalidateField('RoleSelect2');
+    });
+    $('#RegionSelect2').on('change', function () {
+        // Revalidate the color field when an option is chosen
+        fv.revalidateField('RegionSelect2');
+    });
+    $('#editAccessRightsSelect2').on('change', function () {
+        // Revalidate the color field when an option is chosen
+        editfv.revalidateField('editAccessRightsSelect2');
+    });
+    $('#editRoleSelect2').on('change', function () {
+        // Revalidate the color field when an option is chosen
+        editfv.revalidateField('editRoleSelect2');
+    });
+    $('#editRegionSelect2').on('change', function () {
+        // Revalidate the color field when an option is chosen
+        editfv.revalidateField('editRegionSelect2');
+    });
+
 });
 
 var accessrightslist = "";
@@ -267,14 +292,14 @@ $.ajax({
     async: false,
     url: 'https://localhost:7112/api/AccessRights/all',
     success: function (result) {
-        //accessrightslist += '<option value="0" style="font-weight: bold;background: #d9d5d5;">No Select</option>';
+        accessrightslist += '<option value="0" style="font-weight: bold;background: #d9d5d5;">No Select</option>';
         for (var i = 0; i < result.length; i++) {
             if (result[i].isActive == true && result[i].isDeleted == false) {
                 accessrightslist += '<option value="' + result[i].accessId + '">' + result[i].accessName + '</option>';
             }
         }
         $(".accessrights_list").html(accessrightslist);
-        $(".accessrights_list").val('');
+        //$(".accessrights_list").val('');
         //$(".editaccessrights_list").html(Regiondropdown);
       
 
@@ -291,16 +316,16 @@ $.ajax({
     async: false,
     url: 'Role/GetAll',
     success: function (result) {
-        //roleList += '<option value="0" style="font-weight: bold;background: #d9d5d5;">No Select</option>';
+        roleList += '<option value="0" style="font-weight: bold;background: #d9d5d5;">No Select</option>';
         for (var i = 0; i < result.length; i++) {
             
                 roleList += '<option value="' + result[i].id + '">' + result[i].name + '</option>';
            
         }
         $(".role_list").html(roleList);
-        $(".role_list").val('');
+       // $(".role_list").val('');
         $(".editrole_list").html(roleList);
-        $(".editrole_list").val('');
+      //  $(".editrole_list").val('');
         //$(".editaccessrights_list").html(Regiondropdown);
 
 
@@ -317,14 +342,14 @@ $.ajax({
     async: false,
     url: 'https://localhost:7112/api/Region/all',
     success: function (result) {
-        //regionList += '<option value="0" style="font-weight: bold;background: #d9d5d5;">No Select</option>';
+        regionList += '<option value="0" style="font-weight: bold;background: #d9d5d5;">No Select</option>';
         for (var i = 0; i < result.length; i++) {
             if (result[i].isActive == true && result[i].isDeleted == false) {
                 regionList += '<option value="' + result[i].regionId + '">' + result[i].regionName + '</option>';
             }
         }
         $(".regionlist").html(regionList);
-        $(".regionlist").val('');
+       // $(".regionlist").val('');
         //$(".editaccessrights_list").html(Regiondropdown);
 
 
@@ -481,22 +506,34 @@ const fv = FormValidation.formValidation(formValidationExamples, {
         //},
         AccessRightsSelect2: {
             validators: {
-                notEmpty: {
-                    message: 'Please select your country'
+                callback: {
+                    message: 'Please Select Access Rights',
+                    callback: function (value, validator, $field) {
+
+                        return value.value > 0;
+                    }
                 }
             }
         },
         RoleSelect2: {
             validators: {
-                notEmpty: {
-                    message: 'Please select your country'
+                callback: {
+                    message: 'Please Select Role',
+                    callback: function (value, validator, $field) {
+
+                        return value.value !== "0";
+                    }
                 }
             }
         },
         RegionSelect2: {
             validators: {
-                notEmpty: {
-                    message: 'Please select your country'
+                callback: {
+                    message: 'Please Select Region',
+                    callback: function (value, validator, $field) {
+
+                        return value.value > 0;
+                    }
                 }
             }
         },
@@ -734,22 +771,34 @@ const editfv = FormValidation.formValidation(editformValidationExamples, {
         //},
         editAccessRightsSelect2: {
             validators: {
-                notEmpty: {
-                    message: 'Please select your Access Rights'
+                callback: {
+                    message: 'Please Select Access Rights',
+                    callback: function (value, validator, $field) {
+
+                        return value.value > 0;
+                    }
                 }
             }
         },
         editRoleSelect2: {
             validators: {
-                notEmpty: {
-                    message: 'Please select your Role'
+                callback: {
+                    message: 'Please Select Role',
+                    callback: function (value, validator, $field) {
+
+                        return value.value !== "0";
+                    }
                 }
             }
         },
         editRegionSelect2: {
             validators: {
-                notEmpty: {
-                    message: 'Please select your Region'
+                callback: {
+                    message: 'Please Select Region',
+                    callback: function (value, validator, $field) {
+
+                        return value.value > 0;
+                    }
                 }
             }
         },

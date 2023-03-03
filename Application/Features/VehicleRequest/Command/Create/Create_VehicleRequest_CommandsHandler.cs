@@ -37,7 +37,9 @@ namespace Application.Features.VehicleRequest.Command.Create
             }
             if (createVehicleRequestCommandResponse.Success)
             {
+               
                 var VehicleRequest = _mapper.Map<Domain.Entities.VehicleRequest>(request);
+                VehicleRequest.RequestTime = TimeSpan.Parse(request.RequestTime);
                 VehicleRequest.IsActive = true; 
                 VehicleRequest = await _unitOfWork.VehicleRequest.AddAsync(VehicleRequest);
                 VehicleRequest = (Domain.Entities.VehicleRequest)await _unitOfWork.Commit(VehicleRequest, "Insert", "VehicleRequest");

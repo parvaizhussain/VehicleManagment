@@ -36,5 +36,7 @@ namespace Domain.ViewModels
 		//public bool IsCluster { get; set; }
 		public bool IsActive { get; set; }
 		public byte[]? UserImage { get; set; }
-	}
+        public string? EmployeeID { get; set; }
+        public string? HODEmpID { get; set; }
+    }
 }

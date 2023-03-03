@@ -19,15 +19,16 @@ namespace Application.Features.VehicleRequest.Querys.GetByID
         public int Status { get; set; }
         public string Remarks { get; set; }
         public bool HODApproval { get; set; }
+        public string? HODEmpID { get; set; }
         public string IsAirport { get; set; }
         public string RequestType { get; set; }
 
-        public string FlightNo { get; set; }
-        public string TicketNo { get; set; }
+        public string? FlightNo { get; set; }
+        public string? TicketNo { get; set; }
         public byte[]? TicketPDF { get; set; }
-        public string PickFrom { get; set; }
-        public string PickTo { get; set; }
-        public string DropFrom { get; set; }
-        public string DropTo { get; set; }
+        public string? PickFrom { get; set; }
+        public string? PickTo { get; set; }
+        public string? DropFrom { get; set; }
+        public string? DropTo { get; set; }
     }
 }

@@ -15,10 +15,11 @@ namespace Identity.Models
 
         public int? RegionId { get; set; }
         public Region Region { get; set; }
-
         public bool IsCluster { get; set; }
         public bool IsActive { get; set; }
         public bool IsDeleted { get; set; }
         public byte[]? UserImage { get; set; }
+        public string? EmployeeID { get; set; }
+        public string? HODEmpID { get; set;}
     }
 }

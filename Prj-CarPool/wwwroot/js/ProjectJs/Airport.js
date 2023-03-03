@@ -233,6 +233,23 @@ $(document).ready(function () {
 
     LoadTable(newdata);
 
+    $('#Regionlist').on('change', function () {
+        // Revalidate the color field when an option is chosen
+        fv.revalidateField('Regionlist');
+    });
+    $('#Citylist').on('change', function () {
+        // Revalidate the color field when an option is chosen
+        fv.revalidateField('Citylist');
+    });
+    $('#EditRegionlist').on('change', function () {
+        // Revalidate the color field when an option is chosen
+        efv.revalidateField('EditRegionlist');
+    });
+    $('#EditCitylist').on('change', function () {
+        // Revalidate the color field when an option is chosen
+        efv.revalidateField('EditCitylist');
+    });
+
 });
 
 
@@ -517,8 +534,7 @@ const fv = FormValidation.formValidation(formValidationExamples, {
         });
     }
 }).on('core.form.valid', function (event) {
-
-    Save_Airport();
+        Save_Airport();
 });
 
 ////------------- Edit validations-----------------------------
@@ -564,7 +580,7 @@ const efv = FormValidation.formValidation(editformValidationExamples, {
 
         trigger: new FormValidation.plugins.Trigger(),
         bootstrap5: new FormValidation.plugins.Bootstrap5({
-            eleValidClass: '',
+           
             
         }),
         submitButton: new FormValidation.plugins.SubmitButton(),
@@ -588,6 +604,5 @@ const efv = FormValidation.formValidation(editformValidationExamples, {
         });
     }
 }).on('core.form.valid', function (event) {
-
     Edit_Airport();
 });

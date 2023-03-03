@@ -136,7 +136,8 @@
                     <h3 class="mb-1 fw-bold">Welcome to Car Pool! 👋</h3>
                     <p class="mb-4">Please sign-in to your account!</p>
                     <div asp-validation-summary="All" class="text-danger"></div>
-
+                   
+                    
                     <form id="account" class="mb-3" method="post">
                         <div class="mb-3">
                             <label for="email" class="form-label">Email or Username</label>
@@ -178,7 +179,6 @@
                         <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
                        @* <button class="btn btn-primary d-grid w-100">Sign in</button>*@
                     </form>
-
                     <p class="text-center">
                         <span>New on our platform?</span>
                         <a href="auth-register-cover.html">
@@ -219,7 +219,7 @@
                         
                        
 
-                        <a href="javascript:;" class="btn btn-icon btn-label-google-plus me-3">
+                        <a href="javascript:userClick()";" class="btn btn-icon btn-label-google-plus me-3">
                             <i class="tf-icons fa-brands fa-google fs-5"></i>
                         </a>
 
@@ -284,6 +284,13 @@
 
     });
 
+
+    function userClick() {
+     
+        $('#Input_Email').val('fahad.siddiqui@csn.edu.pk');
+        $('#Input_Password').val('Zxc123@@@@');
+
+    }
 </script>
 </html>
 

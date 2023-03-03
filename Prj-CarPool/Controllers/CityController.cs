@@ -52,6 +52,7 @@ namespace Prj_CarPool.Controllers
                 }
                 else
                 {
+                    Obj.CityCode = "000";
                     var deptobj = await _CityRepository.UpdateAsync(Extensions.SharedBag.CityUpsert, Obj, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
                     var datajson = await _CityRepository.GetAllAsync(Extensions.SharedBag.Citylist, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
                     string jsondata = Newtonsoft.Json.JsonConvert.SerializeObject(new { data = datajson.OrderByDescending(x => x.CityId) });

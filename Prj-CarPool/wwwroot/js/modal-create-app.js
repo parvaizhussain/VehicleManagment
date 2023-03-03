@@ -46,7 +46,8 @@ $(function () {
       numeral: true,
       numeralPositiveOnly: true
     });
-  }
+    }
+ 
   appModal.addEventListener('show.bs.modal', function (event) {
     const wizardCreateApp = document.querySelector('#wizard-create-app');
     if (typeof wizardCreateApp !== undefined && wizardCreateApp !== null) {
@@ -61,7 +62,8 @@ $(function () {
 
       if (wizardCreateAppNextList) {
         wizardCreateAppNextList.forEach(wizardCreateAppNext => {
-          wizardCreateAppNext.addEventListener('click', event => {
+            wizardCreateAppNext.addEventListener('click', event => {
+               
             createAppStepper.next();
             initCleave();
           });

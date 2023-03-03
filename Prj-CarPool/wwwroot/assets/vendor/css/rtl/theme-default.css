@@ -1233,8 +1233,8 @@ li.ui-timepicker-selected,
   color: #F94A29 !important;
 }
 .bs-stepper .step.crossed .step-trigger .bs-stepper-circle {
-  background-color: #f4f3fe !important;
-  color: #aba4f6 !important;
+    background-color: #e0ffe7 !important;
+    color: #5fc166 !important;
 }
 .bs-stepper .step.crossed .step-trigger .bs-stepper-icon svg {
   fill: #F94A29 !important;
@@ -1443,7 +1443,7 @@ li.ui-timepicker-selected,
   }
 }
 .bg-menu-theme .menu-inner .menu-item.open > .menu-link.menu-toggle, .layout-menu-hover.layout-menu-collapsed .bg-menu-theme .menu-inner .menu-item.open > .menu-link.menu-toggle, .bg-menu-theme .menu-inner .menu-item.active > .menu-link.menu-toggle, .layout-menu-hover.layout-menu-collapsed .bg-menu-theme .menu-inner .menu-item.active > .menu-link.menu-toggle {
-  background: #f8f8f8;
+    background: #dddddd;
 }
 html:not(.layout-menu-collapsed) .bg-menu-theme .menu-inner .menu-item:not(.active) .menu-link:hover, .layout-menu-hover.layout-menu-collapsed .bg-menu-theme .menu-inner .menu-item:not(.active) .menu-link:hover {
   background: #f8f8f8;

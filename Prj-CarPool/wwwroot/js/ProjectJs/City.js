@@ -219,12 +219,20 @@
 }
 
 $(document).ready(function () {
+    console.log($('#UserDataJson').val());
     var mydata = $('#UserDataJson').val();
-
     var newdata = JSON.parse(mydata);
-
     LoadTable(newdata);
-
+    
+    
+    $('#Regionlist').on('change', function () {
+        // Revalidate the color field when an option is chosen
+        fv.revalidateField('Regionlist');
+    });
+    $('#EditRegionlist').on('change', function () {
+        // Revalidate the color field when an option is chosen
+        efv.revalidateField('EditRegionlist');
+    });
 });
 
 
@@ -306,8 +314,6 @@ function Edit(item) {
 
 
 }
-
-
 function Edit_City() {
 
     var objupdate = {
@@ -355,8 +361,6 @@ function Edit_City() {
 
     
 }
-
-
 function Delete_City() {
 
     var objDelete = {
@@ -400,7 +404,6 @@ function Delete_City() {
 
 
 }
-
 function Delete(item) {
     var cityId = $(item).closest("tr").find('#editCID').text();
     var objDelete = {
@@ -524,7 +527,7 @@ const efv = FormValidation.formValidation(editformValidationExamples, {
         EditCityName: {
             validators: {
                 notEmpty: {
-                    message: 'Please Enter City'
+                    message: 'Please Enter City Name'
                 },
 
 

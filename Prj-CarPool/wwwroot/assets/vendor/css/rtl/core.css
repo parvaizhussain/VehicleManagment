@@ -18998,7 +18998,8 @@ html:not([dir=rtl]) .app-brand-text {
 
 .custom-option-icon.checked i,
 .custom-option-icon.checked svg {
-  color: #7367f0;
+    /*color: #7367f0;*/
+    color: #ff785f;
 }
 .custom-option-icon .custom-option-content {
   text-align: center;

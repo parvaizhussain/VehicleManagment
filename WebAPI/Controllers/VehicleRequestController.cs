@@ -47,6 +47,13 @@ namespace WebAPI.Controllers
             var response = await _mediator.Send(updateCityCommand);
             return Ok(response);
         }
+        //[HttpPatch("",Name = "UpdateAprrovalVR")]
+        //public async Task<ActionResult> Put([FromBody] Update_VehicleRequest_Commads updateCityCommand)
+        //{
+        //    var response = await _mediator.Send(updateCityCommand);
+        //    return Ok(response);
+        //}
+
 
         [HttpPatch("DeleteVR", Name = "DeleteVRById")]
         public async Task<ActionResult<Get_VehicleRequest_VM>> DeleteCityById([FromBody] Delete_VehicleRequest_Commands DeleteCityCommand)

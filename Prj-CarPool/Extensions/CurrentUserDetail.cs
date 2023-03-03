@@ -55,8 +55,10 @@ namespace Prj_CarPool.Extensions
                             UserDetail.FirstName = user.FirstName;
                             UserDetail.LastName = user.LastName;
                             UserDetail.Email = user.Email;
-                            //UserDetail.RegionId = user.RegionId;
-                            //UserDetail.Region = user.Region;
+                        //UserDetail.RegionId = user.RegionId;
+                        //UserDetail.Region = user.Region;
+                            UserDetail.EmployeeID = user.EmployeeID;
+                            UserDetail.HODEmpID= user.HODEmpID;
                             UserDetail.AccessRightsId = user.AccessRightsId;
                             UserDetail.AccessRights = user.AccessRights;
                             UserDetail.pwd = user.pwd;

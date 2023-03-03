@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,10 +16,14 @@ namespace Application.Features.VehicleRequest.Command.Create
         public int RegionID { get; set; }
 
         public string Purpose { get; set; }
-        public DateTime Request { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime RequestDate { get; set; }
+       // [DataType(DataType.Time)]
+        public string RequestTime { get; set; }
         public int Status { get; set; }
         public string Remarks { get; set; }
         public bool HODApproval { get; set; }
+        public string? HODEmpID { get; set; }
         public string IsAirport { get; set; }
         public string RequestType { get; set; }
 

@@ -11,7 +11,7 @@ function encodeImageFileAsURL(element) {
 
 
 function LoadTable(newdatas) {
-    console.log("NEW DAYA" + JSON.stringify(newdatas));
+   /* console.log("NEW DAYA" + JSON.stringify(newdatas));*/
 
     var stutbl = '';
     $(".datatables-users-mytable tbody").html('');
@@ -38,27 +38,32 @@ function LoadTable(newdatas) {
         stutbl += '<td id="editEmployeeID">' + newdatas.data[st].EmployeeID + '</td>';
         stutbl += '<td id="editPurpose">' + newdatas.data[st].Purpose + '</td>';
         stutbl += '<td id="editRegionName">' + newdatas.data[st].Region.RegionName + '</td>';
-        stutbl += '<td id="editStatus">' + newdatas.data[st].Status + '</td>';
         stutbl += '<td id="editEmployeeContact" >' + newdatas.data[st].EmployeeContact + '</td>';
-        stutbl += '<td id="editRequest">' + newdatas.data[st].Request + '</td>';
+        stutbl += '<td id="editRequest">' + flatpickr.formatDate(new Date(newdatas.data[st].RequestDate), "d-M-Y");  + '</td>';
+        stutbl += '<td id="editRequest">' + newdatas.data[st].RequestTime + '</td>';
+       // stutbl += '<td id="editStatus">' + newdatas.data[st].Status + '</td>';
 
 
-        //if (newdatas.data[st].IsActive !== true) {
-        //    stutbl += '<td id="editVCActive"><span class="badge bg-label-danger" text-capitalized>InActive</span></td>';
-        //}
-        //else {
-        //    stutbl += '<td id="editVCActive"><span class="badge bg-label-success" text-capitalized>Active</span></td>';
+        if (newdatas.data[st].Status == 0) {
+            stutbl += '<td id="editVCActive"><span class="badge bg-label-warning" text-capitalized>Pending</span></td>';
+        }
+        else if (newdatas.data[st].Status == 1) {
+            stutbl += '<td id="editVCActive"><span class="badge bg-label-success" text-capitalized>Approved</span></td>';
 
-        //}
-        stutbl += '<td><div class="d-flex align-items-center">';
-        stutbl += '<a  onclick ="ShowEditRequest(this)" class="text-body" data-bs-toggle="modal" data-bs-target="#offcanvasEditNav" ><i class="ti ti-edit ti-sm me-2"></i></a>';
-        stutbl += '<a href="/" class="text-body delete-record"><i class="ti ti-trash ti-sm mx-2"></i></a>';
-        stutbl += '<a href="/" class="text-body dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm mx-1"></i></a>';
-        stutbl += '<div class="dropdown-menu dropdown-menu-end m-0">';
-        stutbl += '<a href="/" class="dropdown-item">View</a>';
-        stutbl += '<a href="javascript:;" class="dropdown-item">Suspend</a>';
-        stutbl += '</div>';
-        stutbl += '</div></td>';
+        }
+        else {
+            stutbl += '<td id="editVCActive"><span class="badge bg-label-danger" text-capitalized>Rejected</span></td>';
+
+        }
+        //stutbl += '<td><div class="d-flex align-items-center">';
+        //stutbl += '<a  onclick ="ShowEditRequest(this)" class="text-body" data-bs-toggle="modal" data-bs-target="#offcanvasEditNav" ><i class="ti ti-edit ti-sm me-2"></i></a>';
+        //stutbl += '<a href="/" class="text-body delete-record"><i class="ti ti-trash ti-sm mx-2"></i></a>';
+        //stutbl += '<a href="/" class="text-body dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm mx-1"></i></a>';
+        //stutbl += '<div class="dropdown-menu dropdown-menu-end m-0">';
+        //stutbl += '<a href="/" class="dropdown-item">View</a>';
+        //stutbl += '<a href="javascript:;" class="dropdown-item">Suspend</a>';
+        //stutbl += '</div>';
+        //stutbl += '</div></td>';
 
         stutbl += '</tr>';
     }
@@ -228,11 +233,11 @@ function LoadTable(newdatas) {
                 ]
             },
             {
-                text: '<i class="ti ti-plus me-0 me-sm-1 ti-xs"></i><span class="d-none d-sm-inline-block">Add New Details</span>',
+                text: '<i class="ti ti-plus me-0 me-sm-1 ti-xs"></i><span class="d-none d-sm-inline-block">Add New Request</span>',
                 className: 'add-new btn btn-primary',
                 attr: {
                     'data-bs-toggle': 'modal',
-                    'data-bs-target': '#offcanvasAddUser'
+                    'data-bs-target': '#createApp'
                 }
             }
         ]
@@ -350,23 +355,56 @@ function LoadTable(newdatas) {
 
 }
 $(document).ready(function () {
+    window.Helpers.initCustomOptionCheck();
+
     var mydata = $('#UserDataJson').val();
 
     var newdata = JSON.parse(mydata);
 
     LoadTable(newdata);
-
-    $(".ispicktype").click(function () {
-        if ($("#Airportpickup").is(":checked") == true) {
+    let checked = $('#basicPlanMain3').is(":checked");
+    if (checked) {
+        $(".ispicktypeticket").hide("slow");
+        /*$(".ispicktypeticket").show("slow");*/
+    }
+    $('#basicPlanMain123').on('change', function () {
+        let checked = $('#basicPlanMain123').is(":checked");
+        if (checked) {
             $(".ispicktypeticket").show("slow");
         }
-        else {
-            $(".ispicktypeticket").hide("slow");
-        }
     });
+    $('#basicPlanMain3').on('change', function () {
+        let checked = $('#basicPlanMain3').is(":checked");
+        if (checked) {
+            $(".ispicktypeticket").hide("slow");
+            /*$(".ispicktypeticket").show("slow");*/
+        }
+        
+    });
+
+   
+   
+
+    
+    //$(".ispicktype").click(function () {
+    //    if ($("#basicPlanMain123").is(":checked") == true) {
+    //        $(".ispicktypeticket").show("slow");
+    //    }
+    //    else {
+    //        $(".ispicktypeticket").hide("slow");
+    //    }
+    //});
 
 
 });
+//function btnskiper() {
+//    let checked = $('#basicPlanMain3').is(":checked");
+//    if (checked) {
+//        alert(checked);
+//        /*  $(".ispicktypeticket").hide("slow");*/
+//        createAppStepper.next();
+//    }
+//};
 var Comapnydropdown = "";
 $.ajax({
     type: 'GET',
