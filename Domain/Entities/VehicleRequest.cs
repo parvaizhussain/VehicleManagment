@@ -24,6 +24,8 @@ namespace Domain.Entities
         public DateTime RequestDate { get; set; }
         [DataType(DataType.Time)]
         public TimeSpan RequestTime { get; set; }
+        [DataType(DataType.Time)]
+        public TimeSpan RequestEndTime { get; set; }
         public int Status { get; set; }
         public string? Remarks { get; set; }
         public bool HODApproval { get; set; }
@@ -37,5 +39,8 @@ namespace Domain.Entities
         public string? PickTo { get; set; }
         public string? DropFrom { get; set; }
         public string? DropTo { get; set; }
+        public int NoOfPassanger { get; set; }
+        public bool IsLuggage { get; set; }
+
     }
 }

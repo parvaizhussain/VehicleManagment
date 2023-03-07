@@ -32,5 +32,6 @@ namespace Domain.Entities
         [ForeignKey("RegionID")]
         public Region Region { get; set; }
         public int VehicleBrandsVehicleBrandId { get; set; }
+        public int PersonCapacity { get; set; }
     }
 }

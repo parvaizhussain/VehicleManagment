@@ -547,12 +547,12 @@
                             </div>
                         </div>
                         <div class="line"></div>
-                        <div class="step airporthide ispicktypeticket" data-target="#database">
+                        <div class="step airporthide" data-target="#database">
                             <button type="button" class="step-trigger">
                                 <span class="bs-stepper-circle"><i class="ti ti-database ti-sm"></i></span>
                                 <span class="bs-stepper-label">
-                                    <span class="bs-stepper-title text-uppercase">Airport</span>
-                                    <span class="bs-stepper-subtitle">Enter Airport details</span>
+                                    <span class="bs-stepper-title text-uppercase">Travelling Plan</span>
+                                    <span class="bs-stepper-subtitle">Enter Travelling Plan</span>
                                 </span>
                             </button>
                         </div>
@@ -657,43 +657,42 @@
                                            multiple="multiple"
                                            placeholder="Enter Purpose Request" />
                                 </div>
-                                <h5>Requesting date time</h5>
+                                <h5>Requesting Date</h5>
                                  <div class="row">
-                                     <div class="col-md-6 mb-3">
+                                     <div class="col-md-12 mb-3">
                                     <div class="input-group input-group-merge">
                                         <input type="text" id="DateRequest" name="DateRequest" autocomplete="off" class="form-control form-control-lg flatpickr-datetime2" placeholder="DD-MMM-YYYY" aria-describedby="multicol-password1" />
                                         <span class="input-group-text cursor-pointer" data-toggle id="multicol-password1">
                                             <i class="ti ti-calendar"></i>
                                         </span>
                                     </div>
+                                        </div>
                                 </div>
+                                    <h5>Requesting Time</h5>
+                                    <div class="row">
+                                     
                                         <div class="col-md-6 mb-3">
-                                        <div class="input-group input-group-merge">
-                                            <input type="text" id="TimeRequest" name="TimeRequest" class="form-control form-control-lg flatpickr-time" placeholder="HH:MM:SS" aria-describedby="multicol-password1" />
-                                            <span class="input-group-text cursor-pointer" data-toggle id="multicol-password1">
-                                                <i class="ti ti-clock"></i>
-                                            </span>
+                                            <div class="input-group input-group-merge">
+                                                <input type="text" id="TimeRequest" name="TimeRequest" class="form-control form-control-lg" placeholder="HH:MM" aria-describedby="multicol-password1" />
+                                                <span class="input-group-text cursor-pointer" data-toggle id="multicol-password2">
+                                                    <i class="ti ti-clock"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6 mb-3">
+                                            <div class="input-group input-group-merge">
+                                                <input type="text" id="TimeRequestEnd" name="TimeRequestEnd" class="form-control form-control-lg" placeholder="HH:MM" aria-describedby="multicol-password1" />
+                                                <span class="input-group-text cursor-pointer" data-toggle id="multicol-password3">
+                                                    <i class="ti ti-clock"></i>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
+                                      
 
-                                 </div>
-                                <h5>Travelling Plan</h5>
-                                <div class="col-md-12">
-                                    <input type="text"
-                                           class="form-control form-control-lg"
-                                           id="travelFromReq"
-                                           name="travelFromReq"
-                                           multiple="multiple"
-                                           placeholder="Travel From" />
-                                </div>
-                                    <div class="col-md-12">
-                                    <input type="text"
-                                           class="form-control form-control-lg"
-                                               id="travelToReq"
-                                           name="travelToReq"
-                                           multiple="multiple"
-                                           placeholder="Travel To" />
-                                </div>
+                               
+                               
                                 </div>
                                 <div class="col-12 d-flex justify-content-between mt-4">
                                     <button class="btn btn-label-secondary btn-prev">
@@ -710,67 +709,46 @@
 
                             <!-- Database -->
                             <div id="database" class="content pt-3 pt-lg-0">
-                                <div class="mb-3">
-                                    <input type="email"
+
+                                <h5>Travelling Plan</h5>
+                                <div class="row  gy-3">
+                                <div class="col-md-12">
+                                    <input type="text"
                                            class="form-control form-control-lg"
-                                           id="exampleInputEmail2"
-                                           placeholder="Database Name" />
+                                           id="travelFromReq"
+                                           name="travelFromReq"
+                                           multiple="multiple"
+                                           placeholder="Travel From" />
                                 </div>
-                                <h5>Select Database Engine</h5>
-                                <ul class="p-0 m-0">
-                                    <li class="d-flex align-items-start mb-3">
-                                        <div class="badge bg-label-danger p-2 me-3 rounded">
-                                            <i class="ti ti-brand-firebase ti-md"></i>
+                                <div class="col-md-12">
+                                    <input type="text"
+                                           class="form-control form-control-lg"
+                                           id="travelToReq"
+                                           name="travelToReq"
+                                           multiple="multiple"
+                                           placeholder="Travel To" />
+                                </div>
+
+                                <div class="col-md-12">
+                                        <input type="text"
+                                               class="form-control form-control-lg"
+                                               id="NoofPassenger"
+                                               name="NoofPassenger"
+                                               multiple="multiple"
+                                               placeholder="No Of Passenger" />
+                                </div>
+
+                                <div class="col-md-12">
+                                        <label class="form-label" for="chkLuggage">Is Luggage?</label>
+                                        <div class="form-check form-switch mb-2 mt-0 ms-2">
+                                            <input class="form-check-input" type="checkbox" id="chkLuggage" />
+                                            <label class="form-check-label" for="flexSwitchCheckChecked">Luggage</label>
                                         </div>
-                                        <div class="d-flex justify-content-between w-100">
-                                            <div class="me-2">
-                                                <h6 class="mb-0">Firebase</h6>
-                                                <small class="text-muted">Cloud Firestone</small>
-                                            </div>
-                                            <div class="d-flex align-items-center">
-                                                <div class="form-check form-check-inline">
-                                                    <input name="database-radio" class="form-check-input" type="radio" value="" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="d-flex align-items-start mb-3">
-                                        <div class="badge bg-label-warning p-2 me-3 rounded">
-                                            <i class="ti ti-brand-amazon ti-md"></i>
-                                        </div>
-                                        <div class="d-flex justify-content-between w-100">
-                                            <div class="me-2">
-                                                <h6 class="mb-0">AWS</h6>
-                                                <small class="text-muted">Amazon Fast NoSQL Database</small>
-                                            </div>
-                                            <div class="d-flex align-items-center">
-                                                <div class="form-check form-check-inline">
-                                                    <input name="database-radio"
-                                                           class="form-check-input"
-                                                           type="radio"
-                                                           value=""
-                                                           checked />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="d-flex align-items-start">
-                                        <div class="badge bg-label-info p-2 me-3 rounded">
-                                            <i class="ti ti-database ti-md"></i>
-                                        </div>
-                                        <div class="d-flex justify-content-between w-100">
-                                            <div class="me-2">
-                                                <h6 class="mb-0">MySQL</h6>
-                                                <small class="text-muted">Basic MySQL database</small>
-                                            </div>
-                                            <div class="d-flex align-items-center">
-                                                <div class="form-check form-check-inline">
-                                                    <input name="database-radio" class="form-check-input" type="radio" value="" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
+                                </div>
+                              
+                                </div>
+                                
+                                
                                 <div class="col-12 d-flex justify-content-between mt-4">
                                     <button class="btn btn-label-secondary btn-prev">
                                         <i class="ti ti-arrow-left ti-xs me-sm-1 me-0"></i>
@@ -924,10 +902,24 @@
         dateFormat: 'd-M-Y',
         theme: "dark"
     });
-     $(".flatpickr-time").flatpickr({
-         enableTime: true,
-         noCalendar: true,
-         dateFormat : "H:i:S"
+    // $(".flatpickr-time").flatpickr({
+    //     enableTime: true,
+    //     noCalendar: true,
+    //     dateFormat: "h:i K",
+    //     time_24hr: false
+    //});
+
+    flatpickr("#TimeRequest", {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "h:i:S",
+        time_24hr: false
+    });
+     flatpickr("#TimeRequestEnd", {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "h:i:S",
+        time_24hr: false
     });
     
 </script>

@@ -180,6 +180,63 @@ $(function () {
               // Jump to the next step when all fields in the current step are valid
               let checked = $('#basicPlanMain3').is(":checked");
               if (checked) {
+                  createAppStepper.to(2);
+              }
+              createAppStepper.next();
+              initCleave();
+          });
+
+          // Purpose Details
+          const FormValidation3 = FormValidation.formValidation(wizardValidationFormStep3, {
+              fields: {
+                  travelFromReq: {
+                      validators: {
+                          notEmpty: {
+                              message: 'Please enter travel from'
+                          }
+                      }
+                  },
+                  travelToReq: {
+                      validators: {
+                          notEmpty: {
+                              message: 'Please enter travel to'
+                          }
+                      }
+                  },
+
+              },
+              plugins: {
+                  trigger: new FormValidation.plugins.Trigger(),
+                  bootstrap5: new FormValidation.plugins.Bootstrap5({
+                      // Use this for enabling/changing valid/invalid class
+                      // eleInvalidClass: '',
+                      eleValidClass: '',
+                      rowSelector: function (field, ele) {
+                          switch (field) {
+                              case 'travelFromReq':
+                              case 'travelToReq':
+                                  '.col-md-12'
+
+                              default:
+                                  return '.row';
+                          }
+                      }
+                  }),
+                  autoFocus: new FormValidation.plugins.AutoFocus(),
+                  submitButton: new FormValidation.plugins.SubmitButton()
+              },
+              init: instance => {
+                  instance.on('plugins.message.placed', function (e) {
+                      //* Move the error message out of the `input-group` element
+                      if (e.element.parentElement.classList.contains('input-group')) {
+                          e.element.parentElement.insertAdjacentElement('afterend', e.messageElement);
+                      }
+                  });
+              }
+          }).on('core.form.valid', function () {
+              // Jump to the next step when all fields in the current step are valid
+              let checked = $('#basicPlanMain3').is(":checked");
+              if (checked) {
                   createAppStepper.to(4);
               }
               createAppStepper.next();
@@ -248,6 +305,7 @@ $(function () {
           if (wizardCreateAppBtnSubmit) {
               wizardCreateAppBtnSubmit.addEventListener('click', event => {
                   let checked = $('#basicPlanMain3').is(":checked");
+                  let chkLuggage = $('#chkLuggage').is(":checked");
                   if (checked) {
                       var VRObj = {
                           EmployeeID: 0,
@@ -256,6 +314,7 @@ $(function () {
                           Purpose: $('#purposeReq').val(),
                           RequestDate: moment($('#DateRequest').val(), "DD-MMM-YYYY").format("YYYY-MM-DD"), //flatpickr.formatDate(new Date($('#DateRequest').val(), "Y-m-d")), 
                           RequestTime: $('#TimeRequest').val(),
+                          RequestEndTime: $('#TimeRequestEnd').val(),
                           Status: 0,
                           //Remarks: "string",
                           HodApproval: false,
@@ -264,6 +323,8 @@ $(function () {
                           //FlightNo: "string",
                           //TicketNo: "string",
                           //TicketPDF: "string",
+                          NoOfPassanger: $('#NoofPassenger').val(), 
+                          IsLuggage: chkLuggage,
                           PickFrom: $('#travelFromReq').val(),
                           PickTo: $('#travelToReq').val(),
                           //DropFrom: "string",

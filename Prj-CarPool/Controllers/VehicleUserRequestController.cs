@@ -6,6 +6,7 @@ using Prj_CarPool.Extensions;
 using Prj_CarPool.IServices;
 using System.Text.Json;
 using Domain.ViewModels;
+using System.Globalization;
 
 namespace Prj_CarPool.Controllers
 {
@@ -41,7 +42,11 @@ namespace Prj_CarPool.Controllers
             {
                 if (Obj.RequestID == 0)
                 {
-                    Obj.EmployeeID = int.Parse(CurUserdata.EmployeeID);
+                    
+
+                   //DateTime time = DateTime.ParseExact(Obj.RequestTime,"h:mm tt",CultureInfo.InvariantCulture);
+                    //Obj.RequestTime = time.ToString("h:mm:ss");
+                   Obj.EmployeeID = int.Parse(CurUserdata.EmployeeID);
                     Obj.HODEmpID = CurUserdata.HODEmpID;
                     var deptobj = await _vehicleRequestRepository.CreateAsyncJson(Extensions.SharedBag.VehicleRequestUpsert, Obj, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));
                     var datajson = await _vehicleRequestRepository.GetAllAsync(Extensions.SharedBag.VehicleRequestlist, HttpContext.Session.GetString(Extensions.SharedBag.JWToken));

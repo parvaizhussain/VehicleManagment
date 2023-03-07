@@ -38,5 +38,10 @@ namespace Application.Features.VehicleRequest.Command.Create
         public string? PickTo { get; set; }
         public string? DropFrom { get; set; }
         public string? DropTo { get; set; }
+
+        public int NoOfPassanger { get; set; }
+        public bool IsLuggage { get; set; }
+   
+        public string RequestEndTime { get; set; }
     }
 }

@@ -25,138 +25,6 @@
         <h5 class="card-title mb-3">Vehicle Request</h5>
 
     </div>
-
-    <!-- Form with Image horizontal Modal -->
-    <div class="modal-onboarding modal fade animate__animated"
-         id="onboardHorizontalImageModal"
-         tabindex="-1"
-         aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content text-center">
-                <div class="modal-header border-0">
-                    @* <a class="text-muted close-label" href="javascript:void(0);" data-bs-dismiss="modal">Skip Intro</a>*@
-                    <button type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                </div>
-                <div class="modal-body onboarding-horizontal p-0">
-                    <div class="onboarding-media">
-                        <img src="~/img/CityLogo/approvegreen.png"
-                             alt="boy-verify-email-light"
-                             width="273"
-                             class="img-fluid" />
-                    </div>
-                    <div class="onboarding-content mb-0">
-                        <h4 class="onboarding-title text-body">Employee's Request Approval</h4>
-                        <div class="onboarding-info">
-                            In this example you can see a form where you can request some additional information
-                            from the customer when they land on the app page.
-                        </div>
-                        <form>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="mb-3">
-                                        <label for="nameEx7" class="form-label">Reason</label>
-                                        <textarea class="form-control"
-                                                  rows=" 3"
-                                                  cols="0"
-                                                  value=""
-                                                  name="description"
-                                                  id="nameEx7"
-                                                  placeholder="Enter Reason">
-                                                </textarea>
-
-                                        <input class="form-control"
-                                               placeholder="Enter Reason"
-                                               type="text"
-                                               hidden="hidden"
-                                               value=""
-                                               tabindex="0"
-                                               id="ReqID" />
-                                    </div>
-                                </div>
-
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="modal-footer border-0">
-                    <button type="button" class="btn btn-label-secondary" id="btnCancelapp" data-bs-dismiss="modal">
-                        Close
-                    </button>
-                    <button type="button" class="btn btn-success" onclick="Approved()">Approve</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--/ Form with Image horizontal Modal -->
-    <!-- REJECTED Form with Image horizontal Modal -->
-    <div class="modal-onboarding modal fade animate__animated"
-         id="onboardHorizontalImageModalReject"
-         tabindex="-1"
-         aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content text-center">
-                <div class="modal-header border-0">
-                    @* <a class="text-muted close-label" href="javascript:void(0);" data-bs-dismiss="modal">Skip Intro</a>*@
-                    <button type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                </div>
-                <div class="modal-body onboarding-horizontal p-0">
-                    <div class="onboarding-media">
-                        <img src="~/img/CityLogo/rejectedstamp.png"
-                             alt="boy-verify-email-light"
-                             width="273"
-                             class="img-fluid" />
-                    </div>
-                    <div class="onboarding-content mb-0">
-                        <h4 class="onboarding-title text-body">Employee's Request Reject</h4>
-                        <div class="onboarding-info">
-                            In this example you can see a form where you can request some additional information
-                            from the customer when they land on the app page.
-                        </div>
-                        <form>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="mb-3">
-                                        <label for="txtReasonReject" class="form-label">Reason</label>
-                                        <textarea class="form-control"
-                                                  rows=" 3"
-                                                  cols="0"
-                                                  value=""
-                                                  name="description"
-                                                  placeholder="Enter Reason"
-                                                  id="txtReasonReject">
-                                                </textarea>
-
-                                        <input class="form-control"
-                                               type="text"
-                                               hidden="hidden"
-                                               value=""
-                                               tabindex="0"
-                                               id="ReqIDReject" />
-                                    </div>
-                                </div>
-
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="modal-footer border-0">
-                    <button type="button" class="btn btn-label-secondary" id="btnCancelrej" data-bs-dismiss="modal">
-                        Close
-                    </button>
-                    <button type="button" class="btn btn-danger" onclick="Reject()">Reject</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--/ Form with Image horizontal Modal -->
-
-
     <div class="card-datatable table-responsive mytable">
         <table class="datatables-users-mytable table border-top">
             <thead class="table-dark">
@@ -179,9 +47,64 @@
         </table>
     </div>
 
+  
+    
+    
+    <!-- Offcanvas to add new user -->
+    <div class="modal fade" tabindex="-1" id="modalassigncar" aria-labelledby="offcanvasAddUserLabel">
+        <!--offcanvasAddUser-->
+        <div class="modal-dialog modal-lg modal-simple modal-edit-user">
+            <div class="modal-content p-3 p-md-5">
+
+                <div class="modal-body">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="text-center mb-4">
+                        <h3 class="mb-2">Assign Car and Driver</h3>
+                        <p class="text-muted">Car and Driver Availbility </p>
+                    </div>
+                    <form class="row g-3" id="addNewUserForm" onsubmit="return false">
+
+                        <label for="VehicleAssign" class="form-label">Vehicle</label>
+                        <select id="VehicleAssign"
+                                class="selectpicker w-100"
+                                data-style="btn-default"
+                                data-show-subtext="true">
+                           
+                          
+                        </select>
+
+                        <label for="DriverAssign" class="form-label">Driver</label>
+                        <select id="DriverAssign"
+                                class="selectpicker w-100"
+                                data-style="btn-default"
+                                data-show-subtext="true">
+                            <option data-subtext="Framework" value="0">React</option>
+                            <option data-subtext="Styles">Sass</option>
+                            <option data-subtext="Markup">HTML</option>
+                        </select>
+
+                        <label for="FuelCardAssign" class="form-label">Fuel Card</label>
+                        <select id="FuelCardAssign"
+                                class="selectpicker w-100"
+                                data-style="btn-default"
+                                data-show-subtext="true">
+                            <option data-subtext="Framework" value="0">React</option>
+                            <option data-subtext="Styles">Sass</option>
+                            <option data-subtext="Markup">HTML</option>
+                        </select>
 
 
-
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>
+                            <button type="reset" class="btn btn-label-secondary" id="btnCancelSave" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -213,7 +136,7 @@
 <script src="~/assets/vendor/libs/block-ui/block-ui.js"></script>
 <script src="~/js/ui-toasts.js"></script>
 <script src="~/assets/js/extended-ui-blockui.js"></script>
-<script src="~/js/projectjs/EmpReqList.js"></script>
+<script src="~/js/projectjs/RequestManage.js"></script>
 @*<script src="~/assets/vendor/libs/bs-stepper/bs-stepper.js"></script>*@
 
 @*  <script src="~/assets/js/app-user-list.js" defer></script>*@

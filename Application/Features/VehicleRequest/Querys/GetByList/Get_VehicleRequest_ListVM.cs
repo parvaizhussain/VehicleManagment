@@ -35,5 +35,9 @@ namespace Application.Features.VehicleRequest.Querys.GetByList
         public string? PickTo { get; set; }
         public string? DropFrom { get; set; }
         public string? DropTo { get; set; }
+        public int NoOfPassanger { get; set; }
+        public bool IsLuggage { get; set; }
+
+        public TimeSpan RequestEndTime { get; set; }
     }
 }
