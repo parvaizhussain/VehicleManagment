@@ -38,7 +38,7 @@ namespace Persistence.UOW
             MaintainaceHistory =  new MaintainaceHistoryRepository(_dbContext);
             AccessRights = new AccessRightsRepository(_dbContext);
             VehicleRequest = new VehicleRequestRepository(_dbContext);
-
+            Booking = new BookingRepository(_dbContext);
         }
         public IUserRepository User { get; set; }
         public IRegionRepository Region { get; set; }
@@ -58,6 +58,7 @@ namespace Persistence.UOW
         public IMaintainaceHistoryRepository MaintainaceHistory{ get; set; }
         public IAccessRightsRepository AccessRights{ get; set; }
         public IVehicleRequestRepository VehicleRequest { get; set; }
+        public IBookingRepository Booking { get; set; }
 
 
 

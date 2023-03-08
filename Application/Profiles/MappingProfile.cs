@@ -6,6 +6,10 @@ using Application.Features.Airport.Command.Create;
 using Application.Features.Airport.Command.Update;
 using Application.Features.Airport.Querys.GetByID;
 using Application.Features.Airport.Querys.GetByList;
+using Application.Features.Booking.Command.Create;
+using Application.Features.Booking.Command.Update;
+using Application.Features.Booking.Querys.GetByID;
+using Application.Features.Booking.Querys.GetByList;
 using Application.Features.Branch.Commands.CreateBranch;
 using Application.Features.Branch.Commands.UpdateBranch;
 using Application.Features.Branch.Queries.GetBranchByID;
@@ -195,6 +199,13 @@ namespace Application.Profiles
             CreateMap<FuelCard, Get_FuelCard_ListVM>().ReverseMap();
             CreateMap<FuelCard, Update_FuelCard_Commands>().ReverseMap();
             CreateMap<FuelCard, Delete_FuelCard_Commands>().ReverseMap();
+
+
+            CreateMap<BookingMaster, Create_booking_Commands>().ReverseMap();
+            CreateMap<BookingMaster, Create_booking_Dto>().ReverseMap();
+            CreateMap<BookingMaster, Get_booking_VM>().ReverseMap();
+            CreateMap<BookingMaster, Get_booking_ListVM>().ReverseMap();
+            CreateMap<BookingMaster, Update_booking_Commads>().ReverseMap();
         }
 
 
