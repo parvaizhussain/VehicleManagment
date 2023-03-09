@@ -26,6 +26,7 @@ namespace Domain.Entities
         public DateTime PurchaseDate { get; set; }
         public string VehicleType { get; set; }
         public string VehicleMilage { get; set; }
+        public int VehicleCurrentKM { get; set; }
         public string VehicleModel { get; set; }
         public string FuelType { get; set; }
         public int RegionID { get; set; }

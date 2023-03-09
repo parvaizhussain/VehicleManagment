@@ -28,8 +28,8 @@ namespace Application.Contracts.IUOW
         public IMaintainaceHistoryRepository MaintainaceHistory { get; }
         public IAccessRightsRepository AccessRights { get; }
         public IVehicleRequestRepository VehicleRequest { get; }
-
-        public IBookingRepository Booking { get; }
+         public IBookingRepository Booking { get; }
+        public IReceiptRepository Receipt { get; }
         Task<object> Commit(object obj);
         Task<object> Commit(List<object> obj);
         Task<object> Commit(object obj, string action, string controller);

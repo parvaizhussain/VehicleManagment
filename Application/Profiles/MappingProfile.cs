@@ -44,6 +44,10 @@ using Application.Features.Network.Commands.UpdateNetwork;
 using Application.Features.Network.Queries.GetNetworkByID;
 using Application.Features.Network.Queries.GetNetworkByRegionCode;
 using Application.Features.Network.Queries.GetNetworkList;
+using Application.Features.Receipt.Command.Create;
+using Application.Features.Receipt.Command.Update;
+using Application.Features.Receipt.Querys.GetByID;
+using Application.Features.Receipt.Querys.GetByList;
 using Application.Features.Region.Commands.CreateRegion;
 using Application.Features.Region.Commands.UpdateRegion;
 using Application.Features.Region.Queries.GetRegionByID;
@@ -206,6 +210,13 @@ namespace Application.Profiles
             CreateMap<BookingMaster, Get_booking_VM>().ReverseMap();
             CreateMap<BookingMaster, Get_booking_ListVM>().ReverseMap();
             CreateMap<BookingMaster, Update_booking_Commads>().ReverseMap();
+
+
+            CreateMap<Receipt, Create_Receipt_Commands>().ReverseMap();
+            CreateMap<Receipt, Create_Receipt_Dto>().ReverseMap();
+            CreateMap<Receipt, Get_Receipt_VM>().ReverseMap();
+            CreateMap<Receipt, Get_Receipt_ListVM>().ReverseMap();
+            CreateMap<Receipt, Update_Receipt_Commads>().ReverseMap();
         }
 
 

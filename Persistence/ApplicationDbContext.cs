@@ -48,7 +48,8 @@ namespace Persistence
         public DbSet<AccessRights> AccessRights { get; set; }
         public DbSet<VehicleRequest> VehicleRequests { get; set; }
         public DbSet<BookingMaster> BookingMasters { get; set; }
-
+        public DbSet<Receipt> Receipts { get; set; }
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

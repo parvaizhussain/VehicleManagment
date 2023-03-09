@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence;
 
@@ -11,9 +12,10 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230309062812_InitReceiptadd")]
+    partial class InitReceiptadd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,7 +85,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("AccessId");
 
-                    b.ToTable("AccessRights", (string)null);
+                    b.ToTable("AccessRights");
                 });
 
             modelBuilder.Entity("Domain.Entities.Airport", b =>
@@ -129,7 +131,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("RegionID");
 
-                    b.ToTable("Airports", (string)null);
+                    b.ToTable("Airports");
                 });
 
             modelBuilder.Entity("Domain.Entities.BookingDetail", b =>
@@ -175,7 +177,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("BookingMasterBookingMID");
 
-                    b.ToTable("BookingDetail", (string)null);
+                    b.ToTable("BookingDetail");
                 });
 
             modelBuilder.Entity("Domain.Entities.BookingMaster", b =>
@@ -226,7 +228,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("BookingMID");
 
-                    b.ToTable("BookingMasters", (string)null);
+                    b.ToTable("BookingMasters");
                 });
 
             modelBuilder.Entity("Domain.Entities.Branch", b =>
@@ -275,7 +277,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("NetworkId");
 
-                    b.ToTable("Branch", (string)null);
+                    b.ToTable("Branch");
                 });
 
             modelBuilder.Entity("Domain.Entities.City", b =>
@@ -324,7 +326,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("RegionId");
 
-                    b.ToTable("City", (string)null);
+                    b.ToTable("City");
                 });
 
             modelBuilder.Entity("Domain.Entities.DatabaseLog", b =>
@@ -383,7 +385,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DatabaseLogs", (string)null);
+                    b.ToTable("DatabaseLogs");
                 });
 
             modelBuilder.Entity("Domain.Entities.Department", b =>
@@ -423,7 +425,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("DepartmentId");
 
-                    b.ToTable("Department", (string)null);
+                    b.ToTable("Department");
                 });
 
             modelBuilder.Entity("Domain.Entities.Driver", b =>
@@ -483,7 +485,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("RegionID");
 
-                    b.ToTable("Drivers", (string)null);
+                    b.ToTable("Drivers");
                 });
 
             modelBuilder.Entity("Domain.Entities.FuelCard", b =>
@@ -534,7 +536,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("CardID");
 
-                    b.ToTable("FuelCards", (string)null);
+                    b.ToTable("FuelCards");
                 });
 
             modelBuilder.Entity("Domain.Entities.Group", b =>
@@ -579,7 +581,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("DepartmentId");
 
-                    b.ToTable("Group", (string)null);
+                    b.ToTable("Group");
                 });
 
             modelBuilder.Entity("Domain.Entities.MaintainaceHistory", b =>
@@ -637,7 +639,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("ServiceCenterId");
 
-                    b.ToTable("MaintainaceHistories", (string)null);
+                    b.ToTable("MaintainaceHistories");
                 });
 
             modelBuilder.Entity("Domain.Entities.Network", b =>
@@ -686,7 +688,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("CityId");
 
-                    b.ToTable("Network", (string)null);
+                    b.ToTable("Network");
                 });
 
             modelBuilder.Entity("Domain.Entities.Receipt", b =>
@@ -733,7 +735,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("ReceiptId");
 
-                    b.ToTable("Receipts", (string)null);
+                    b.ToTable("Receipts");
                 });
 
             modelBuilder.Entity("Domain.Entities.Region", b =>
@@ -777,7 +779,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("RegionId");
 
-                    b.ToTable("Region", (string)null);
+                    b.ToTable("Region");
                 });
 
             modelBuilder.Entity("Domain.Entities.ServiceCenter", b =>
@@ -829,7 +831,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("VehicleCompanyID");
 
-                    b.ToTable("ServiceCenters", (string)null);
+                    b.ToTable("ServiceCenters");
                 });
 
             modelBuilder.Entity("Domain.Entities.Session", b =>
@@ -888,7 +890,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("RegionId");
 
-                    b.ToTable("Sessions", (string)null);
+                    b.ToTable("Sessions");
                 });
 
             modelBuilder.Entity("Domain.Entities.Set_VehicleDetails", b =>
@@ -970,7 +972,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("VehicleBrandsVehicleBrandId");
 
-                    b.ToTable("Set_VehicleDetails", (string)null);
+                    b.ToTable("Set_VehicleDetails");
                 });
 
             modelBuilder.Entity("Domain.Entities.SetIcon", b =>
@@ -991,7 +993,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("SetIcons", (string)null);
+                    b.ToTable("SetIcons");
                 });
 
             modelBuilder.Entity("Domain.Entities.VehicleBrands", b =>
@@ -1032,7 +1034,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("VehicleCompanyId");
 
-                    b.ToTable("VehicleBrands", (string)null);
+                    b.ToTable("VehicleBrands");
                 });
 
             modelBuilder.Entity("Domain.Entities.VehicleCompany", b =>
@@ -1068,7 +1070,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("VehicleCompanyID");
 
-                    b.ToTable("VehicleCompanies", (string)null);
+                    b.ToTable("VehicleCompanies");
                 });
 
             modelBuilder.Entity("Domain.Entities.VehicleRequest", b =>
@@ -1172,7 +1174,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("RegionID");
 
-                    b.ToTable("VehicleRequests", (string)null);
+                    b.ToTable("VehicleRequests");
                 });
 
             modelBuilder.Entity("Domain.Entities.Airport", b =>
